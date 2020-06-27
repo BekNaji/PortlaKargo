@@ -9,6 +9,7 @@ use App\Models\CargoStatus;
 use App\Models\CargoLog;
 use App\Models\Product;
 use Auth;
+use App;
 
 
 
@@ -16,6 +17,7 @@ use Auth;
 
 class CargoController extends Controller
 {
+
     public function index()
     {
     	$cargos  = Cargo::all();
@@ -85,25 +87,18 @@ class CargoController extends Controller
         return back()->with(['success'=>'Silindi!']);
     }
 
-     public function storeLog($id,$status)
-    {
-
-        $cargoLog = new CargoLog();
-        $cargoLog->cargo_id = $id;
-        $cargoLog->cargo_status_id = $status;
-        $cargoLog->save();
-
-    }
+  
 
     public function pdf(Request $request)
     {
 
         $cargo = Cargo::find($request->id);
+        $barcode = $this->getBarcode($cargo->number);
         $products = Product::where('cargo_id',$cargo->id)->get();
 
     
 
-        return view('admin.cargo.pdf',compact('cargo','products'));
+        return view('admin.cargo.pdf',compact('cargo','products','barcode'));
     }
 
     public function filter(Request $request,Cargo $cargos)
@@ -142,4 +137,45 @@ class CargoController extends Controller
 
         return back()->with(['success'=>'Güncellendi']);
     }
+    
+       public function storeLog($id,$status)
+    {
+
+        $cargoLog = new CargoLog();
+        $cargoLog->cargo_id = $id;
+        $cargoLog->cargo_status_id = $status;
+        $cargoLog->save();
+
+    }
+
+public function getBarcode($data)
+{
+    //Generate into customize folder under public
+    $bar = App::make('BarCode');
+    $barcode = [
+        'text' => $data,
+        'size' => 30,
+        'orientation' => 'horizontal',
+        'code_type' => 'code39',
+        'print' => true,
+        'sizefactor' => 2,
+        'filename' => 'image1.jpeg',
+        'filepath' => 'prdbarcode'
+    ];
+    $barcontent = $bar->barcodeFactory()->renderBarcode(
+    $text=$barcode["text"], 
+    $size=$barcode['size'], 
+    $orientation=$barcode['orientation'], 
+    $code_type=$barcode['code_type'], // code_type : code128,code39,code128b,code128a,code25,codabar 
+    $print=$barcode['print'], 
+    $sizefactor=$barcode['sizefactor'],
+    $filename = $barcode['filename'],
+    $filepath = $barcode['filepath']
+    )->filename($barcode['filename']);
+
+    return $barcontent;  
+
+}
+
+
 }

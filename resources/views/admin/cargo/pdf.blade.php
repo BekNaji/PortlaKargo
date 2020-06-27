@@ -31,7 +31,7 @@
 							</div>
 
 							<div class="col-md-4">
-								<center><p>Express INVOICE</p></center>
+								<center><img src="{{asset($barcode)}}"></center>
 							</div>
 
 							<div class="col-md-4">
@@ -61,8 +61,7 @@
 										{{$cargo->sender->country}} {{$cargo->sender->city}}<br><br>
 									</div>
 									<div class="col-md-6">
-										<b>Passport</b><br>
-										{{$cargo->sender->passport}}<br><br>
+					
 										<b>Telefon</b><br>
 										{{$cargo->sender->phone}}<br><br>
 										<b>Address</b><br>
@@ -135,18 +134,18 @@
 							</div>
 							<div class="col-md-6">
 								<b>Ödeme Türü</b><br>
-								<span class="badge badge-info">
+								
 									@if($cargo->payment_type == 1)
 									Gönderici Öder
 									@else
 									Alıcı Öder
 									@endif
-								</span>
+							
 								<br><br>
 							</div>
 							<div class="col-md-6">
 								<b>Status</b><br>
-								<span class="badge badge-primary">{{$cargo->cargoStatus->name}}</span><br><br>
+								{{$cargo->cargoStatus->name}}<br><br>
 							</div>
 							<div class="col-md-12">
 								<b>Tarih</b><br>
@@ -197,11 +196,11 @@
 <br>
 <div class="row">
 	<div class="col-md-6">
-		{{strtoupper(Auth::user()->name)}}
+		{{strtoupper(Auth::user()->name ?? '')}}
 <br><br><hr>
 	</div>
 	<div class="col-md-6">
-		{{$cargo->sender->name}} {{$cargo->sender->surname}}
+		{{$cargo->sender->name ?? ''}} {{$cargo->sender->surname ?? ''}}
 <br><br><hr>
 	</div>
 </div>

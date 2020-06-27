@@ -39,7 +39,7 @@ class HomeController extends Controller
 
         $cargo = Cargo::where('number','=',$number)->get()->first();
         
-        if($cargo->count() < 0)
+        if(!$cargo)
         {
         	return redirect()->back()
     		->with(['warning'=>'Boyle bir kayit bulunamadı!']);

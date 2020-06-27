@@ -161,7 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Barryvdh\Snappy\ServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -171,9 +171,12 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        // Pela barcode 
+        peal\barcodegenerator\BarcodeServiceProvider::class,
 
 
 
@@ -232,9 +235,11 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
-        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+
         'Product'=>  App\Http\Controllers\Admin\ProductController::class,
+        
+        // peal barcode
+        'BarCode' => peal\barcodegenerator\Facades\BarCode::class,
 
     ],
 

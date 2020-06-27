@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route::get('test', 'Admin\CargoController@test')->name('test');
+
 Route::redirect('/home', '/dashboard/index');
 Route::redirect('/admin', '/dashboard/index');
 Route::redirect('dashboard', '/dashboard/index');

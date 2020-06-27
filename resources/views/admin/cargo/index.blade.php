@@ -38,8 +38,8 @@
 							<input class="cargo" type="checkbox" name="cargo[]" data-id="{{$cargo->id}}">
 							</td>
 							<td>{{$loop->iteration}}</td>
-							<td>{{$cargo->number}}</td>
-							<td>{{$cargo->cargoStatus->name}}</td>
+							<td>{{$cargo->number ?? ''}}</td>
+							<td>{{$cargo->cargoStatus->name ?? ''}}</td>
 							<td>
 								@if($cargo->payment_type == 1)
 								Göderici Öder
@@ -49,8 +49,8 @@
 							</td>
 							<td>{{$cargo->sender->name ?? ''}} {{$cargo->sender->surname ?? ''}}</td>
 							<td>{{$cargo->receiver->name ?? ''}} {{$cargo->receiver->surname ?? ''}}</td>
-							<td>{{$cargo->total_kg}}KG</td>
-							<td>{{$cargo->total_price}}$</td>
+							<td>{{$cargo->total_kg ?? ''}}KG</td>
+							<td>{{$cargo->total_price ?? ''}}$</td>
 							<td>{{$cargo->created_at->toDateString()}}</td>
 							<td>
 								<a type="submit" target="_blank" 
