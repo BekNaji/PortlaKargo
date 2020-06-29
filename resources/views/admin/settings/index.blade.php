@@ -1,16 +1,18 @@
 @extends('layouts.admin')
-
+@section('title','Genel Ayarlar')
 @section('content')
 <div class="row">
+
 	<div class="col-md-8 offset-2">
+		<br>
 		<div class="card">
 			<div class="card-body">
-				<i class="fa fa-cogs" aria-hidden="true"></i> General Settings
+				<i class="fa fa-cogs" aria-hidden="true"></i> Genel Ayarlar
 				<hr>
 				<form action="{{route('settings.update')}}" method="POST">
 					@csrf
 					<div class="form-group">
-						<label>Comapany Name</label>
+						<label>Şirket adı</label>
 						<input value="{{Auth::user()->company->name ?? ''}}" class="form-control" type="text" name="name" required>
 					</div>
 					<div class="form-group">
@@ -18,7 +20,7 @@
 						<input value="{{Auth::user()->company->email ?? ''}}" class="form-control" type="email" name="email" required>
 					</div>
 					<div class="form-group">
-						<label>Phone</label>
+						<label>Telefon</label>
 						<input value="{{Auth::user()->company->phone ?? ''}}" class="form-control" type="text" name="phone" required>
 					</div>
 					<div class="form-group">

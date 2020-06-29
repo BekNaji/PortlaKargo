@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('title','Kullanıcı Ayarları')
 @section('content')
 <div class="row">
 	<div class="col-md-12">

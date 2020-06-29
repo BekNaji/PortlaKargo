@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('title','Kargo Detay')
 @section('content')
 
 <div class="row">
@@ -118,18 +119,18 @@
 							</div>
 							<div class="col-md-6">
 								<b>Ödeme Türü</b><br>
-								<span class="badge badge-info">
+								
 									@if($cargo->payment_type == 1)
 									Gönderici Öder
 									@else
 									Alıcı Öder
 									@endif
-								</span>
+								
 								<br><br>
 							</div>
 							<div class="col-md-6">
 								<b>Status</b><br>
-								<span class="badge badge-primary">{{$cargo->cargoStatus->name}}</span><br><br>
+								{{$cargo->cargoStatus->name}}<br><br>
 							</div>
 							<div class="col-md-12">
 								<b>Tarih</b><br>

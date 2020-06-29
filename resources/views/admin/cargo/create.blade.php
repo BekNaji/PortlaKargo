@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('title','Gönderici Ekle')
 @section('content')
 <br><br>
 <div class="row">

@@ -17,6 +17,8 @@ class CreateCargoStatusesTable extends Migration
             $table->id();
             $table->string('name');
             $table->timestamps();
+            $table->foreignId('company_id')->default(1);  
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 

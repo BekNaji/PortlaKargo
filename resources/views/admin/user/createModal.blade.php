@@ -12,6 +12,8 @@
             <div class="modal-body">
                 <form action="{{route('user.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="company_id" 
+                    value="{{Auth::user()->company->id}}">
                     <div class="form-group">
                         <label>Kullanıcı Tam adı</label>
                         <input class="form-control" type="text" name="name">

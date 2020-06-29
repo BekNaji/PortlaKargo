@@ -10,8 +10,7 @@ use App\Models\CargoLog;
 use App\Models\Product;
 use Auth;
 use App;
-
-
+use Illuminate\Support\Carbon;
 
 
 
@@ -101,21 +100,14 @@ class CargoController extends Controller
         return view('admin.cargo.pdf',compact('cargo','products','barcode'));
     }
 
-    public function filter(Request $request,Cargo $cargos)
+    public function filter(Request $request)
     {
-        $cargo = $cargos->newQuery();
-        if($request->start != ''){
-            $cargos = $cargo->where('created_at','>',$request->start)->get();
-        }
-
-        if($request->end != ''){
-            $cargos = $cargo->where('created_at','<',$request->end)->get();
-        }
-
-        if($request->status != 'false'){
-            $cargos = $cargo->where('status',$request->status)->get();
-        }
-
+        $from = Carbon::parse($request->start.' 00:00:00')->format('Y-m-d H:i:s');
+        $to   = Carbon::parse($request->end.' 23:59:59')->format('Y-m-d H:i:s');
+        
+        $cargos = Cargo::where('created_at','>=',$from)
+        ->where('created_at','<=',$to)->get();
+        $statuses = CargoStatus::all();
         
         return view('admin.cargo.index',compact('cargos','statuses'));
     }
@@ -129,7 +121,8 @@ class CargoController extends Controller
             $cargo = Cargo::find($id);
             if($cargo->status != $request->status)
             {
-                $this->storeLog($cargo->id,$cargo->status);
+                $this->storeLog($cargo->id,$request->status);
+
             } 
             $cargo->status = $request->status;
             $cargo->save();
@@ -160,7 +153,7 @@ public function getBarcode($data)
         'print' => true,
         'sizefactor' => 2,
         'filename' => 'image1.jpeg',
-        'filepath' => 'prdbarcode'
+        'filepath' => 'barcode'
     ];
     $barcontent = $bar->barcodeFactory()->renderBarcode(
     $text=$barcode["text"], 
@@ -173,7 +166,8 @@ public function getBarcode($data)
     $filepath = $barcode['filepath']
     )->filename($barcode['filename']);
 
-    return $barcontent;  
+    
+    return $barcontent.'?barcode='.rand(1111,9999);  
 
 }
 

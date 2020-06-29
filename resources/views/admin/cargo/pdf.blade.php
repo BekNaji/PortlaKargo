@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Kafolat Kargo</title>
+	<title>{{Auth::user()->company->name ?? ''}}</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 	<!-- jQuery library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -31,11 +31,11 @@
 							</div>
 
 							<div class="col-md-4">
-								<center><img src="{{asset($barcode)}}"></center>
+								<center><img src="{{url($barcode)}}"></center>
 							</div>
 
 							<div class="col-md-4">
-								<h3><span class="float-right ">{{$cargo->number}}</span></h3>
+								<h3><span class="float-right ">{{$cargo->number ?? ''}}</span></h3>
 							</div>
 						</div>
 					</div>
@@ -54,18 +54,18 @@
 									@if($cargo->sender_id != '')
 									<div class="col-md-6">
 										<b>Ad Soyad</b> <br>
-										{{$cargo->sender->name}} {{$cargo->sender->surname}} <br><br>
+										{{$cargo->sender->name ?? ''}} {{$cargo->sender->surname ?? ''}} <br><br>
 										<b>Email</b><br>
-										{{$cargo->sender->email}}<br><br>
+										{{$cargo->sender->email ?? ''}}<br><br>
 										<b>Ülke ve Şehir</b><br>
-										{{$cargo->sender->country}} {{$cargo->sender->city}}<br><br>
+										{{$cargo->sender->country ?? ''}} {{$cargo->sender->city ?? ''}}<br><br>
 									</div>
 									<div class="col-md-6">
 					
 										<b>Telefon</b><br>
-										{{$cargo->sender->phone}}<br><br>
+										{{$cargo->sender->phone ?? ''}}<br><br>
 										<b>Address</b><br>
-										{{$cargo->sender->address}}<br><br>
+										{{$cargo->sender->address ?? ''}}<br><br>
 									</div>
 									
 									@endif
@@ -84,19 +84,19 @@
 									@if($cargo->receiver_id != '')
 									<div class="col-md-6">
 										<b>Ad Soyad</b> <br>
-										{{$cargo->receiver->name}} {{$cargo->receiver->surname}} <br><br>
+										{{$cargo->receiver->name ?? ''}} {{$cargo->receiver->surname ?? ''}} <br><br>
 										<b>Email</b><br>
-										{{$cargo->receiver->email}}<br><br>
+										{{$cargo->receiver->email ?? ''}}<br><br>
 										<b>Ülke ve Şehir</b><br>
-										{{$cargo->receiver->country}} {{$cargo->receiver->city}}<br><br>
+										{{$cargo->receiver->country ?? ''}} {{$cargo->receiver->city ?? ''}}<br><br>
 									</div>
 									<div class="col-md-6">
 										<b>Passport</b><br>
-										{{$cargo->receiver->passport}}<br><br>
+										{{$cargo->receiver->passport ?? ''}}<br><br>
 										<b>Telefon</b><br>
 										{{$cargo->receiver->phone}}<br><br>
 										<b>Address</b><br>
-										{{$cargo->receiver->address}}<br><br>
+										{{$cargo->receiver->address ?? ''}}<br><br>
 									</div>
 						
 									@endif
@@ -122,7 +122,7 @@
 							<div class="col-md-6">
 								<b>Toplam Ücret</b><br>
 								@if($cargo->total_price != '')
-								{{$cargo->total_price}}$
+								{{$cargo->total_price ?? ''}}$
 								@else
 								$ 0.0
 								@endif
@@ -130,7 +130,7 @@
 							</div>
 							<div class="col-md-6">
 								<b>Toplam Kg</b><br>
-								{{$cargo->total_kg}} kg<br><br>
+								{{$cargo->total_kg ?? ''}} kg<br><br>
 							</div>
 							<div class="col-md-6">
 								<b>Ödeme Türü</b><br>
@@ -145,11 +145,11 @@
 							</div>
 							<div class="col-md-6">
 								<b>Status</b><br>
-								{{$cargo->cargoStatus->name}}<br><br>
+								{{$cargo->cargoStatus->name ?? ''}}<br><br>
 							</div>
 							<div class="col-md-12">
 								<b>Tarih</b><br>
-								{{$cargo->created_at}}<br><br>
+								{{$cargo->created_at ?? ''}}<br><br>
 							</div>
 						</div>
 					</div>
@@ -178,10 +178,10 @@
 								@foreach($products as $product)
 								<tr>
 									<td>{{$loop->iteration}}</td>
-									<td>{{$product->name}} </td>
-									<td>{{$product->count}} </td>
-									<td>${{$product->cost}} </td>
-									<td>${{$product->total}} </td>
+									<td>{{$product->name ?? ''}} </td>
+									<td>{{$product->count ?? ''}} </td>
+									<td>${{$product->cost ?? ''}} </td>
+									<td>${{$product->total ?? ''}} </td>
 									
 								</tr>
 								@endforeach

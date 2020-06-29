@@ -23,6 +23,10 @@ class CreateCargosTable extends Migration
             $table->foreignId('sender_id');
             $table->foreignId('receiver_id');
 
+            $table->foreignId('company_id')->default(1);
+            
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+
             $table->foreign('sender_id')->references('id')->on('customers');
             $table->foreign('receiver_id')->references('id')->on('receivers');
 

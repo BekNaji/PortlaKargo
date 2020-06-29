@@ -12,6 +12,12 @@
             <div class="modal-body">
                 <form action="{{route('customer.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    
+                    <div class="form-group">
+                        <label>Passport</label>
+                        <input class="form-control" type="text" name="passport">
+                    </div>
+
                     <div class="form-group">
                         <label>Adı</label>
                         <input class="form-control" type="text" name="name" required>
@@ -22,15 +28,9 @@
                         <input class="form-control" type="text" name="surname" required>
                     </div>
 
-                    <div class="form-group">
-                        <label>Passport</label>
-                        <input class="form-control" type="text" name="passport">
-                    </div>
+                    
 
-                    <div class="form-group">
-                        <label>Kimlik</label>
-                        <input class="form-control" type="text" name="identity">
-                    </div>
+                   
 
                     <div class="form-group">
                         <label>Telefon</label>

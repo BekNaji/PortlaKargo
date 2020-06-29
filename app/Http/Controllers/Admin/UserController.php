@@ -6,12 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Helpers\Upload;
+use Auth;
 class UserController extends Controller
 {
     
     public function index()
     {
-        $users = User::all();
+        if(Auth::user()->role == 'root')
+        {
+            $users = User::all();
+        }else
+        {
+            $users = User::where('company_id',Auth::user()->company->id);
+        }
     	return view('admin.user.index',compact('users'));
     }
 

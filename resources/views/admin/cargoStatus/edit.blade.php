@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('title','Kargo Status Düzenle')
 @section('content')
 <div class="row">
 	<div class="col-md-12">

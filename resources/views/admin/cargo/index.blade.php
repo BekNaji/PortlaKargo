@@ -1,7 +1,9 @@
 @extends('layouts.admin')
+@section('title','Kargo Listesi')
 @section('content')
 <div class="row">
 	<div class="col-md-12">
+		<br>
 		<div class="card">
 			<div class="card-body">
 				

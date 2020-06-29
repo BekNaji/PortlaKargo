@@ -22,15 +22,6 @@
                         <input type="date" name="end" class="form-control" max="{{date('Y-m-d')}}">
                     </div>
 
-                   <div class="form-group">
-                        <label>Kargo Durumu <br> (Seçilmemesi durumunda tüm kayıtları getirecek)</label>
-                        <select class="form-control" name="status" required>
-                            <option selected value="false">Seç</option>
-                            @foreach($statuses as $status)
-                            <option value="{{$status->id}}">{{$status->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
                     <button type="submit" class="btn btn-success" >Ok</button>
                 </form>
             </div>

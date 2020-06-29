@@ -25,6 +25,9 @@ class CreateReceiversTable extends Migration
             $table->string('passport_image')->nullable();
             $table->string('email')->nullable();
             $table->timestamps();
+            $table->foreignId('company_id')->default(1);
+            
+            $table->foreign('company_id')->references('id')->on('company')->onDelete('cascade');
         });
     }
 

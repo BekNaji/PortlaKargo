@@ -18,12 +18,15 @@
 		<link href="{{ asset('assets') }}/css/bootstrap-select.min.css"/>
 		<link href="{{ asset('assets') }}/css/dataTables.bootstrap4.min.css" crossorigin="anonymous" />
 		<script src="{{ asset('assets') }}/js/all.min.js" type="text/javascript"></script>
+		<link href="{{ asset('assets') }}/css/dataTables.min.css" rel="stylesheet" />
 		<link href="{{ asset('assets') }}/css/toastr.min.css" rel="stylesheet" />
 		
 	</head>
 	<body class="sb-nav-fixed">
 		<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-			<a class="navbar-brand" href="{{route('home')}}">{{config('app.name')}}</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button
+			<a class="navbar-brand" href="{{route('home')}}">
+				{{Auth::user()->company->name ?? ''}}
+			</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button
 			>
 			<!-- Navbar Search-->
 			<form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
@@ -50,18 +53,21 @@
 					<div class="sb-sidenav-menu">
 						<div class="nav">
 							<!-- <div class="sb-sidenav-menu-heading">Core</div> -->
+
 							<a class="nav-link
 								{{request()->is('dashboard/index') || request()->is('dashboard/index/*') ?'active' : ''}} "
 								href="{{route('dashboard.index')}}"
 								><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
 							Anasayfa</a
 							>
+							@if(Auth::user()->role == 'admin')
 							<a class="nav-link
 								{{request()->is('dashboard/cargo/*')  ?'active' : ''}} "
 								href="{{route('cargo.index')}}"
 								><div class="sb-nav-link-icon"><i class="fas fa-truck"></i></div>
 							Kargo</a
 							>
+
 							<a class="nav-link
 								{{request()->is('dashboard/customer/*')  ?'active' : ''}} "
 								href="{{route('customer.index')}}"
@@ -74,6 +80,7 @@
 								><div class="sb-nav-link-icon"><i class="fas fa-arrow-right"></i></div>
 							Alıcılar</a
 							>
+							@endif
 							<a class="nav-link
 								{{request()->is('dashboard/user/*')  ?'active' : ''}} "
 								href="{{route('user.index')}}"

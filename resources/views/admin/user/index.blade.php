@@ -1,11 +1,11 @@
-@extends('layouts.admin');
-
+@extends('layouts.admin')
+@section('title','Kullanıcılar Listesi')
 @section('content')
 <div class="row">
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-body">
-				<i class="fa fa-users" aria-hidden="true"></i> Users &#160;&#160;&#160;
+				<i class="fa fa-users" aria-hidden="true"></i> Kullanıcı Listesi &#160;&#160;&#160;
 				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp;
 				<button id="filter" class="btn btn-info"><i class="fa fa-filter" aria-hidden="true"></i></button>
 				<hr>

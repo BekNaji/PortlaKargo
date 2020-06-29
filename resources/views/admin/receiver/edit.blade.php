@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('title','Müşteri Bilgilerini düzenle')
 @section('content')
 <div class="row">
 	<div class="col-md-6 offset-3">

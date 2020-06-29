@@ -1,16 +1,17 @@
 @extends('layouts.admin')
-
+@section('title','Profil Ayarları')
 @section('content')
 <div class="row">
 	<div class="col-md-12">
+		<br>
 		<div class="card">
 			<div class="card-body">
 				<i class="fa fa-user" aria-hidden="true"></i> Profil Ayarları
 				<hr>
 				<div class="row">
 					<div class="col-md-3">
-						@if(Auth::user()->url != '')
-						<img src="{{asset(Auth::user()->url)}}" class="img-fluid">
+						@if(Auth::user()->image != '')
+						<img src="{{asset(Auth::user()->image)}}" class="img-fluid">
 						@else
 						<img src="{{asset('images/avatar.png')}}" class="img-fluid">
 						@endif

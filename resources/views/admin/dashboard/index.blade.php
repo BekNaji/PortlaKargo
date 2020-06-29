@@ -1,10 +1,11 @@
 @extends('layouts.admin')
-@section('header_js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" ></script>
-@endsection
+@section('title','Portal Anasayfa')
+
 @section('content')
 <div class="row">
     <div class="col-md-12">
+        <br>
+        @if(Auth::user()->role != 'root')
         <div class="card">
             <div class="card-body">
                 <i class="fa fa-hashtag" aria-hidden="true"></i> Dashboard
@@ -53,6 +54,8 @@
                 </div>
             </div>
         </div>
+        @endif
+
     </div>
 </div>
 <script type="text/javascript">

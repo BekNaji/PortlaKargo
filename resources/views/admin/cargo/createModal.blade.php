@@ -20,9 +20,11 @@
                         <label>Kargo Durumu</label>
                         <select class="form-control" name="status" required>
                             <option selected>Seç</option>
+                            @if($statuses)
                             @foreach($statuses as $status)
                             <option value="{{$status->id}}">{{$status->name}}</option>
                             @endforeach
+                            @endif
                         </select>
                     </div>
 

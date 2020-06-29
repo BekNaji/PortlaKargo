@@ -48,7 +48,7 @@ class HomeController extends Controller
         $cargoLogs = CargoLog::where('cargo_id',$cargo->id)->get();
 
         
-        return view('result',compact('cargoLogs','settings'));
+        return view('result',compact('cargoLogs','settings','cargo'));
     }
 
     public function about()
@@ -62,4 +62,5 @@ class HomeController extends Controller
         $settings = Company::find(1);
         return view('contact',compact('settings'));
     }
+    
 }

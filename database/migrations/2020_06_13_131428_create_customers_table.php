@@ -18,12 +18,16 @@ class CreateCustomersTable extends Migration
             $table->string('name');
             $table->string('surname');
             $table->string('passport')->nullable();
-            $table->string('identity')->nullable();
             $table->string('passport_image')->nullable();
-            $table->string('identity_image')->nullable();
-            $table->string('address');
-            $table->string('phone');
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->string('city')->default('ISTANBUL');
+             $table->foreignId('company_id')->default(1);
+            
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+
+            $table>
             $table->timestamps();
         });
     }
