@@ -18,20 +18,26 @@
                     </div>
                     <div class="form-group">
                         <label>Kargo Durumu</label>
+                        @if($statuses->count() != '')
                         <select class="form-control" name="status" required>
-                            <option selected>Seç</option>
-                            @if($statuses)
+                            <option value="" selected>Seç</option>
+                            
                             @foreach($statuses as $status)
                             <option value="{{$status->id}}">{{$status->name}}</option>
                             @endforeach
-                            @endif
                         </select>
+                        @else
+                        <a href="{{route('status.cargo.index')}}">Status Ekle</a>
+                        <select class="form-control" name="status" required>
+                            
+                        </select>
+                        @endif
                     </div>
 
                     <div class="form-group">
                         <label>Ödeme Türü</label>
                         <select class="form-control" name="payment_type" required>
-                            <option selected disabled>Seç</option>
+                            <option value="" selected disabled>Seç</option>
                             <option value="1">Gönderıcı Öder</option>
                             <option value="2">Alıcı Öder</option>
                         </select>

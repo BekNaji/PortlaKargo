@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use Auth;
+use App\Http\Requests\CheckCompanySettings;
 
 class SettingsController extends Controller
 {
@@ -35,7 +36,7 @@ class SettingsController extends Controller
     // update function
     public function update(Request $request)
     {
-    	$company = Company::find(Auth::user()->company->id);
+    	$company = Company::find(Auth::user()->company_id);
         $company->name = $request->name;
         $company->email = $request->email;
         $company->phone = $request->phone;

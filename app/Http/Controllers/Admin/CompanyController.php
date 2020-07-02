@@ -10,7 +10,17 @@ use Auth;
 
 class CompanyController extends Controller
 {
-    
+
+    public function index()
+    {
+        $companies = Company::all();
+        return view('admin.company.index',compact('companies'));
+    }
+    public function edit(Request $request)
+    {
+        $company = Company::find(decrypt($request->id));
+        return view('admin.company.edit',compact('company'));
+    }
 	public function register()
     {
         return view('admin.company.register');
@@ -21,7 +31,7 @@ class CompanyController extends Controller
         return view('admin.company.status');
     }
 
-    public function store(Request $request)
+    public function apply(Request $request)
     {
     	$validate = $request->validate([
     		'name' => 'required|max:255',
@@ -41,6 +51,26 @@ class CompanyController extends Controller
     	$user->save();
 
     	return redirect()->route('company.status')->with(['message'=>'Bizi tercih ettiğiniz için teşekkür ederiz! Kaydınız daha etkinleşmedi kısa sürede sizinde iletişime geçilecektir!']);
+        
+    }
+
+    public function update(Request $request)
+    {
+        $validate = $request->validate([
+            'name' => 'required|max:255',
+            'email'=> 'required|max:255',
+            'phone'=> 'required|max:255'
+        ]);
+
+        $company = Company::find($request->id);
+        $company->name = $request->name;
+        $company->email = $request->email;
+        $company->phone = $request->phone;
+        $company->status = $request->status;
+
+        $company->save();
+    
+        return redirect()->route('company.index')->with(['success'=>'Güncellendi!']);
         
     }
 }

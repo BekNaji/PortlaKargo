@@ -9,6 +9,13 @@
 			<div class="card-body">
 				<i class="fa fa-cogs" aria-hidden="true"></i> Genel Ayarlar
 				<hr>
+				
+				@if(session('message'))
+				<div class="alert alert-info alert-dismissible">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<strong>Bildirim!</strong>{{session('message')}}
+				</div>
+				@endif
 				<form action="{{route('settings.update')}}" method="POST">
 					@csrf
 					<div class="form-group">

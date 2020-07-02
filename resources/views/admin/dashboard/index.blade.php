@@ -8,7 +8,7 @@
         @if(Auth::user()->role != 'root')
         <div class="card">
             <div class="card-body">
-                <i class="fa fa-hashtag" aria-hidden="true"></i> Dashboard
+                <i class="fa fa-hashtag" aria-hidden="true"></i> Portal Anasayfa
                 <hr>
                 <div class="row">
                     <div class="col-xl-3 col-md-6">
@@ -22,6 +22,7 @@
                             </div>
                         </div>
                     </div>
+                    @if(Auth::user()->role == 'admin')
                     <div class="col-xl-3 col-md-6">
                         <div class="card bg-warning text-white mb-4">
                             <div class="card-body">Toplam Kullanıcı sayısı <br>
@@ -32,9 +33,10 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     <div class="col-xl-3 col-md-6">
                         <div class="card bg-success text-white mb-4">
-                            <div class="card-body">Toplam Kayıtlı Gönderici sayısı <br><h2>{{$senderCount}}</h2></div>
+                            <div class="card-body">Toplam Gönderici sayısı <br><h2>{{$senderCount}}</h2></div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
                                 <a class="small text-white stretched-link" href="#">Listeye git</a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>

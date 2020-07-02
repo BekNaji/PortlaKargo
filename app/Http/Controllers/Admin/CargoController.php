@@ -8,6 +8,7 @@ use App\Models\Cargo;
 use App\Models\CargoStatus;
 use App\Models\CargoLog;
 use App\Models\Product;
+use App\Models\Company;
 use Auth;
 use App;
 use Illuminate\Support\Carbon;
@@ -16,11 +17,25 @@ use Illuminate\Support\Carbon;
 
 class CargoController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware(function ($request, $next) 
+        {
+            if(Auth::user()->company->cargo_letter == '')
+            {
+                return redirect()
+                ->route('settings.index')
+                ->with(['message'=>'Lütfen Önce Kargo numara ilk harfını Belirleyiniz!']);
+            }
+
+            return $next($request);
+        });
+    }
 
     public function index()
     {
-    	$cargos  = Cargo::all();
-        $statuses = CargoStatus::all();
+    	$cargos  = Cargo::where('company_id',Auth::user()->company_id)->get();
+        $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
     	return view('admin.cargo.index',compact('cargos','statuses'));
     }
 
@@ -45,6 +60,7 @@ class CargoController extends Controller
     {
     	
         $cargo = new Cargo();
+        $cargo->company_id = Auth::user()->company_id;
         $cargo->payment_type = $request->payment_type;
         $cargo->status = $request->status;
         $cargo->total_kg = $request->total_kg;
@@ -91,7 +107,7 @@ class CargoController extends Controller
     public function pdf(Request $request)
     {
 
-        $cargo = Cargo::find($request->id);
+        $cargo = Cargo::find(decrypt($request->id));
         $barcode = $this->getBarcode($cargo->number);
         $products = Product::where('cargo_id',$cargo->id)->get();
 
@@ -105,9 +121,10 @@ class CargoController extends Controller
         $from = Carbon::parse($request->start.' 00:00:00')->format('Y-m-d H:i:s');
         $to   = Carbon::parse($request->end.' 23:59:59')->format('Y-m-d H:i:s');
         
-        $cargos = Cargo::where('created_at','>=',$from)
+        $cargos = Cargo::where('company_id',Auth::user()->company_id)
+        ->where('created_at','>=',$from)
         ->where('created_at','<=',$to)->get();
-        $statuses = CargoStatus::all();
+        $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
         
         return view('admin.cargo.index',compact('cargos','statuses'));
     }

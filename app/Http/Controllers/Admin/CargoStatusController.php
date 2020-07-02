@@ -16,7 +16,7 @@ class CargoStatusController extends Controller
     }
     public function index()
     {
-    	$statuses = CargoStatus::all();
+    	$statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
  
     	return view('admin.cargoStatus.index',compact('statuses'));
     }
@@ -25,6 +25,7 @@ class CargoStatusController extends Controller
     {
    
     	$status = new CargoStatus();
+        $status->company_id = Auth::user()->company_id;
     	$status->name = $request->name;
     	$status->save();
 

@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Receiver;
 use App\Models\Cargo;
+use Auth;
 
 class ReceiverController extends Controller
 {
     public function index()
     {
-    	$receivers  = Receiver::all();
+    	$receivers  = Receiver::where('company_id',Auth::user()->company_id)->get();
     	return view('admin.receiver.index',compact('receivers'));
     }
 
@@ -27,7 +28,7 @@ class ReceiverController extends Controller
         {
             $receiver = new Receiver();
         }
-    	
+    	$receiver->company_id = Auth::user()->company_id;
         $receiver->name     = strtoupper($request->name);
         $receiver->surname  = strtoupper($request->surname);
         $receiver->email    = strtolower($request->email);

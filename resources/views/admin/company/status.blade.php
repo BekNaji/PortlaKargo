@@ -13,6 +13,11 @@
             	<div class="alert alert-info">
 				<strong>Kaydınız daha onaylanmamiştır! <b>bekturk333@gmail.com</b> adresinden bizimle iletişime geçiniz!</strong>
 				</div>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" >
+                            @csrf
+                           <button class="btn btn-primary"  type="submit"> Farklı Kullanıcı ile Giriş yap!</button>
+                        </form>
+                
                 
                 
             </div>

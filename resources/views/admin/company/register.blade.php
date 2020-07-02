@@ -9,7 +9,7 @@
 				<strong>Kullanıcıya ait Şirket bulunamadı!</strong><p> Ürünü kullanmak için aşağdaki formu doldurabilir veya <b>bekturk@gmail.com</b> adresi ile iletişime geçebilir siniz!</p>
 				</div>
             	
-                <form action="{{route('company.store')}}" method="POST">
+                <form action="{{route('company.apply')}}" method="POST">
                 	@csrf
                 	<div class="form-group">
                 		<label>Şirket Adı</label>

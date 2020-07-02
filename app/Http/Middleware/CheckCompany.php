@@ -19,7 +19,7 @@ class CheckCompany
 
         if(Auth::user()->role != 'root')
         {
-            if(Auth::user()->company_id == '')
+            if(Auth::user()->company_id == ' ')
             {
                 return redirect()->route('company.register');
             }
@@ -27,6 +27,7 @@ class CheckCompany
             {
                 return redirect()->route('company.status');
             }
+           
         }
         return $next($request);
     }

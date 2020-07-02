@@ -12,21 +12,43 @@
             <div class="modal-body">
                 <form action="{{route('user.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="company_id" 
-                    value="{{Auth::user()->company->id}}">
+                    <div class="form-group">
+                    <label>Yetki</label>
+                    <select class="form-control" name="role" required>
+                        <option value="" selected>Seç</option>
+                        @if(Auth::user()->role == 'root')
+                        <option value="root" >Root</option>
+                        @endif
+                        <option value="admin" >Admin</option>
+                        <option value="user" >User</option>
+                    </select>
+                    
+                    </div>
+                    @if(Auth::user()->role == 'root')
+                    <div class="form-group">
+                        <label>Company</label>
+                        <select class="form-control" name="company_id" required>
+                            <option value="" selected>Seç</option>
+                            @foreach($companies as $company)
+                                <option value="{{$company->id}}">{{$company->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @endif
+                    
                     <div class="form-group">
                         <label>Kullanıcı Tam adı</label>
-                        <input class="form-control" type="text" name="name">
+                        <input class="form-control" type="text" name="name" required>
                     </div>
 
                     <div class="form-group">
                         <label>Email</label>
-                        <input  class="form-control" type="text" name="email">
+                        <input  class="form-control" type="text" name="email" required>
                     </div>
 
                     <div class="form-group">
                         <label>Parola</label>
-                        <input id="password" class="form-control" type="password" name="password">
+                        <input id="password" class="form-control" type="password" name="password" required>
                         <input type="checkbox" name="show" id="showPassword"> Parolayı göster
                     </div>
                     <div class="form-group">

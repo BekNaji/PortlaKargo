@@ -13,6 +13,9 @@
 					<thead>
 						<tr>
 							<td>#</td>
+							@if(Auth::user()->role == 'root')
+							<td>Company Name</td>
+							@endif
 							<td>Ad</td>
 							<td>Email</td>
 							<td>Yetkı</td>
@@ -24,12 +27,15 @@
 						@foreach($users as $user)
 						<tr>
 							<td>{{$loop->iteration}}</td>
-							<td>{{$user->name}}</td>
-							<td>{{$user->email}}</td>
-							<td><span class="badge badge-primary">{{$user->role}}</span></td>
+							@if(Auth::user()->role == 'root')
+							<td>{{$user->company->name ?? ''}}</td>
+							@endif
+							<td>{{$user->name ?? ''}}</td>
+							<td>{{$user->email ?? ''}}</td>
+							<td><span class="badge badge-primary">{{$user->role ?? ''}}</span></td>
 							<td>
 								@if($user->image !='')
-								<img class="img-fluid" style="width:100px; height:100px;" src="{{asset($user->image)}}">
+								<img class="img-fluid" style="width:100px; height:100px;" src="{{asset($user->image )}}">
 								@else
 								<img class="img-fluid" style="width:100px; height:100px;" src="{{asset('images/avatar.png')}}">
 								@endif

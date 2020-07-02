@@ -22,6 +22,7 @@ class HomeController extends Controller
         return view('home',compact('settings'));
     }
 
+    
     public function search(Request $request)
     {
         $settings = Company::find(1);

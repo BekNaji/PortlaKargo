@@ -139,6 +139,9 @@
 							<a class="btn btn-warning" 
 							href="{{route('cargo.edit',
 							[encrypt($cargo->id)])}}">Düzenle</a>
+							<a type="submit" target="_blank" 
+									href="{{route('cargo.pdf',encrypt($cargo->id))}}" class="btn btn-info"><i class="fa fa-print"></i>
+							</a>
 						</div>
 					</div>
 				</div>

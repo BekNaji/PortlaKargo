@@ -52,11 +52,11 @@
 							<td>{{$cargo->sender->name ?? ''}} {{$cargo->sender->surname ?? ''}}</td>
 							<td>{{$cargo->receiver->name ?? ''}} {{$cargo->receiver->surname ?? ''}}</td>
 							<td>{{$cargo->total_kg ?? ''}}KG</td>
-							<td>{{$cargo->total_price ?? ''}}$</td>
+							<td>{{$cargo->total_price ?? '$0.0'}}</td>
 							<td>{{$cargo->created_at->toDateString()}}</td>
 							<td>
 								<a type="submit" target="_blank" 
-									href="{{route('cargo.pdf',$cargo->id)}}" class="btn btn-info"><i class="fa fa-print"></i>
+									href="{{route('cargo.pdf',encrypt($cargo->id))}}" class="btn btn-info"><i class="fa fa-print"></i>
 								</a>
 								<a type="submit"
 									href="{{route('cargo.show',encrypt($cargo->id))}}" class="btn btn-warning"><i class="fa fa-edit"></i>

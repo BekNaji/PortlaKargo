@@ -22,9 +22,13 @@ Route::get('/contact', 'HomeController@contact')->name('contact');
 
 Route::middleware('auth')
 	   ->prefix('dashboard')->namespace('Admin')->group(function(){
-
+	Route::get('company/index', 'CompanyController@index')->name('company.index');
+	Route::get('company/edit/{id}', 'CompanyController@edit')->name('company.edit');
+	Route::post('company/delete', 'CompanyController@delete')->name('company.delete');
+	Route::post('company/update', 'CompanyController@update')->name('company.update');
 	Route::get('company/status', 'CompanyController@status')->name('company.status');
 	Route::get('company/register', 'CompanyController@register')->name('company.register');
+	Route::post('company/apply', 'CompanyController@apply')->name('company.apply');
 	Route::post('company/store', 'CompanyController@store')->name('company.store');
 });
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Cargo;
 use App\Helpers\Upload;
+use Auth;
 
 use Response;
 
@@ -15,7 +16,7 @@ class CustomerController extends Controller
 {
     public function index()
     {
-    	$customers  = Customer::all();
+    	$customers  = Customer::where('company_id',Auth::user()->company_id)->get();
     	return view('admin.customer.index',compact('customers'));
     }
 
@@ -31,7 +32,7 @@ class CustomerController extends Controller
         {
             $customer = new Customer();
         }
-    	
+    	$customer->company_id = Auth::user()->company_id;
         $customer->name     = strtoupper($request->name);
         $customer->surname  = strtoupper($request->surname);
         $customer->email    = strtolower($request->email);
@@ -121,15 +122,18 @@ class CustomerController extends Controller
         return back()->with(['success'=>'Silindi!']);
     }
 
+    // this function will use for ajax request
     public function get(Request $request)
     {
 
-        $request = Customer::where('passport',$request->data)->get()->first();
+        $request = Customer::where('passport',strtoupper($request->data))
+                              ->get()->first();
 
     
         return response()->json(array($request),200);
     }
 
+    // this function will use when we want check passport 
     public function checkPassport($request)
     {
         $sender = Customer::where('passport',$request)->get();

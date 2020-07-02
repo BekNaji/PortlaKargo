@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Receiver;
 use App\User;
 use Carbon\Carbon;
+use Auth;
 
 class DashboardController extends Controller
 {
@@ -16,12 +17,12 @@ class DashboardController extends Controller
 
     public function index()
     {	
-    	$cargoCount =Cargo::all()->count();
+    	$cargoCount =Cargo::where('company_id',Auth::user()->company_id)->count();
 
-    	$userCount = User::all()->count();
+    	$userCount = User::where('company_id',Auth::user()->company_id)->count();
 
-    	$senderCount = Customer::all()->count();
-    	$receiverCount = Receiver::all()->count();
+    	$senderCount = Customer::where('company_id',Auth::user()->company_id)->count();
+    	$receiverCount = Receiver::where('company_id',Auth::user()->company_id)->count();
 
     	return view('admin.dashboard.index',compact('cargoCount','userCount','senderCount','receiverCount'));
     }
