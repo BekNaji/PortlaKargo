@@ -1,5 +1,6 @@
 <html>
     <head>
+        <title>Uzbek Kargo</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -22,7 +23,7 @@
     <body>
         <nav class="navbar navbar-expand-md bg-dark navbar-dark">
             <!-- Brand -->
-            <a class="navbar-brand" href="{{url('/')}}">{{$settings->name ?? ''}}</a>
+            <a class="navbar-brand" href="{{url('/')}}">Uzbek Kargo</a>
             <!-- Toggler/collapsibe Button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>

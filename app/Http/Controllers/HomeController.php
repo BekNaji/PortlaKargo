@@ -18,14 +18,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $settings = Company::find(1);
-        return view('home',compact('settings'));
+        return view('home');
     }
 
     
     public function search(Request $request)
     {
-        $settings = Company::find(1);
+
     	$key = strtoupper(trim($request->key));
         
 
@@ -49,19 +48,19 @@ class HomeController extends Controller
         $cargoLogs = CargoLog::where('cargo_id',$cargo->id)->get();
 
         
-        return view('result',compact('cargoLogs','settings','cargo'));
+        return view('result',compact('cargoLogs','cargo'));
     }
 
     public function about()
     {
-        $settings = Company::find(1);
-        return view('about',compact('settings'));
+        
+        return view('about');
     }
 
     public function contact()
     {
-        $settings = Company::find(1);
-        return view('contact',compact('settings'));
+       
+        return view('contact');
     }
     
 }

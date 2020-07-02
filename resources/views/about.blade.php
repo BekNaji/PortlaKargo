@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-body">
                 <h1>Hakkımızda</h1>
-                {{$settings->about}}
+                
             </div>
         </div>
     </div>

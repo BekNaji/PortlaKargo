@@ -13,7 +13,7 @@
 
                 <b id="name"></b> adlı Kaydı silmeyı onayliyor musun?
                 <br>
-                <form action="{{route('cargo.delete')}}" method="POST">
+                <form action="{{route('company.delete')}}" method="POST">
                     @csrf
                     <input type="hidden" id="id" name="id" value="">
                     <br>

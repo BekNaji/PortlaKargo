@@ -71,4 +71,8 @@
 </div>
 @include('admin.company.deleteModal')
 
+@include('admin.company.createModal')
+
+@include('admin.company.script')
+
 @endsection

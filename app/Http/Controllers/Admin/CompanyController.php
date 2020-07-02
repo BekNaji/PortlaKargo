@@ -54,6 +54,26 @@ class CompanyController extends Controller
         
     }
 
+     public function store(Request $request)
+    {
+        $validate = $request->validate([
+            'name' => 'required|max:255',
+            'email'=> 'required|max:255',
+            'phone'=> 'required|max:255'
+        ]);
+
+        $company = new Company();
+        $company->name = $request->name;
+        $company->email = $request->email;
+        $company->phone = $request->phone;
+        $company->status = 0;
+
+        $company->save();
+
+        return redirect()->route('company.index')->with(['message'=>'Eklendi']);
+        
+    }
+
     public function update(Request $request)
     {
         $validate = $request->validate([
@@ -71,6 +91,16 @@ class CompanyController extends Controller
         $company->save();
     
         return redirect()->route('company.index')->with(['success'=>'Güncellendi!']);
+        
+    }
+
+    public function delete(Request $request)
+    {
+        
+        $company = Company::find($request->id);
+        $company->delete();
+    
+        return redirect()->route('company.index')->with(['success'=>'Silindi!']);
         
     }
 }
