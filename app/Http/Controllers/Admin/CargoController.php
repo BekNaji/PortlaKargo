@@ -110,10 +110,11 @@ class CargoController extends Controller
         $cargo = Cargo::find(decrypt($request->id));
         $barcode = $this->getBarcode($cargo->number);
         $products = Product::where('cargo_id',$cargo->id)->get();
+        $company = Company::find(Auth::user()->company_id);
 
     
 
-        return view('admin.cargo.pdf',compact('cargo','products','barcode'));
+        return view('admin.cargo.pdf',compact('cargo','products','barcode','company'));
     }
 
     public function filter(Request $request)

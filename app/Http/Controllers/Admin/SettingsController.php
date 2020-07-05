@@ -43,6 +43,8 @@ class SettingsController extends Controller
         $company->cargo_letter = trim(strtoupper($request->cargo_letter));
         $company->about = $request->about;
         $company->contact = $request->contact;
+        $company->address = $request->address;
+        $company->other_address = $request->other_address;
         $company->save();
 
         return back()->with(['success'=>'Güncellendi!']);

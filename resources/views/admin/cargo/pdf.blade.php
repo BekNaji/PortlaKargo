@@ -27,7 +27,7 @@
 
 						<div class="row">
 							<div class="col-md-4">
-								<h3>KAFOLAT KARGO </h3>
+								<h3>{{$company->name ?? ''}}</h3>
 							</div>
 
 							<div class="col-md-4">
@@ -47,10 +47,16 @@
 					{{-- Sender  --}}
 					<div class="col-md-12">
 						<div class="card">
+							<div class="card-header">
+								{{$company->address ?? ''}}
+							</div>
+						</div>
+						<div class="card">
 							<div class="card-body">
-								<i class="fa fa-hashtag" aria-hidden="true"></i> Göderici Bilgileri
+								<i class="fa fa-hashtag" aria-hidden="true"></i> SENDER / ОТПРАВИТЕЛЬ
 								<hr>
 								<div class="row">
+			
 									@if($cargo->sender_id != '')
 									<div class="col-md-6">
 										<b>Ad Soyad</b> <br>
@@ -77,10 +83,18 @@
 					{{-- Receiver --}}
 					<div class="col-md-12">
 						<div class="card">
+							<div class="card-header">
+								{{$company->other_address ?? ''}}
+							</div>
+						</div>
+						<div class="card">
 							<div class="card-body">
-								<i class="fa fa-hashtag" aria-hidden="true"></i> Alıcı Bilgileri
+								<i class="fa fa-hashtag" aria-hidden="true"></i> RECEIVER / ПОЛУЧАТЕЛЬ
 								<hr>
 								<div class="row">
+									<div class="col-md-12">
+										
+									</div>
 									@if($cargo->receiver_id != '')
 									<div class="col-md-6">
 										<b>Ad Soyad</b> <br>
@@ -115,7 +129,7 @@
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-body">
-						<i class="fa fa-hashtag" aria-hidden="true"></i> Kargo Bilgileri
+						<i class="fa fa-hashtag" aria-hidden="true"></i> CARGO INFORMATION  / ИНФОРМАЦИЯ О ГРУЗЕ
 						
 						<hr>
 						<div class="row">
@@ -161,7 +175,7 @@
 		 	 <div class="col-md-12">
 				<div class="card">
 					<div class="card-body">
-						<i class="fa fa-list" aria-hidden="true"></i> Ürünler Listesi
+						<i class="fa fa-list" aria-hidden="true"></i> PRODUCTS LIST / СПИСОК ПРОДУКТОВ
 						<hr>
 						<table class="table table-bordered" id="dataTable">
 							<thead>

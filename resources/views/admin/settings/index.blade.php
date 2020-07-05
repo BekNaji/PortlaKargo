@@ -44,6 +44,18 @@
 							{{Auth::user()->company->contact ?? ''}}
 						</textarea>
 					</div>
+					<div class="form-group">
+						<label>Şirket adresı</label>
+						<textarea class="form-control" name="address">
+							{{Auth::user()->company->address ?? ''}}
+						</textarea>
+					</div>
+					<div class="form-group">
+						<label>Yurtdışı Adres</label>
+						<textarea class="form-control" name="other_address">
+							{{Auth::user()->company->other_address ?? ''}}
+						</textarea>
+					</div>
 					<button class="btn btn-success">Güncelle</button>
 				</form>
 			</div>
