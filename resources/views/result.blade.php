@@ -6,20 +6,20 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    @isset($cargo->sender->name )
+                    @if($cargo->sender->name != '')
                     <div class="col-md-4">
                         <b>Gönderici:</b>
-                        {{substr($cargo->sender->name,0,2)}}***
-                        {{substr($cargo->sender->surname,0,2)}}***
+                        {{substr($cargo->sender->name ?? '',0,2)}}***
+                        {{substr($cargo->sender->surname ?? '',0,2)}}***
                     </div>
-                    @endisset
-                    @isset($cargo->sender->name)
+                    @endif
+                    @if($cargo->sender->name != '')
                     <div class="col-md-4">
                         <b>Alıcı:</b>
-                        {{substr($cargo->receiver->name,0,2)}}***
-                        {{substr($cargo->receiver->surname,0,2)}}***
+                        {{substr($cargo->receiver->name ?? '',0,2)}}***
+                        {{substr($cargo->receiver->surname ?? '',0,2)}}***
                     </div>
-                    @endisset
+                    @endif
                     <div class="col-md-4">
                         <b>Kargo Takip No:</b> {{$cargo->number ?? ''}}
                     </div>
