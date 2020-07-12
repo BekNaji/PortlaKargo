@@ -19,6 +19,8 @@ Route::get('/search', 'HomeController@search')->name('search');
 Route::get('/about', 'HomeController@about')->name('about');
 Route::get('/contact', 'HomeController@contact')->name('contact');
 
+Route::get('/telegram', 'TelegrambotController@index')->name('telegram');
+
 
 Route::middleware('auth')
 	   ->prefix('dashboard')->namespace('Admin')->group(function(){

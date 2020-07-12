@@ -179,6 +179,9 @@ return [
         peal\barcodegenerator\BarcodeServiceProvider::class,
 
 
+        
+
+
 
     
 
@@ -240,6 +243,8 @@ return [
         
         // peal barcode
         'BarCode' => peal\barcodegenerator\Facades\BarCode::class,
+
+
 
     ],
 
