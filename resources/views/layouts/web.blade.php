@@ -32,23 +32,37 @@
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
                     <li class="nav-item {{request()->is('/')?'active':''}}">
-                        <a class="nav-link" href="{{url('/')}}">Anasayfa</a>
+                        <a class="nav-link" href="{{url('/')}}">{{__('home.home')}}</a>
+                    </li>
+                    <li class="nav-item {{request()->is('price')?'active':''}}">
+                        <a class="nav-link" href="{{url('price')}}">{{__('home.price')}}</a>
                     </li>
                     <li class="nav-item {{request()->is('about')?'active':''}}">
-                        <a class="nav-link" href="{{url('about')}}">Hakkımızda</a>
+                        <a class="nav-link" href="{{url('about')}}">{{__('home.about_us')}}</a>
                     </li>
                     <li class="nav-item {{request()->is('contact')?'active':''}}">
-                        <a class="nav-link" href="{{url('contact')}}">İletişim</a>
+                        <a class="nav-link" href="{{url('contact')}}">{{__('home.contact')}}</a>
                     </li>
                     @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('dashboard.index')}}">Admin Panel</a>
+                        <a class="nav-link" href="{{route('dashboard.index')}}">{{__('home.admin_panel')}}</a>
                     </li>
                     @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('login')}}">Giriş Yap</a>
+                        <a class="nav-link" href="{{route('login')}}">{{__('home.login')}}</a>
                     </li>
                     @endauth
+                    <li class="nav-item dropdown">
+                    <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#">{{app()->getLocale()}}
+                    <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                    <li><a class="nav-link text-dark" href="{{ url('locale/en') }}">English</a></li>
+                    <li><a class="nav-link text-dark" href="{{ url('locale/tr') }}">Türkçe</a></li>
+                    <li><a class="nav-link text-dark" href="{{ url('locale/uz') }}">O'zbekcha</a></li>
+                    </ul>
+                    </li>
+                    
+                    
                 </ul>
             </div>
         </nav>

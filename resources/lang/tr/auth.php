@@ -15,10 +15,10 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'login' => 'Login',
+    'login' => 'Giriş yap',
     'email' => 'Email',
-    'password' =>'Password',
-    'remember_me' => 'Remember me',
-    'welcome' => 'Welcome',
+    'password' =>'Şifre',
+    'remember_me' => 'Benı hatırla',
+    'welcome' => 'Hoş geldin',
 
 ];

@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // Route::get('test', 'Admin\CargoController@test')->name('test');
+Route::get('locale/{locale}', function ($locale){
+    Session::put('locale', $locale);
+    return redirect()->back();
+});
+
+
 Route::redirect('/home', '/dashboard/index');
 Route::redirect('/admin', '/dashboard/index');
 Route::redirect('dashboard', '/dashboard/index');
@@ -19,7 +25,9 @@ Route::get('/search', 'HomeController@search')->name('search');
 Route::get('/about', 'HomeController@about')->name('about');
 Route::get('/contact', 'HomeController@contact')->name('contact');
 
-Route::get('/telegram', 'TelegrambotController@index')->name('telegram');
+Route::get('/price', 'HomeController@price')->name('price');
+
+Route::any('telegram', 'TelegrambotController@index')->name('telegram');
 
 
 Route::middleware('auth')

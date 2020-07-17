@@ -6,9 +6,9 @@
            
             <div class="col-lg-6 col-md-12">
                 <div class="block d-flex">
-                    <input name="key" type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="search" placeholder="Kargo Takip No" required>
+                    <input name="key" type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="search" placeholder="{{__('home.cargo_number')}}" required>
                     <!-- Search Button -->
-                    <button type="submit" class="btn btn-primary">Ara</button>
+                    <button type="submit" class="btn btn-primary">{{__('home.search')}}</button>
                 </div>
             </div>
         </div>
