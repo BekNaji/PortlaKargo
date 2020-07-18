@@ -14,7 +14,7 @@ class TelegrambotController extends Controller
         $chatId = $lastMessage->message->chat->id;
         $lastMessageText = $lastMessage->message->text;
          
-
+        
         $sendMessage = $telegram::sendMessage([
             'chat_id' => $chatId, 
             'text' => $lastMessageText
