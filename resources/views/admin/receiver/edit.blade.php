@@ -17,13 +17,8 @@
                         <input value="{{$receiver->passport}}"  class="form-control" type="text" name="passport">
                     </div>
                     <div class="form-group">
-                        <label>Adı</label>
+                        <label>Ad ve Soyad</label>
                         <input value="{{$receiver->name}}" class="form-control" type="text" name="name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Soyad</label>
-                        <input value="{{$receiver->surname}}"  class="form-control" type="text" name="surname" required>
                     </div>
 
                     <div class="form-group">
@@ -31,13 +26,15 @@
                         <input value="{{$receiver->phone}}"  class="form-control" type="text" name="phone" required>
                     </div>
 
-                    <div class="form-group">
+                   {{--  <div class="form-group">
                         <label>Email</label>
                         <input value="{{$receiver->email}}"  class="form-control" type="email" name="email" >
-                    </div>
+                    </div> --}}
                     <div class="form-group">
-                        <label>Ükle</label>
-                        <input value="{{$receiver->country}}"  class="form-control" type="text" name="country" required>
+                        <label>Ülke</label>
+                        <select name="country" class="form-control">
+                            <option value="Uzbekistan">Uzbekistan</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Şehir</label>

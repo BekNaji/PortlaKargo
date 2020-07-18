@@ -58,7 +58,7 @@
 					<div class="col-md-4">
 						<div class="card">
 							<div class="card-header">
-								Büyük
+								Pro
 							</div>
 							<div class="card-body">
 								<center>
@@ -81,7 +81,7 @@
 						<br>
 						<div class="card">
 							<div class="card-header">
-								Büyük
+								Özel
 							</div>
 							<div class="card-body">
 								<center>

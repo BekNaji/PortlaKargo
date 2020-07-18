@@ -14,20 +14,21 @@
                     @csrf
                     <input type="hidden" name="request_type" value="{{$type ?? ''}}">
                     <input type="hidden" name="id" value="{{$customer->id}}">
-                    <div class="form-group">
-                        <label>Adı</label>
-                        <input value="{{$customer->name}}" class="form-control" type="text" name="name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Soyad</label>
-                        <input value="{{$customer->surname}}"  class="form-control" type="text" name="surname" required>
-                    </div>
-
-                    <div class="form-group">
+                     <div class="form-group">
                         <label>Passport</label>
                         <input value="{{$customer->passport}}"  class="form-control" type="text" name="passport">
                     </div>
+                    <div class="form-group">
+                        <label>Ad ve Soyad</label>
+                        <input value="{{$customer->name}}" class="form-control" type="text" name="name" required>
+                    </div>
+
+                  {{--   <div class="form-group">
+                        <label>Soyad</label>
+                        <input value="{{$customer->surname}}"  class="form-control" type="text" name="surname" required>
+                    </div> --}}
+
+                   
 
                    
 
@@ -35,14 +36,16 @@
                         <label>Telefon</label>
                         <input value="{{$customer->phone}}"  class="form-control" type="text" name="phone" required>
                     </div>
-
+{{-- 
                     <div class="form-group">
                         <label>Email</label>
                         <input value="{{$customer->email}}"  class="form-control" type="email" name="email" >
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label>Ülke</label>
-                        <input value="{{$customer->country}}"  class="form-control" type="text" name="country" required>
+                        <select name="country" class="form-control">
+                            <option value="Uzbekistan">Uzbekistan</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Şehir</label>

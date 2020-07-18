@@ -7,7 +7,7 @@
             <div class="card-body">
                 <h1>Hakkımızda</h1>
                 <hr>
-                <p>Şu anda okumakta olduğunuz website Türkiyede Özellikle İstanbuldan bulunan Rusya ve Orta Asya ülkerine Kargo hizmeti veren şirketleri bir arada toplyan bir sistemdir.Bu sistem sayasinde Kargo firmları ve müşterileri için çok daha kolaylık sağlamaktadir. </p>
+                <p>Bu website Türkiyede Özellikle İstanbulda bulunan Rusya ve Orta Asya ülkerine Kargo hizmeti veren şirketleri bir arada toplyan bir sistemdir.Bu sistem  Kargo firmları ve kargo hizmeti alan  müşteriler için çok daha kolaylık sağlamaktadir. </p>
                 <b>
                 Kargo şirketleri için bu sistem ne özellikler vemektedir?</b> <br>
                 * Gönderilen kargoları kaydeder ve özel takip numarası verir <br>

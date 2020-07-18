@@ -11,6 +11,7 @@ return [
 'cargo_number'  => 'Cargo tracking number',
 'admin_panel'   => 'Admin Panel',
 'search'        => 'Search',
+'register'        => 'Register',
 
 
 ];

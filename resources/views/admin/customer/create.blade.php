@@ -20,30 +20,32 @@
                     <input type="hidden" name="id" id="id" value="">
                     <div class="form-group">
                         <label>Passport ID</label>
-                        <input id="passport" type="text" name="passport" class="form-control" required>
+                        <input id="passport" type="text" name="passport" class="form-control">
                         <ul class="list-group" id="result">
                             
                         </ul>
                     </div>
                     <div class="form-group">
-                        <label>Ad</label>
+                        <label>Ad ve Soyad</label>
                         <input id="name" type="text" name="name" class="form-control" required>
                     </div>
-                    <div class="form-group">
+                {{--     <div class="form-group">
                         <label>Soyad</label>
                         <input id="surname" type="text" name="surname" class="form-control" required>
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label>Telefon</label>
                         <input id="phone" type="text" name="phone" class="form-control" required>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label>Email</label>
                         <input id="email" type="email" name="email" class="form-control" >
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label>Ülke</label>
-                        <input id="country" type="text" name="country" class="form-control" required>
+                        <select name="country" class="form-control">
+                            <option value="Uzbekistan">Uzbekistan</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Şehir</label>

@@ -11,13 +11,13 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <link href="{{ asset('assets') }}/css/toastr.min.css" rel="stylesheet" />
         <style type="text/css">
-            body {
-            background-image: url(https://images2.alphacoders.com/279/thumb-1920-279630.jpg);
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: cover;
-            }
+        body {
+        background-image: url(https://images2.alphacoders.com/279/thumb-1920-279630.jpg);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover;
+        }
         </style>
     </head>
     <body>
@@ -48,51 +48,54 @@
                         <a class="nav-link" href="{{route('dashboard.index')}}">{{__('home.admin_panel')}}</a>
                     </li>
                     @else
-                    <li class="nav-item">
+                    <li class="nav-item  {{request()->is('login')?'active':''}}">
                         <a class="nav-link" href="{{route('login')}}">{{__('home.login')}}</a>
                     </li>
                     @endauth
-                    <li class="nav-item dropdown">
-                    <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#">{{app()->getLocale()}}
-                    <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                    <li><a class="nav-link text-dark" href="{{ url('locale/en') }}">English</a></li>
-                    <li><a class="nav-link text-dark" href="{{ url('locale/tr') }}">Türkçe</a></li>
-                    <li><a class="nav-link text-dark" href="{{ url('locale/uz') }}">O'zbekcha</a></li>
-                    </ul>
+                    <li class="nav-item  {{request()->is('register')?'active':''}}">
+                        <a class="nav-link" href="{{ route('register') }}">{{ __('home.register') }}</a>
                     </li>
-                    
-                    
-                </ul>
+                    <li class="nav-item dropdown">
+                        <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#">{{app()->getLocale()}}
+                            <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link text-dark" href="{{ url('locale/en') }}">English</a></li>
+                                <li><a class="nav-link text-dark" href="{{ url('locale/tr') }}">Türkçe</a></li>
+                                <li><a class="nav-link text-dark" href="{{ url('locale/uz') }}">O'zbekcha</a></li>
+                            </ul>
+                        </li>
+                        
+                        
+                    </ul>
+                </div>
+            </nav>
+            <div class="container-fluid">
+                @yield('content')
             </div>
-        </nav>
-        <div class="container-fluid">
-            @yield('content')
-        </div>
-        <script src="{{ asset('assets') }}/js/toastr.min.js"></script>
-        <script type="text/javascript">
-        toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": true,
-        "positionClass": "toast-bottom-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "5000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-        }
-        </script>
-        <script type="text/javascript">
+            <script src="{{ asset('assets') }}/js/toastr.min.js"></script>
+            <script type="text/javascript">
+            toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "5000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+            }
+            </script>
+            <script type="text/javascript">
             @if(session('warning'))
-                toastr.warning("{{session('warning')}}");
+            toastr.warning("{{session('warning')}}");
             @endif
-        </script>
-        </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
-    </html>
+            </script>
+            </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+        </html>

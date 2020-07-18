@@ -61,8 +61,7 @@
 									<div class="col-md-6">
 										<b>Ad Soyad</b> <br>
 										{{$cargo->sender->name ?? ''}} {{$cargo->sender->surname ?? ''}} <br><br>
-										<b>Email</b><br>
-										{{$cargo->sender->email ?? ''}}<br><br>
+						
 										<b>Ülke ve Şehir</b><br>
 										{{$cargo->sender->country ?? ''}} {{$cargo->sender->city ?? ''}}<br><br>
 									</div>
@@ -99,8 +98,7 @@
 									<div class="col-md-6">
 										<b>Ad Soyad</b> <br>
 										{{$cargo->receiver->name ?? ''}} {{$cargo->receiver->surname ?? ''}} <br><br>
-										<b>Email</b><br>
-										{{$cargo->receiver->email ?? ''}}<br><br>
+										
 										<b>Ülke ve Şehir</b><br>
 										{{$cargo->receiver->country ?? ''}} {{$cargo->receiver->city ?? ''}}<br><br>
 									</div>

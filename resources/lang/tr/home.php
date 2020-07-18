@@ -11,6 +11,8 @@ return [
 'cargo_number'  => 'Kargo Takip no',
 'admin_panel'   => 'Admin Panel',
 'search'        => 'Ara',
+'register'        => 'Kayit ol',
+
 
 
 ];
