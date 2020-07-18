@@ -7,7 +7,7 @@ class TelegrambotController extends Controller
 {
     public function index()
     {
-        $telegram = new Telegram('1327273177:AAGsQR9gbP3bzOs0wRmknzGXcsPxmP_U9wY');
+        $telegram = new Api('1327273177:AAGsQR9gbP3bzOs0wRmknzGXcsPxmP_U9wY');
         $response = $telegram::getUpdates();
         $lastMessage = end($response);
 
