@@ -16,7 +16,7 @@ Route::get('locale/{locale}', function ($locale){
     return redirect()->back();
 });
 
-
+Route::get('/api/cargo/status', 'Api\CargoControllerApi@index');
 
 
 Route::redirect('/home', '/dashboard/index');
