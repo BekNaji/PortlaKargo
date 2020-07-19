@@ -27,7 +27,7 @@ Route::get('/contact', 'HomeController@contact')->name('contact');
 
 Route::get('/price', 'HomeController@price')->name('price');
 
-Route::any('/telegram', 'TelegrambotController@index')->name('telegram');
+Route::any('/telegram{key?}', 'TelegrambotController@index')->name('telegram');
 
 
 Route::middleware('auth')

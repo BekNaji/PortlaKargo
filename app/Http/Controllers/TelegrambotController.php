@@ -5,22 +5,31 @@ use Telegram\Bot\Api;
 use Telegram;
 class TelegrambotController extends Controller
 {
-    public function index()
+    protected $telegram;
+    protected $chat_id;
+    protected $username;
+    protected $text;
+
+    public function __construct()
     {
-        $telegram = new Telegram('1327273177:AAGsQR9gbP3bzOs0wRmknzGXcsPxmP_U9wY');
-        $response = $telegram::getUpdates();
-        $lastMessage = end($response);
+        $this->telegram = new Api(env('TELEGRAM_BOT_TOKEN'));
+    }
 
-        $chatId = $lastMessage->message->chat->id;
-        $lastMessageText = $lastMessage->message->text;
-         
+    public function index(Request $request)
+    {
         
-        $sendMessage = $telegram::sendMessage([
-            'chat_id' => $chatId, 
-            'text' => 'Salom'
-        ]);
-
-        return json_encode($sendMessage);
-        // dd($lastMessageText);
+    
+        $this->chat_id = $request['message']['chat']['id'];
+        $this->username = $request['message']['from']['username'];
+        $this->text = $request['message']['text'];
+ 
+        switch ($this->text) {
+            case '/start':
+                return "Salom";
+                break;
+            default:
+                $this->checkDatabase();
+        }
+        
     }
 }
