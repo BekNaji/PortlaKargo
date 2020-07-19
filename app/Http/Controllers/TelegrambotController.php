@@ -21,7 +21,19 @@ class TelegrambotController extends Controller
         $telegram = new Telegram('1327273177:AAGsQR9gbP3bzOs0wRmknzGXcsPxmP_U9wY');
 
         $updates = Telegram::getUpdates();
-        return (json_encode($updates));
+
+        $chat_id = end($updates)->message->chat->id;
         
+        return $this->sendMessage($chat_id,"Hello World");
+        
+    }
+
+    public function sendMessage($id,$message)
+    {
+        Telegram::sendMessage([
+            'chat_id' => $id,
+            'text' => $message
+        ]);
+        return;
     }
 }
