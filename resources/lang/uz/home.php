@@ -8,7 +8,7 @@ return [
 'contact'       => 'Aloqa',
 'price' 		=> 'Narxlar',
 'login'         => 'Kirish',
-'cargo_number'  => 'Kargo taqim raqami',
+'cargo_number'  => 'Kargo taqib raqami',
 'admin_panel'   => 'Admin Panel',
 'search'        => 'Qidirish',
 'register'        => 'Qayd qilish',
