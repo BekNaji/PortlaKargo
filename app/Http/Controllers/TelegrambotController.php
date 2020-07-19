@@ -12,7 +12,7 @@ class TelegrambotController extends Controller
 
     public function __construct()
     {
-        $this->telegram = new Api(env('TELEGRAM_BOT_TOKEN'));
+        $this->telegram = new Api(env('1327273177:AAGsQR9gbP3bzOs0wRmknzGXcsPxmP_U9wY'));
     }
 
     public function index(Request $request)
@@ -25,13 +25,16 @@ class TelegrambotController extends Controller
  
         switch ($this->text) {
             case '/start':
-                 $sendMessage = $telegram::sendMessage([
+                 $sendMessage = $this->telegram::sendMessage([
                     'chat_id' => $this->chat_id, 
                     'text' => 'Salom'
                 ]);
                 break;
             default:
-                $this->checkDatabase();
+                $sendMessage = $this->telegram::sendMessage([
+                    'chat_id' => $this->chat_id, 
+                    'text' => 'Tushinmadim!'
+                ]);
         }
    
         // $telegram = new Telegram('1327273177:AAGsQR9gbP3bzOs0wRmknzGXcsPxmP_U9wY');
