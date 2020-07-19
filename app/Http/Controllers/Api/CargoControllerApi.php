@@ -17,7 +17,7 @@ class CargoControllerApi extends Controller
     		return false;
     	}
     	$cargo = Cargo::where('number','=',$request->n)->get()->first();
-    	if($cargo->count() < 0)
+    	if(!$cargo)
     	{
     		return false;
     	}else
@@ -30,8 +30,9 @@ class CargoControllerApi extends Controller
     			'current_status' => $cargo->cargoStatus->name,
     			'date' => $cargoLogs->created_at,
     		);
-
-    		return response()->json($array);
+    		return json_encode($array);
+    		
     	}
+    	
     }
 }
