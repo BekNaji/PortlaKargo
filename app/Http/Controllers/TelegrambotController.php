@@ -12,12 +12,11 @@ class TelegrambotController extends Controller
 
     public function __construct()
     {
-        $this->telegram = new Api(env('1327273177:AAGsQR9gbP3bzOs0wRmknzGXcsPxmP_U9wY'));
+        $this->telegram = new Api('1327273177:AAGsQR9gbP3bzOs0wRmknzGXcsPxmP_U9wY');
     }
 
     public function index(Request $request)
     {
-        
     
         $this->chat_id = $request['message']['chat']['id'];
         $this->username = $request['message']['from']['username'];
