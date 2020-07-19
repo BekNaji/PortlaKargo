@@ -25,11 +25,31 @@ class TelegrambotController extends Controller
  
         switch ($this->text) {
             case '/start':
-                return "Salom";
+                 $sendMessage = $telegram::sendMessage([
+                    'chat_id' => $this->chat_id, 
+                    'text' => 'Salom'
+                ]);
                 break;
             default:
                 $this->checkDatabase();
         }
+   
+        // $telegram = new Telegram('1327273177:AAGsQR9gbP3bzOs0wRmknzGXcsPxmP_U9wY');
+        // $response = $telegram::getUpdates();
+        // $lastMessage = end($response);
+
+        // $chatId = $lastMessage->message->chat->id;
+        // $lastMessageText = $lastMessage->message->text;
+         
+        // if($lastMessageText == '/start')
+        // {
+        //     $content array('chat_id'=>)
+        // }
+        // $sendMessage = $telegram::sendMessage([
+        //     'chat_id' => $chatId, 
+        //     'text' => 'Salom'
+        // ]);
+
         
     }
 }
