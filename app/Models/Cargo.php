@@ -28,6 +28,10 @@ class Cargo extends Model
     {
         return $this->belongsToMany('App\Models\Product','id','cargo_id');
     }
+    public function company()
+    {
+        return $this->belongsTo('App\Models\Company','company_id','id');
+    }
 
     
 }

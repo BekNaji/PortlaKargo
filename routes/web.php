@@ -42,6 +42,8 @@ Route::middleware('auth')
 	Route::get('company/register', 'CompanyController@register')->name('company.register');
 	Route::post('company/apply', 'CompanyController@apply')->name('company.apply');
 	Route::post('company/store', 'CompanyController@store')->name('company.store');
+
+
 });
 
 Auth::routes();
@@ -49,6 +51,9 @@ Route::middleware(['auth','checkcompany'])
 	   ->prefix('dashboard')->namespace('Admin')->group(function(){
 
 Route::get('index', 'DashboardController@index')->name('dashboard.index');
+
+
+
 // profile
 Route::get('profile/index', 'ProfileController@index')->name('profile.index');
 Route::post('profile/update', 'ProfileController@update')->name('profile.update');
@@ -102,6 +107,11 @@ Route::get('status/log/store', 'CargoLogController@store')->name('cargo.log.stor
 // company route
 Route::get('settings/index', 'SettingsController@index')->name('settings.index');
 Route::post('settings/update', 'SettingsController@update')->name('settings.update');
+
+//sms
+Route::get('getbalance', 'SmsController@getBalance')->name('get.balance');
+
+Route::get('sendsms', 'SmsController@sendSMS')->name('send.sms');
 
 
 });

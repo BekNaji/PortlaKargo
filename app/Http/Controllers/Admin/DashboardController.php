@@ -27,5 +27,6 @@ class DashboardController extends Controller
     	return view('admin.dashboard.index',compact('cargoCount','userCount','senderCount','receiverCount'));
     }
 
+
     
 }
