@@ -17,6 +17,8 @@ Route::get('locale/{locale}', function ($locale){
 });
 
 
+
+
 Route::redirect('/home', '/dashboard/index');
 Route::redirect('/admin', '/dashboard/index');
 Route::redirect('dashboard', '/dashboard/index');
