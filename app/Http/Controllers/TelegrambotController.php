@@ -24,7 +24,12 @@ class TelegrambotController extends Controller
 
         $chat_id = end($updates)->message->chat->id;
         
-        return $this->sendMessage($chat_id,"Hello World");
+        $text = end($updates)->message->chat->text;
+        if($text == '/test')
+        {
+            $this->sendMessage($chat_id,"You wrote Test");
+        }
+        $this->sendMessage($chat_id,"Hello World");
         
     }
 
