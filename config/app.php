@@ -179,7 +179,7 @@ return [
         peal\barcodegenerator\BarcodeServiceProvider::class,
 
         //Telegram
-        telegram\Bot\Laravel\TelegramServiceProvider::class,
+        Telegram\Bot\Laravel\TelegramServiceProvider::class,
 
         
 
@@ -248,6 +248,9 @@ return [
         
         // peal barcode
         'BarCode' => peal\barcodegenerator\Facades\BarCode::class,
+
+        'Telegram'  => Telegram\Bot\Laravel\Facades\Telegram::class
+
 
        
 
