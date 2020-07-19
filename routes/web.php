@@ -29,7 +29,7 @@ Route::get('/contact', 'HomeController@contact')->name('contact');
 
 Route::get('/price', 'HomeController@price')->name('price');
 
-Route::post('/telegram', 'TelegrambotController@index')->name('telegram');
+Route::get('/telegram', 'TelegrambotController@index')->name('telegram');
 
 
 Route::middleware('auth')
