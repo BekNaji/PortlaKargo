@@ -12,7 +12,9 @@ return [
 'admin_panel'   => 'Admin Panel',
 'search'        => 'Ara',
 'register'        => 'Kayit ol',
-
+'select'	=> 'Seç',
+'free'		=> 'Ücretsiz',
+'paid'		=> 'Ücretlı',
 
 
 ];

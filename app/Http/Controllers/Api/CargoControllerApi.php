@@ -14,12 +14,13 @@ class CargoControllerApi extends Controller
     {
     	if($request->n == '')
     	{
-    		return false;
+    		array('message' => 'Are you trying to hack?');
     	}
     	$cargo = Cargo::where('number','=',$request->n)->get()->first();
     	if(!$cargo)
     	{
-    		return false;
+    		$array = array('message'=>'Böyle bir kayıt bulunamadı! Tekrar deneyiniz!');
+
     	}else
     	{
     		$cargoLogs = CargoLog::where('cargo_id',$cargo->id)->get()->last();
@@ -30,9 +31,10 @@ class CargoControllerApi extends Controller
     			'current_status' => $cargo->cargoStatus->name,
     			'date' => $cargoLogs->created_at,
     		);
-    		return json_encode($array);
+    		
     		
     	}
+        return json_encode($array);
     	
     }
 }

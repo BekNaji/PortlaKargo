@@ -3,7 +3,9 @@
 @section('content')
 <div class="row">
 	<div class="col-md-6 offset-3">
-		
+        <br>
+        <button class="btn btn-primary" onclick="history.back()">Geri git</button>
+		<br><br>
 		<div class="card">
 			<div class="card-body">
 				<i class="fa fa-user" aria-hidden="true"></i> Müşteri Bilgilerini düzenle 

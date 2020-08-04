@@ -7,15 +7,21 @@
             <div class="card-body">
                 <h1>Hakkımızda</h1>
                 <hr>
-                <p>Bu website Türkiyede Özellikle İstanbulda bulunan Rusya ve Orta Asya ülkerine Kargo hizmeti veren şirketleri bir arada toplyan bir sistemdir.Bu sistem  Kargo firmları ve kargo hizmeti alan  müşteriler için çok daha kolaylık sağlamaktadir. </p>
-                <b>
-                Kargo şirketleri için bu sistem ne özellikler vemektedir?</b> <br>
-                * Gönderilen kargoları kaydeder ve özel takip numarası verir <br>
-                * Her gönderi için ayrı barkod oluşturur <br>
-                * Kullanıcı kaydlarını tutar, bu sayedi aynı müşteri tekrar ürün göndermek istediğinde kolayı sistem üzerindek müşteriye ait bilgiler otomatik doldurulur <br>
-                * Şirketinizdeki her personal için kullanıcı hesapı açılabilir sınırsız <br>
-                * Telegram bot üzerinden müşteri kargo takip numarası ile gönderilen ürünün nerede oluduğu hakkında bilgi alabilir
-                * Her kargo için SMS bilgilendirmesi yapabilir (Türkiye için)
+                Uz kargi hakkinda
+                Bu web site Türkiyede özellikle İstanbul’da bulunan, Orta Asya ülkelerine  kargo hizmeti veren şirketler için tasarlanmıştır. Kargo Takip sistemi ile gönderileri kolayca takip edebilirsiniz. <br> 
+                <b>Kargo takip sistemi özellikleri  nelerdir.</b> 
+                * Sınırsız sayıda sistem kullanıcısı oluşturabilirsiniz, örnek: Kargo kaydı alan eleman için, Teslim eden kurye için ayrı ayrı kullanıcı hesabı açılabilir <br>
+                * Her gönderi için ayrı kargo takip numarası oluşturulabilir<br>
+                * İşi hızlandırmak için her gönderi için barkod oluşturur.<br>
+                * Müşteriler website üzerinden kargo takip numarasını yazarak göndermiş oldukları kargonun nerede olduğunu ve ne zaman teslim alındığını öğrenebilirler. 
+                Ayrıca kargo durumunu Telegram bot üzerinden de öğrenilebilir.<br>
+                * Kaydı alınan gönderileri durumuna ve tarihine göre sıralanabilir <br>
+                * Müşteri bilgileri kaydedilir ve bilgiler tekrar kullanılması durumunda telefon numarası üzerinden bilgiler getirilebilir <br>
+                * Aylık, Yıllık  kaç adet kargo gönderildi, bunun bilgisini görüntülenebilir <br>
+
+
+
+
             </div>
         </div>
     </div>

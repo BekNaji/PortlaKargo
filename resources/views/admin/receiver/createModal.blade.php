@@ -18,30 +18,33 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Adı</label>
+                        <label>Ad ve Soyad</label>
                         <input class="form-control" type="text" name="name" required>
                     </div>
 
-                    <div class="form-group">
+                  {{--   <div class="form-group">
                         <label>Soyad</label>
                         <input class="form-control" type="text" name="surname" required>
-                    </div>
+                    </div> --}}
 
                     
 
                     <div class="form-group">
-                        <label>Telefon</label>
+                        <label>Telefon ÖRNEK: 5550156185</label>
                         <input class="form-control" type="text" name="phone" required>
                     </div>
 
-                    <div class="form-group">
+                   {{--  <div class="form-group">
                         <label>Email</label>
                         <input class="form-control" type="email" name="email">
-                    </div>
+                    </div> --}}
 
                     <div class="form-group">
                         <label>Ülke</label>
-                        <input class="form-control" type="text" name="country" required>
+                        <select name="country" class="form-control">
+                            <option value="Uzbekistan">Uzbekistan</option>
+                            <option value="Turkiye">Turkiye</option>
+                        </select>
                     </div>
 
                     <div class="form-group">

@@ -12,6 +12,9 @@ return [
 'admin_panel'   => 'Admin Panel',
 'search'        => 'Search',
 'register'        => 'Register',
+'select'	=> 'Select',
+'free'		=> 'Free',
+'paid'		=> 'Paid',
 
 
 ];

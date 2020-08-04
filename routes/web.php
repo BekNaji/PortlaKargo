@@ -31,6 +31,7 @@ Route::get('/price', 'HomeController@price')->name('price');
 
 Route::get('/telegram', 'TelegrambotController@index')->name('telegram');
 
+Route::get('/testtest', 'TelegrambotController@sendMessage');
 
 Route::middleware('auth')
 	   ->prefix('dashboard')->namespace('Admin')->group(function(){

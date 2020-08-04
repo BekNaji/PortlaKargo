@@ -16,8 +16,8 @@
 				
 				
 				<hr>
-				<table class="table table-bordered" id="dataTable">
-					<thead>
+				<table class="table  table-striped" id="dataTable">
+					<thead class="bg-dark text-white">
 						<tr>
 							<td style="width:50px;"><input 
 								type="checkbox" id="selectAll"></td>

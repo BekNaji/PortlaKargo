@@ -8,13 +8,10 @@
 				<h1>{{__('home.price')}}</h1>
 				<hr>
 				<div class="row">
-					
-
-					<div class="col-md-4">
-
+					<div class="col-md-6">
 						<div class="card">
 							<div class="card-header">
-								Başlangıç
+								{{__('home.free') }}
 							</div>
 							<div class="card-body">
 								<center>
@@ -23,84 +20,39 @@
 								<p>* Sınırsız Kargo kaydı</p>
 								<p>* Sınırsız Kullanıcı</p>
 								<p>* Sınrısız Telegram bilgilendirmesi</p>
-								<p>* SMS bilgilendirmesi 0 adet</p>
+								
 								</center>
 							</div>
 							<div class="card-footer">
-								<button class="btn btn-primary">
-								Seç
-								</button>
+								<a href="{{route('register')}}" class="btn btn-primary">
+								{{__('home.select')}}
+								</a>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-6">
 						<div class="card">
 							<div class="card-header">
-								Orta
+								{{__('home.paid')}}
 							</div>
 							<div class="card-body">
 								<center>
 								<h1>$10</h1>
-								<p>* 3 Ay</p>
+								<p>* 1 Ay</p>
 								<p>* Sınırsız Kargo kaydı</p>
 								<p>* Sınırsız Kullanıcı</p>
 								<p>* Telegram bilgilendirmesi</p>
-								<p>* SMS bilgilendirmesi 1000 adet</p>
+								
 								</center>
 							</div>
 							<div class="card-footer">
 								<button class="btn btn-primary">
-								Seç
+								{{__('home.select')}}
 								</button>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4">
-						<div class="card">
-							<div class="card-header">
-								Pro
-							</div>
-							<div class="card-body">
-								<center>
-								<h1>$20</h1>
-								<p>* 3 Ay</p>
-								<p>* Sınırsız Kargo kaydı</p>
-								<p>* Sınırsız Kullanıcı</p>
-								<p>* Sınrısız Telegram bilgilendirmesi</p>
-								<p>* SMS bilgilendirmesi 2000 adet</p>
-								</center>
-							</div>
-							<div class="card-footer">
-								<button class="btn btn-primary">
-								Seç
-								</button>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-8 offset-sm-2">
-						<br>
-						<div class="card">
-							<div class="card-header">
-								Özel
-							</div>
-							<div class="card-body">
-								<center>
-								<h1>Özel</h1>
-								<p>* Ay</p>
-								<p>* Sınırsız Kargo kaydı</p>
-								<p>* Sınırsız Kullanıcı</p>
-								<p>* Sınrısız Telegram bilgilendirmesi</p>
-								<p>* SMS bilgilendirmesi *** adet</p>
-								</center>
-							</div>
-							<div class="card-footer">
-								<button class="btn btn-primary">
-								Seç
-								</button>
-							</div>
-						</div>
-						
-					</div>
+				
 				</div>
 				
 			</div>

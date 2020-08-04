@@ -4,8 +4,9 @@
 <div class="row">
 	<div class="col-md-6 offset-3">
 		
-		<a class="btn btn-primary " href="{{route('customer.index')}}">Geri git</a> 
-		<br><br>
+		<br>
+        <button class="btn btn-primary" onclick="history.back()">Geri git</button>
+        <br><br>
 		<div class="card">
 			<div class="card-body">
 				<i class="fa fa-user" aria-hidden="true"></i> Göderici Bilgilerini düzenle 
@@ -45,6 +46,7 @@
                         <label>Ülke</label>
                         <select name="country" class="form-control">
                             <option value="Uzbekistan">Uzbekistan</option>
+                            <option value="Uzbekistan">Turkiye</option>
                         </select>
                     </div>
                     <div class="form-group">

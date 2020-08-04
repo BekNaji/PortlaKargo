@@ -34,7 +34,7 @@
                         <input id="surname" type="text" name="surname" class="form-control" required>
                     </div> --}}
                     <div class="form-group">
-                        <label>Telefon</label>
+                        <label>Telefon ÖRNEK: 5550156185</label>
                         <input id="phone" type="text" name="phone" class="form-control" required>
                     </div>
                     {{-- <div class="form-group">
@@ -45,6 +45,7 @@
                         <label>Ülke</label>
                         <select name="country" class="form-control">
                             <option value="Uzbekistan">Uzbekistan</option>
+                            <option value="Turkiye">Turkiye</option>
                         </select>
                     </div>
                     <div class="form-group">
