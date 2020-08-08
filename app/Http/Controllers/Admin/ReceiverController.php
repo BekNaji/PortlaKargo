@@ -95,7 +95,7 @@ class ReceiverController extends Controller
 
         if($request->request_type != '')
         {
-            return redirect()->route('cargo.edit',encrypt($request->request_type))
+            return redirect()->route('cargo.show',encrypt($request->request_type))
             ->with(['success'=>'Güncellendi!']);
         }
         return redirect()->route('receiver.index')->with(['success'=>'Güncellendi!']);

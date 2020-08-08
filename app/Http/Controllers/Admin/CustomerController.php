@@ -90,7 +90,7 @@ class CustomerController extends Controller
         $customer->country  = strtoupper($request->country);
         $customer->city     = strtoupper($request->city);
         $customer->passport = strtoupper($request->passport);
-        $customer->identity = strtoupper($request->identity);
+
         $customer->phone    = strtoupper($request->phone);
         $customer->address  = strtoupper($request->address);
         if($customer->passport_image != '')
@@ -104,8 +104,7 @@ class CustomerController extends Controller
 
         if($request->request_type != '')
         {
-            return redirect()
-            ->route('cargo.edit',encrypt($request->request_type))
+            return redirect()->route('cargo.show',encrypt($request->request_type))
             ->with(['success'=>'Güncellendi!']);
             
         }
@@ -127,7 +126,8 @@ class CustomerController extends Controller
     {
 
         $request = Customer::where('passport',strtoupper($request->data))
-                              ->get()->first();
+                            ->where('company_id',Auth::user()->company_id)
+                            ->get()->first();
 
     
         return response()->json(array($request),200);

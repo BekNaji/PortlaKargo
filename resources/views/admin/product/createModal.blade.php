@@ -25,11 +25,19 @@
                         <tbody id="product" >
                             <tr class="product" >
 
-                                <td><input class="form-control" type="text" name="name"></td>
-                                <td><input  class="form-control count" type="text" name="count"></td>
+                                <td>
+                                    <input class="form-control" type="text" name="name" required>
+                                </td>
+                                <td>
+                                    <input class="form-control count" type="text" name="count" required>
+                                </td>
 
-                                <td><input class="form-control cost" type="text" name="cost"></td>
-                                <td><input class="form-control total" type="text" name="total"></td>
+                                <td>
+                                    <input class="form-control cost" type="text" name="cost" required>
+                                </td>
+                                <td>
+                                    <input class="form-control total" type="text" name="total" required>
+                                </td>
                                 
                             </tr>
                         </tbody>
