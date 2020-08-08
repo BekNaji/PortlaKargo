@@ -21,6 +21,15 @@
                         <label>Bitiş Tarihi</label>
                         <input type="date" name="end" class="form-control" max="{{date('Y-m-d')}}">
                     </div>
+                    <div class="form-group">
+                        <label>Kargo Durumu</label>
+                        <select class="form-control" name="status" >
+                            <option selected value="all">Hepsi</option>
+                            @foreach($statuses as $status)
+                            <option value="{{$status->id}}">{{$status->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
                     <button type="submit" class="btn btn-success" >Ok</button>
                 </form>

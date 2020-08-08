@@ -34,7 +34,9 @@ class CargoController extends Controller
 
     public function index()
     {
-    	$cargos  = Cargo::where('company_id',Auth::user()->company_id)->get();
+    	$cargos  = Cargo::where('company_id',Auth::user()->company_id)
+        ->orderBy('id','DESC')->get();
+
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
     	return view('admin.cargo.index',compact('cargos','statuses'));
     }
@@ -119,12 +121,28 @@ class CargoController extends Controller
 
     public function filter(Request $request)
     {
-        $from = Carbon::parse($request->start.' 00:00:00')->format('Y-m-d H:i:s');
-        $to   = Carbon::parse($request->end.' 23:59:59')->format('Y-m-d H:i:s');
         
-        $cargos = Cargo::where('company_id',Auth::user()->company_id)
-        ->where('created_at','>=',$from)
-        ->where('created_at','<=',$to)->get();
+        $cargos = Cargo::where('company_id',Auth::user()->company_id);
+        if($request->start !='')
+        {
+            $from = Carbon::parse($request->start.' 00:00:00')->format('Y-m-d H:i:s');
+            $cargos->where('created_at','>=',$from)->get();
+        }
+        if($request->end !='')
+        {
+            $to   = Carbon::parse($request->end.' 23:59:59')->format('Y-m-d H:i:s');
+            $cargos->where('created_at','<=',$to)->get();
+
+        }
+        
+        if($request->status != 'all')
+        {
+            $cargos->where('status','=',$request->status);
+        }
+        $cargos = $cargos->orderBy('id','DESC')->get();
+
+        
+      
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
         
         return view('admin.cargo.index',compact('cargos','statuses'));
