@@ -2,7 +2,7 @@
 @section('title','Şirket Bilgilerini düzenle')
 @section('content')
 <div class="row">
-    <div class="col-md-6 offset-3 ">
+    <div class="col-md-6 offset-md-3 ">
         <br>
         <a class="btn btn-primary " href="{{route('company.index')}}">Geri git</a>
         <br><br>
