@@ -58,12 +58,14 @@ Route::get('index', 'DashboardController@index')->name('dashboard.index');
 // profile
 Route::get('profile/index', 'ProfileController@index')->name('profile.index');
 Route::post('profile/update', 'ProfileController@update')->name('profile.update');
+Route::get('profile/remove/image/{id}', 'ProfileController@removeImage')->name('profile.remove.image');
 // User Route
 Route::get('user/index', 'UserController@index')->name('user.index');
 Route::get('user/edit/{id}', 'UserController@edit')->name('user.edit');
 Route::post('user/update', 'UserController@update')->name('user.update');
 Route::post('user/store', 'UserController@store')->name('user.store');
 Route::post('user/delete', 'UserController@delete')->name('user.delete');
+Route::get('user/remove/image/{id}', 'UserController@romoveImage')->name('user.remove.image');
 // Customer Route
 Route::get('customer/index', 'CustomerController@index')->name('customer.index');
 Route::get('cargo/customer/create/{id}', 'CustomerController@create')->name('customer.create');

@@ -21,7 +21,8 @@
 				<div class="row">
 					<div class="col-md-3">
 						@if(Auth::user()->image != '')
-						<img src="{{asset(Auth::user()->image)}}" class="img-fluid">
+						<img src="{{asset(Auth::user()->image)}}" class="img-fluid"><br>
+						<a href="{{route('profile.remove.image',encrypt(Auth::user()->id))}}">Sil</a>
 						@else
 						<img src="{{asset('images/avatar.png')}}" class="img-fluid">
 						@endif

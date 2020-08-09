@@ -65,4 +65,18 @@ class ProfileController extends Controller
     	
     	// delete code
     }
+
+    public function removeImage(Request $request)
+    {
+        
+        $user = User::find(decrypt($request->id));
+
+        if(file_exists($user->image))
+        {
+            unlink($user->image);
+        }
+        $user->image = '';
+        $user->save();
+        return back();
+    }
 }

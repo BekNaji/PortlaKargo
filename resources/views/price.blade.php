@@ -2,7 +2,7 @@
 @section('content')
 <br>
 <div class="row">
-	<div class="col-md-8 offset-2">
+	<div class="col-md-8 offset-md-2">
 		<div class="card">
 			<div class="card-body">
 				<h1>{{__('home.price')}}</h1>

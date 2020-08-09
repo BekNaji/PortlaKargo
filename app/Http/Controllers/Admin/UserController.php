@@ -106,6 +106,10 @@ class UserController extends Controller
         }
         if($request->file('image') != '')
         {
+            if(file_exists($user->image))
+            {
+                unlink($user->image);
+            }
             $upload = new Upload;
             $user->image = $upload->uploadImage($request->file('image'),'profile/');
         }
@@ -120,10 +124,28 @@ class UserController extends Controller
     	if($request->id != '')
         {
             $user = User::find($request->id);
+            if(file_exists($user->image))
+            {
+                unlink($user->image);
+            }
             $user->delete();
             $data['success'] = 'Kullanıcı Silindı!';
         }
 
         return back()->with($data);
+    }
+
+    public function removeImage(Request $request)
+    {
+        
+        $user = User::find(decrypt($request->id));
+
+        if(file_exists($user->image))
+        {
+            unlink($user->image);
+        }
+        $user->image = '';
+        $user->save();
+        return back();
     }
 }
