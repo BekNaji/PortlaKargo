@@ -30,8 +30,8 @@
                     
 
                     <div class="form-group">
-                        <label>Telefon ÖRNEK: 5550156185</label>
-                        <input class="form-control" type="text" name="phone" required>
+                        <label>Telefon ÖRNEK: 05550156185</label>
+                        <input class="form-control" type="number" name="phone" required>
                     </div>
 
                    {{--  <div class="form-group">
@@ -57,10 +57,10 @@
                         <textarea name="address" class="form-control"></textarea>
                     </div>
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label>Passport Resmi</label>
                         <input type="file" name="passport_image">
-                    </div>
+                    </div> --}}
                     <button type="submit" class="btn btn-success" >Kaydet</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal" >Iptal</button>
                 </form>

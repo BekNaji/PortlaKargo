@@ -33,8 +33,8 @@
                    
 
                     <div class="form-group">
-                        <label>Telefon ÖRNEK: 5550156185</label>
-                        <input class="form-control" type="text" name="phone" required>
+                        <label>Telefon ÖRNEK: 05550156185</label>
+                        <input class="form-control" type="number" name="phone" required>
                     </div>
 
                     {{-- <div class="form-group">

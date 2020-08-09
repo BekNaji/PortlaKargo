@@ -34,8 +34,8 @@
                         <input id="surname" type="text" name="surname" class="form-control" required>
                     </div> --}}
                     <div class="form-group">
-                        <label>Telefon</label>
-                        <input id="phone" type="text" name="phone" class="form-control" required>
+                        <label>Telefon (05550156185)</label>
+                        <input id="phone" type="number" name="phone" class="form-control" required>
                     </div>
                    {{--  <div class="form-group">
                         <label>Email</label>

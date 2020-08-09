@@ -35,7 +35,7 @@
                     </div> --}}
                     <div class="form-group">
                         <label>Telefon ÖRNEK: 05550156185</label>
-                        <input min="11" max="11" id="phone" type="text" name="phone" class="form-control" required>
+                        <input min="11" max="11" id="phone" type="number" name="phone" class="form-control" required>
                     </div>
                     {{-- <div class="form-group">
                         <label>Email</label>

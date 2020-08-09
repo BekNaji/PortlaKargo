@@ -14,14 +14,11 @@
 						<tr>
 							<td>#</td>
 							<td>Ad Soyad</td>
-							<td>Email</td>
+							<td>Passport</td>
 							<td>Telefon</td>
 							<td>Ülke</td>
 							<td>Şehir</td>
 							<td>Address</td>
-
-							<td>Passport</td>
-							<td>Kimlik</td>
 							<td>#</td>
 						</tr>
 					</thead>
@@ -30,14 +27,11 @@
 						<tr>
 							<td>{{$loop->iteration}}</td>
 							<td>{{$customer->name}} {{$customer->surname}}</td>
-							<td>{{$customer->email}}</td>
+							<td>{{$customer->passport}}</td>
 							<td>{{$customer->phone}}</td>
 							<td>{{$customer->country}}</td>
 							<td>{{$customer->city}}</td>
-							<td>{{$customer->address}}</td>
-							<td>{{$customer->passport}}</td>
-							<td>{{$customer->identity}}</td>
-							
+							<td>{{$customer->address}}</td>							
 							<td>
 								
 								<a type="submit" 
