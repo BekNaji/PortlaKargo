@@ -18,7 +18,10 @@ return [
     'login' => 'Kirish',
     'email' => 'Email',
     'password' =>'Parol',
+    'confirm_password' => 'Parolni tasdiqlang (qayta yozing)',
     'remember_me' => 'Meni Eslab qol',
     'welcome' => 'Hush kelibsiz',
+    'name' => 'Ism va Familya',
+    'register'=>'Qayd qil',
 
 ];

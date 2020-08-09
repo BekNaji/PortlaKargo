@@ -165,6 +165,8 @@
 		$('#body').fadeIn(1000);
 		@if(session('success'))
 		toastr.success("{{session('success')}}");
+		@elseif(session('error'))
+		toastr.warning("{{session('error')}}");
 		@endif
 		</script>
 	</body>

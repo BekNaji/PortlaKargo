@@ -4,6 +4,16 @@
 <div class="row">
 	<div class="col-md-12">
 		<br>
+		@if ($errors->any())
+				<div class="alert alert-danger">
+				<ul>
+				@foreach ($errors->all() as $error)
+				<li>{{ $error }}</li>
+				@endforeach
+				</ul>
+				</div>
+
+				@endif
 		<div class="card">
 			<div class="card-body">
 				<i class="fa fa-user" aria-hidden="true"></i> Profil Ayarları
@@ -31,6 +41,7 @@
 							<div class="form-group">
 								<label>Email</label>
 								<input value="{{Auth::user()->email}}" class="form-control" type="email" name="email" required>
+								<p>{{$error->email ?? ''}}</p>
 							</div>
 
 							<div class="form-group">

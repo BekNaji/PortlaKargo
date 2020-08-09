@@ -25,7 +25,7 @@
 							</div>
 							<div class="card-footer">
 								<a href="{{route('register')}}" class="btn btn-primary">
-								{{__('home.select')}}
+{{ __('home.register') }}
 								</a>
 							</div>
 						</div>
@@ -46,9 +46,9 @@
 								</center>
 							</div>
 							<div class="card-footer">
-								<button class="btn btn-primary">
-								{{__('home.select')}}
-								</button>
+								<a href="{{route('register')}}" class="btn btn-primary">
+								{{ __('home.register') }}
+								</a>
 							</div>
 						</div>
 					</div>

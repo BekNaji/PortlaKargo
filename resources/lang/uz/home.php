@@ -12,6 +12,9 @@ return [
 'admin_panel'   => 'Admin Panel',
 'search'        => 'Qidirish',
 'register'        => 'Qayd qilish',
-
+'language' => 'Til',
+'free'		=> 'Bepul',
+'paid'		=> 'Pullik',
+'select'	=> 'Tanlang',
 
 ];

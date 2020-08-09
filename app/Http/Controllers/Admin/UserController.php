@@ -9,6 +9,9 @@ use App\Helpers\Upload;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Company;
+use Illuminate\Validation\Rule;
+
+
 class UserController extends Controller
 {
     public function __construct()
@@ -33,6 +36,12 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $validator = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
+       
         
     	$user = new User();
         if(Auth::user()->role == 'root')
@@ -62,7 +71,7 @@ class UserController extends Controller
     // edit function
     public function edit(Request $request)
     {
-    	$user = User::find($request->id);
+    	$user = User::find(decrypt($request->id));
         $companies = Company::all();
     	return view('admin.user.edit',compact('user','companies'));
     }
@@ -70,6 +79,19 @@ class UserController extends Controller
     // update function
     public function update(Request $request)
     {
+        // dd($request->id);
+        $user = User::find($request->id);
+        
+        $validator = $request->
+        validate(['name' => ['required', 'string', 'max:255']]);
+        
+        if($user->email != $request->email)
+        {
+            $request->
+            validate(['email' => ['required', 'string', 'email', 'max:255','unique:users,email']]);
+        }
+
+
     	$user = User::find($request->id);
         if(Auth::user()->role == 'root')
         {

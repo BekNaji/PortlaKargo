@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Helpers\Upload;
+use Auth;
 
 class ProfileController extends Controller
 {
@@ -31,6 +32,16 @@ class ProfileController extends Controller
     // update function
     public function update(Request $request)
     {
+        $user = User::find(Auth::user()->id);
+        
+        $validator = $request->
+        validate(['name' => ['required', 'string', 'max:255']]);
+        
+        if($user->email != $request->email)
+        {
+            $request->
+            validate(['email' => ['required', 'string', 'email', 'max:255','unique:users,email']]);
+        }
     	$user = User::find($request->user_id);
         $user->name = $request->name;
         $user->email = $request->email;

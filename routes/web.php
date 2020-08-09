@@ -60,7 +60,7 @@ Route::get('profile/index', 'ProfileController@index')->name('profile.index');
 Route::post('profile/update', 'ProfileController@update')->name('profile.update');
 // User Route
 Route::get('user/index', 'UserController@index')->name('user.index');
-Route::post('user/edit', 'UserController@edit')->name('user.edit');
+Route::get('user/edit/{id}', 'UserController@edit')->name('user.edit');
 Route::post('user/update', 'UserController@update')->name('user.update');
 Route::post('user/store', 'UserController@store')->name('user.store');
 Route::post('user/delete', 'UserController@delete')->name('user.delete');

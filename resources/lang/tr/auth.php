@@ -17,8 +17,11 @@ return [
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'login' => 'Giriş yap',
     'email' => 'Email',
-    'password' =>'Şifre',
+    'password' =>'Şifre', 
+    'confirm_password' => 'Şifreyı Onayla',
     'remember_me' => 'Benı hatırla',
     'welcome' => 'Hoş geldin',
+    'name' => 'Ad ve Soyad',
+    'register'=>'Kayıt ol',
 
 ];

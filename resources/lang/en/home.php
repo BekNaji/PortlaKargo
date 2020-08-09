@@ -15,6 +15,7 @@ return [
 'select'	=> 'Select',
 'free'		=> 'Free',
 'paid'		=> 'Paid',
+'language' => 'Language',
 
 
 ];

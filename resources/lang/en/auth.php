@@ -18,7 +18,11 @@ return [
     'login' => 'Login',
     'email' => 'Email',
     'password' =>'Password',
+    'confirm_password' => 'Confirm Password',
     'remember_me' => 'Remember me',
     'welcome' => 'Welcome',
+    'name' => 'Name',
+    'register'=>'Register',
+
 
 ];

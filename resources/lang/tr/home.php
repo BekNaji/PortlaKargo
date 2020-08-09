@@ -15,6 +15,6 @@ return [
 'select'	=> 'Seç',
 'free'		=> 'Ücretsiz',
 'paid'		=> 'Ücretlı',
-
+'language' => 'Dil',
 
 ];

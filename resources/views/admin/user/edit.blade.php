@@ -5,6 +5,16 @@
 	<div class="col-md-12">
 		<a class="btn btn-primary " href="{{route('user.index')}}">Geri git</a>
 		<br><br>
+		@if ($errors->any())
+				<div class="alert alert-danger">
+				<ul>
+				@foreach ($errors->all() as $error)
+				<li>{{ $error }}</li>
+				@endforeach
+				</ul>
+				</div>
+
+				@endif
 		<div class="card">
 			<div class="card-body">
 				<i class="fa fa-user" aria-hidden="true"></i> Kullanıcı Ayarları
@@ -23,7 +33,7 @@
 							<input type="hidden" name="id" value="{{$user->id}}">
 							<div class="form-group">
 								<label>Yetki</label>
-								<select class="form-control" name="role">
+								<select class="form-control" name="role"> 
 									@if(Auth::user()->role == 'root')
 									<option value="root"
 									{{$user->role == 'root'?'selected':''}}

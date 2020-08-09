@@ -3,11 +3,24 @@
 @section('content')
 <div class="row">
 	<div class="col-md-12">
+		<br>
+		@if ($errors->any())
+				<div class="alert alert-danger">
+				<ul>
+				@foreach ($errors->all() as $error)
+				<li>{{ $error }}</li>
+				@endforeach
+				</ul>
+				</div>
+
+				@endif
+				
 		<div class="card">
 			<div class="card-body">
 				<i class="fa fa-users" aria-hidden="true"></i> Kullanıcı Listesi &#160;&#160;&#160;
 				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp;
 				<button id="filter" class="btn btn-info"><i class="fa fa-filter" aria-hidden="true"></i></button>
+
 				<hr>
 				<table class="table table-bordered" id="dataTable">
 					<thead>
@@ -41,14 +54,13 @@
 								@endif
 							</td>
 							<td>
-								<form action="{{route('user.edit')}}" method="POST">
-									@csrf
-									<input type="hidden" name="id" value="{{$user->id}}">
-								<button type="submit" href="{{route('user.edit')}}" class="btn btn-warning"><i class="fa fa-edit"></i></button>
+								
+								
+								<a href="{{route('user.edit',encrypt($user->id))}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
 
 								<a id="delete" data-id="{{$user->id}}" 
 									data-name="{{$user->name}}" href="#delete" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
-								</form>
+								
 								
 							</td>
 						</tr>

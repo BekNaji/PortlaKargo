@@ -56,7 +56,7 @@
                         <a class="nav-link" href="{{ route('register') }}">{{ __('home.register') }}</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#">{{app()->getLocale()}}
+                        <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#">{{ __('home.language') }}
                             <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link text-dark" href="{{ url('locale/en') }}">English</a></li>
