@@ -19,7 +19,7 @@ class CargoControllerApi extends Controller
     	$cargo = Cargo::where('number','=',$request->n)->get()->first();
     	if(!$cargo)
     	{
-    		$array = array('message'=>'Böyle bir kayıt bulunamadı! Tekrar deneyiniz!');
+    		$array = array('message'=>'Boyle bir kayit bulunmadi! Tekrar Deneyiniz!');
 
     	}else
     	{
