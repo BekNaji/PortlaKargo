@@ -19,7 +19,7 @@
 			<div class="card-body">
 				<i class="fa fa-users" aria-hidden="true"></i> Kullanıcı Listesi &#160;&#160;&#160;
 				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp;
-				<button id="filter" class="btn btn-info"><i class="fa fa-filter" aria-hidden="true"></i></button>
+				
 
 				<hr>
 				<table class="table table-bordered" id="dataTable">

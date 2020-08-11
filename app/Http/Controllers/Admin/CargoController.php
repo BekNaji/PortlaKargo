@@ -45,7 +45,7 @@ class CargoController extends Controller
     {
 
         $cargo = Cargo::find(decrypt($request->id));
-        $statuses = CargoStatus::all();
+        $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
         
         return view('admin.cargo.edit',compact('cargo','statuses'));
     }

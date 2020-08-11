@@ -17,7 +17,8 @@
                                 <h2>{{$cargoCount}}</h2>
                             </div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">Listeye git</a>
+                                <a class="small text-white stretched-link" 
+                                href="{{route('cargo.index')}}">Listeye git</a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>
@@ -28,7 +29,8 @@
                             <div class="card-body">Toplam Kullanıcı sayısı <br>
                             <h2>{{$userCount}}</h2></div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">Listeye git</a>
+                                <a class="small text-white stretched-link" 
+                                href="{{route('user.index')}}">Listeye git</a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>
@@ -38,7 +40,8 @@
                         <div class="card bg-success text-white mb-4">
                             <div class="card-body">Toplam Gönderici sayısı <br><h2>{{$senderCount}}</h2></div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">Listeye git</a>
+                                <a class="small text-white stretched-link" 
+                                href="{{route('customer.index')}}">Listeye git</a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>
@@ -48,7 +51,8 @@
                             <div class="card-body">Toplam Alıcı Sayısı
                             <br><h2>{{$receiverCount}}</h2></div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">Listeye git</a>
+                                <a class="small text-white stretched-link" 
+                                href="{{route('receiver.index')}}">Listeye git</a>
                                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                             </div>
                         </div>

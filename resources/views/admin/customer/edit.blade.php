@@ -5,7 +5,7 @@
 	<div class="col-md-6 offset-3">
 		
 		<br>
-        <button class="btn btn-primary" onclick="history.back()">Geri git</button>
+        <a href="{{route('cargo.show',encrypt($type))}}" class="btn btn-primary" >Geri git</a>
         <br><br>
 		<div class="card">
 			<div class="card-body">

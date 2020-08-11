@@ -5,7 +5,7 @@
 
 	<i class="fa fa-list" aria-hidden="true"></i> Ürünler Listesi&#160;&#160;&#160;
 	<button id="create" class="btn btn-success "><i class="fa fa-plus" aria-hidden="true"></i></button> &nbsp;
-	<button id="filter" class="btn btn-info"><i class="fa fa-filter" aria-hidden="true"></i></button>
+	
 	<hr>
 
 	<table class="table table-bordered" id="dataTable">

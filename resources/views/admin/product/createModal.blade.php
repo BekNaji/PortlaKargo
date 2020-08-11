@@ -29,14 +29,14 @@
                                     <input class="form-control" type="text" name="name" required>
                                 </td>
                                 <td>
-                                    <input class="form-control count" type="text" name="count" required>
+                                    <input class="form-control count" type="number" name="count" required>
                                 </td>
 
                                 <td>
-                                    <input class="form-control cost" type="text" name="cost" required>
+                                    <input class="form-control cost" type="number" name="cost" required step="0.01">
                                 </td>
                                 <td>
-                                    <input class="form-control total" type="text" name="total" required>
+                                    <input class="form-control total" type="text" name="total" readonly>
                                 </td>
                                 
                             </tr>

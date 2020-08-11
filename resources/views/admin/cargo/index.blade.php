@@ -16,7 +16,7 @@
 				
 				
 				<hr>
-				<table class="table  table-striped" id="dataTable">
+				<table class="table  table-striped table-responsive-lg" id="dataTable">
 					<thead class="bg-dark text-white">
 						<tr>
 							<td style="width:50px;"><input 
@@ -56,14 +56,24 @@
 							<td>{{$cargo->created_at->toDateString()}}</td>
 							<td>
 								<a type="submit" target="_blank" 
-									href="{{route('cargo.pdf',encrypt($cargo->id))}}" class="btn btn-info"><i class="fa fa-print"></i>
+									href="{{route('cargo.pdf',encrypt($cargo->id))}}" >
+									<span class="badge badge-info">
+									<i class="fa fa-print"></i>
+									</span>
 								</a>
 								<a type="submit"
-									href="{{route('cargo.show',encrypt($cargo->id))}}" class="btn btn-warning"><i class="fa fa-edit"></i>
+									href="{{route('cargo.show',encrypt($cargo->id))}}" >
+									<span class="badge badge-warning">
+									<i class="fa fa-edit"></i>
+									</span>
 								</a>
 								<a id="delete" data-id="{{$cargo->id}}"
 									data-name="{{$cargo->number}}"
-								href="#delete" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
+								href="#delete">
+								<span class="badge badge-danger">
+								<i class="fa fa-trash-alt "></i>
+								</span>
+								</a>
 								
 								
 							</td>

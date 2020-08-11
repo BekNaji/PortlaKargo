@@ -132,7 +132,7 @@
 						<hr>
 						<div class="row">
 							<div class="col-md-6">
-								<b>Toplam Ücret</b><br>
+								<b>Total Fee / Общая комиссия</b><br>
 								@if($cargo->total_price != '')
 								{{$cargo->total_price ?? ''}}$
 								@else
@@ -141,26 +141,26 @@
 								<br><br>
 							</div>
 							<div class="col-md-6">
-								<b>Toplam Kg</b><br>
+								<b>Total Kg / Общая кг</b><br>
 								{{$cargo->total_kg ?? ''}} kg<br><br>
 							</div>
 							<div class="col-md-6">
-								<b>Ödeme Türü</b><br>
+								<b>Payment Type / Способ оплаты</b><br>
 								
 									@if($cargo->payment_type == 1)
-									Gönderici Öder
+									Sender / Отправитель
 									@else
-									Alıcı Öder
+									Receiver / Получатель
 									@endif
 							
 								<br><br>
 							</div>
 							<div class="col-md-6">
-								<b>Status</b><br>
+								<b>Status / Положение дел</b><br>
 								{{$cargo->cargoStatus->name ?? ''}}<br><br>
 							</div>
 							<div class="col-md-12">
-								<b>Tarih</b><br>
+								<b>Date / Дата</b><br>
 								{{$cargo->created_at ?? ''}}<br><br>
 							</div>
 						</div>
@@ -179,10 +179,10 @@
 							<thead>
 								<tr>
 									<td>#</td>
-									<td>Ad</td>
-									<td>Adet</td>
-									<td>Ücret</td>
-									<td>Toplam Ücret</td>
+									<td>Name</td>
+									<td>Piece</td>
+									<td>Fee</td>
+									<td>Total Fee</td>
 									
 								</tr>
 							</thead>
@@ -218,7 +218,7 @@
 </div>
 
 <p>
-	KAFOLAT CARGO AND TRADING COMPANY LIMITED
+	{{Auth::user()->company->name ?? ''}} AND TRADING COMPANY LIMITED
 </p>
 
 </div>

@@ -11,7 +11,7 @@
 		@yield('title')
 		@else
 		{{ config('app.name') }}
-		@endif
+		@endif 
 		</title>
 		<link href="{{ asset('assets') }}/css/styles.css" rel="stylesheet" />
 		<link href="{{ asset('assets') }}/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"  />
@@ -20,6 +20,7 @@
 		<script src="{{ asset('assets') }}/js/all.min.js" type="text/javascript"></script>
 		<link href="{{ asset('assets') }}/css/dataTables.min.css" rel="stylesheet" />
 		<link href="{{ asset('assets') }}/css/toastr.min.css" rel="stylesheet" />
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	</head>
 	<body class="sb-nav-fixed">
 		<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -164,9 +165,19 @@
 		$('#body').hide();
 		$('#body').fadeIn(1000);
 		@if(session('success'))
-		toastr.success("{{session('success')}}");
+			Swal.fire(
+			'{{session('success')}}',
+			'',
+			'success'
+			);
+		//toastr.success("{{session('success')}}");
 		@elseif(session('error'))
-		toastr.warning("{{session('error')}}");
+		Swal.fire(
+			'{{session('error')}}',
+			'',
+			'warning'
+			);
+		//toastr.warning("{{session('error')}}");
 		@endif
 		</script>
 	</body>

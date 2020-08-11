@@ -19,10 +19,10 @@
                     <div class="form-group">
                         <label>Kargo Durumu</label>
                         <select class="form-control" name="status" required>
-                            <option selected>Seç</option>
+                            <option >Seç</option>
                             @foreach($statuses as $status)
                             <option value="{{$status->id}}"
-                                {{($cargo->status == $status->id) ?"selected":''}}
+                                {{($cargo->status == $status->id) ? "selected":''}}
                                 >{{$status->name}}</option>
                             @endforeach
                         </select>

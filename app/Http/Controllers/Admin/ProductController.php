@@ -51,7 +51,7 @@ class ProductController extends Controller
 
         $this->calculateTotalPrice($request->cargoId);
 
-        return back()->with(['success'=>'Ürün bilgileri gümcellendi!']);
+        return back()->with(['success'=>'Ürün bilgileri güncellendi!']);
 
     }
 
@@ -63,7 +63,7 @@ class ProductController extends Controller
     	$product = Product::find($request->id);
         $product->delete();
         $this->calculateTotalPrice($request->cargoId);
-        return back()->with(['success'=>'Silindi!']);
+        return back()->with(['success'=>'Ürün Silindi!']);
     }
 
     public function calculateTotalPrice($cargoId)
