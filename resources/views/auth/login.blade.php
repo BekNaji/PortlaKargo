@@ -61,9 +61,11 @@
                         </div>
                     </form>
                     <br>
+                    <center>
                     <p>To test, you can login using the following username and password.</p>
                     <b>Username: </b> test@gmail.com <br>
                     <b>Password: </b> 123456789
+                    </center>
                
                 
             </div>
