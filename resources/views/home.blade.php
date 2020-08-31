@@ -111,7 +111,7 @@
 <div class="site-section bg-light" id="contact">
     <div class="container">
         <div class="row">
-            <div class="col-12 text-center mb-5" data-aos="fade-up" data-aos-delay="">
+            <div class="col-12 text-center mb-5" >
                 <div class="block-heading-1">
                     
                     <h2>İletişim</h2>
@@ -119,7 +119,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-6 mb-5" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-lg-6 mb-5" data-aos="fade-up" >
                 <form action="#" method="post">
                     <div class="form-group row">
                         <div class="col-md-6 mb-4 mb-lg-0">
@@ -146,7 +146,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-4 ml-auto" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-lg-4 ml-auto" data-aos="fade-up" >
                 <div class="bg-white p-3 p-md-5">
                     <h3 class="text-black mb-4">Contact</h3>
                     <ul class="list-unstyled footer-link">
