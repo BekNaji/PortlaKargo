@@ -1,6 +1,7 @@
 @extends('layouts.web')
 @section('content')
-<br>
+<div class="site-section bg-light" >
+
 <div class="row">
     <div class="col-md-8 offset-md-2">
         <div class="card">
@@ -77,5 +78,7 @@
             </div>
         </div>
     </div>
+</div>
+
 </div>
 @endsection

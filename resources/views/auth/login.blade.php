@@ -1,12 +1,13 @@
 @extends('layouts.web')
 @section('content')
 <br>
+<div class="site-section bg-light" >
 <div class="row">
     <div class="col-md-8 offset-md-2">
         <div class="card">
             <div class="card-body">
                 
-               
+                <center><h1>Login Portal Kargo</h1></center><br>
                 	 <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -72,4 +73,6 @@
         </div>
     </div>
 </div>
+</div>
+
 @endsection
