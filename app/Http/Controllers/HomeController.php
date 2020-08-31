@@ -7,6 +7,7 @@ use App\Models\Cargo;
 use App\Models\CargoLog;
 use App\Models\CargoStatus;
 use App\Models\Company;
+use App\Models\Follower;
 
 class HomeController extends Controller
 {
@@ -67,6 +68,21 @@ class HomeController extends Controller
     {
        
         return view('contact');
+    }
+
+    public function saveEmail(Request $request)
+    {
+
+        if($request->email != '')
+        {
+            $follower = new Follower();
+            $follower->email = $request->email;
+            $follower->save();
+            return back()->with(['success'=>'Email Kaydedildi!']);
+            
+        }
+        abort('419');
+        
     }
     
 }

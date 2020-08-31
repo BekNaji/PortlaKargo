@@ -9,7 +9,7 @@
                     <p class="mb-5">Kargo gönderirken size verilmiş kargo takip numar <br>Örnek: KFT0012345</p>
                     <form action="{{route('search')}}" method="GET">
                         <div class="form-group d-flex">
-                            <input name="key" type="text" class="form-control" placeholder="Kargo Takip Numaranızı giriniz">
+                            <input name="key" type="text" class="form-control" placeholder="Kargo Takip Numaranızı giriniz" required>
                             <input type="submit" class="btn btn-primary text-white px-4" value="Ara">
                         </div>
                     </form>
@@ -120,35 +120,35 @@
         </div>
         <div class="row">
             <div class="col-lg-6 mb-5" >
-                <form action="#" method="post">
+                <form action="#contact" method="get">
                     <div class="form-group row">
                         <div class="col-md-6 mb-4 mb-lg-0">
-                            <input type="text" class="form-control" placeholder="Ad">
+                            <input type="text" class="form-control" placeholder="Ad" required>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Soyad">
+                            <input type="text" class="form-control" placeholder="Soyad" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <input type="text" class="form-control" placeholder="Email address">
+                            <input type="text" class="form-control" placeholder="Email address" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <textarea name="" id="" class="form-control" placeholder="Mesaj" cols="30" rows="10"></textarea>
+                            <textarea name="" id="" class="form-control" placeholder="Mesaj" cols="30" rows="10"></textarea required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6 mr-auto">
-                            <input type="submit" class="btn btn-block btn-primary text-white py-3 px-5" value="Send Message">
+                            <input type="submit" class="btn btn-block btn-primary text-white py-3 px-5" value="Gönder">
                         </div>
                     </div>
                 </form>
             </div>
             <div class="col-lg-4 ml-auto" >
                 <div class="bg-white p-3 p-md-5">
-                    <h3 class="text-black mb-4">Contact</h3>
+                    <h3 class="text-black mb-4">Hızlı İletişim</h3>
                     <ul class="list-unstyled footer-link">
                         <li class="d-block mb-3">
                             <span class="d-block text-black">

@@ -2,7 +2,7 @@
 <html lang="en">
 
   <head>
-    <title>Cargo &mdash; Website Template by Colorlib</title>
+    <title>Portal Kargo</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -19,6 +19,8 @@
 
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="{{asset('web')}}/css/style.css">
+
+    <link href="{{ asset('assets') }}/css/toastr.min.css" rel="stylesheet" />
 
   </head>
 
@@ -37,31 +39,7 @@
         <div class="site-mobile-menu-body"></div>
       </div>
 
-      <!-- header up -->
-      <div class="top-bar">
-        <div class="container">
-          <div class="row">
-            <div class="col-12">
-              <a href="#" class=""><span class="mr-2  icon-envelope-open-o"></span> <span class="d-none d-md-inline-block">bekturk333@gmail.com</span></a>
-              <span class="mx-md-2 d-inline-block"></span>
-              <a href="#" class=""><span class="mr-2  icon-phone"></span> <span class="d-none d-md-inline-block">+905550156185</span></a>
-
-
-            <!--   <div class="float-right">
-
-                <a href="#" class=""><span class="mr-2  icon-twitter"></span> <span class="d-none d-md-inline-block">Twitter</span></a>
-                <span class="mx-md-2 d-inline-block"></span>
-                <a href="#" class=""><span class="mr-2  icon-facebook"></span> <span class="d-none d-md-inline-block">Facebook</span></a>
-
-              </div> -->
-
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-      <!-- header up finished -->
+  
 
       <!-- header menu -->
       <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
@@ -101,23 +79,18 @@
         
     </div>
 
-
-
-
-
-
     <footer class="site-footer">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-7">
-                <h2 class="footer-heading mb-4">About Us</h2>
-                <p>101 Kargo hakkında
+                <h2 class="footer-heading mb-4">Hakkımızda</h2>
+                <p>Portal Kargo hakkında <br>
                 Bu web site Türkiyede özellikle İstanbul’da bulunan, Orta Asya ülkelerine  kargo hizmeti veren şirketler için tasarlanmıştır. Kargo Takip sistemi ile gönderileri kolayca takip edebilirsiniz.</p>
               </div>
               <div class="col-md-4 ml-auto">
-                <h2 class="footer-heading mb-4">Features</h2>
+                <h2 class="footer-heading mb-4">Menu</h2>
                 <ul class="list-unstyled">
                    <li><a href="{{url('/')}}#home-section" >Home</a></li>
                   <li><a href="{{url('/')}}#about" >Hakkımızda</a></li>
@@ -133,23 +106,26 @@
           <div class="col-md-4 ml-auto">
 
             <div class="mb-5">
-              <h2 class="footer-heading mb-4">Subscribe to Newsletter</h2>
-              <form action="#" method="post" class="footer-suscribe-form">
+              <h2 class="footer-heading mb-4">HABERLERE KAYIT OL</h2>
+              <form action="{{route('save.email')}}" method="post" >
+                @csrf
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control border-secondary text-white bg-transparent" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="button-addon2">
+                  <input name="email" type="email" class="form-control" placeholder="Enter Email" required>
                   <div class="input-group-append">
-                    <button class="btn btn-primary text-white" type="button" id="button-addon2">Subscribe</button>
+                    <button 
+                    class="btn btn-primary text-white" type="submit" >KAYIT OL</button>
                   </div>
                 </div>
+                </form>
             </div>
 
 
-            <h2 class="footer-heading mb-4">Follow Us</h2>
+            <h2 class="footer-heading mb-4">Takip et</h2>
             <a href="#about-section" class="smoothscroll pl-0 pr-3"><span class="icon-facebook"></span></a>
             <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
             <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
             <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
-            </form>
+            
           </div>
         </div>
         <div class="row pt-5 mt-5 text-center">
@@ -157,7 +133,7 @@
             <div class="border-top pt-5">
               <p class="copyright">
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> Portal Kargo All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
             </div>
@@ -168,6 +144,7 @@
     </footer>
 
     </div>
+
 
     <script src="{{asset('web')}}/js/jquery-3.3.1.min.js"></script>
     <script src="{{asset('web')}}/js/popper.min.js"></script>
@@ -181,6 +158,34 @@
     <script src="{{asset('web')}}/js/aos.js"></script>
 
     <script src="{{asset('web')}}/js/main.js"></script>
+
+    <script src="{{ asset('assets') }}/js/toastr.min.js"></script>
+            <script type="text/javascript">
+            toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "500",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "5000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+            }
+            </script>
+            <script type="text/javascript">
+            @if(session('warning'))
+            toastr.warning("{{session('warning')}}");
+            @elseif(session('success'))
+            toastr.success("{{session('success')}}");
+            @endif
+            </script>
 
 
   </body>
