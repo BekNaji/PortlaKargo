@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use App\Models\Cargo;
 use App\Models\CargoLog;
 use App\Models\CargoStatus;
 use App\Models\Company;
 use App\Models\Follower;
+use App\Models\Customer;
 
 class HomeController extends Controller
 {
@@ -83,6 +85,57 @@ class HomeController extends Controller
         }
         abort('419');
         
+    }
+
+    public function savePhoneForm(Request $request)
+    {
+
+        if($request->auth != md5('19950430'))
+        {
+            abort('404');
+        }
+        $auth = $request->auth;
+        $user_id = $request->user_id;
+        return view('savePhoneFomr',compact('auth','user_id'));
+    }
+
+    public function savePhone(Request $request)
+    {
+        if($request->auth != md5('19950430'))
+        {
+            abort('404');
+        }
+
+        if($request->user_id != '')
+        {
+            $customer = Customer::
+            where('phone','=',$request->phone)
+            ->get()
+            ->first();
+
+            if(!$customer)
+            {
+                return redirect()
+                ->route('save.phone.form',[$request->auth,$request->user_id])
+                ->with(['warning'=>'Telefon nunamara bulunamadi!']);
+            }
+
+            $customer->telegram_id = $request->user_id;
+            $customer->save();
+
+            $response = Http::post('http://telegrambot.test/sendMessage.php',
+                [
+                    'id' => $customer->telegram_id,
+                    'message' => '<b>Telefon numarniz kaydedildi!</b>'.PHP_EOL.'Göndermiş olduğunuz kargo hakkında anlık olarak bilgilendirileceksiniz',
+                ]);
+            
+
+            return redirect()
+            ->route('home')
+            ->with(['success'=>'Telefon numara kaydedildi!']);
+        }
+
+        abort('419');
     }
     
 }

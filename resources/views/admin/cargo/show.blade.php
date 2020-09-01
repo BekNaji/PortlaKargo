@@ -41,11 +41,16 @@
 							{{$cargo->sender->address}}<br><br>
 						</div>
 						<a class="btn btn-warning" 
-						href="{{route('customer.edit',[encrypt($cargo->sender_id),$cargo->id])}}">Düzenle</a>
+						href="{{route('customer.edit',[encrypt($cargo->sender_id),$cargo->id])}}">Düzenle</a>&nbsp;
 						@else
 						<a class="btn btn-success" 
 						href="{{route('customer.create',encrypt($cargo->id))}}">Gönderici Ekle</a>
 						@endif
+						@if($cargo->sender->telegram_id)
+							<a  
+							class="btn btn-primary" 
+							href="{{route('telegram.send.message',$cargo->id)}}">Telegram Mesaj Gönder!</a>
+							@endif
 					</div>
 				</div>
 			</div>
@@ -139,9 +144,14 @@
 							<a class="btn btn-warning" 
 							href="{{route('cargo.edit',
 							[encrypt($cargo->id)])}}">Düzenle</a>
+							&nbsp;
 							<a type="submit" target="_blank" 
-									href="{{route('cargo.pdf',encrypt($cargo->id))}}" class="btn btn-info"><i class="fa fa-print"></i>
+							   href="{{route('cargo.pdf',encrypt($cargo->id))}}" class="btn btn-info">
+							   <i class="fa fa-print"></i>
 							</a>
+							
+
+
 						</div>
 					</div>
 				</div>

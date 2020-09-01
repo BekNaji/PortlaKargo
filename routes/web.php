@@ -19,13 +19,17 @@ Route::get('locale/{locale}', function ($locale){
 Route::get('/api/cargo/status', 'Api\CargoControllerApi@index');
 
 
-Route::redirect('/home', '/dashboard/index');
+Route::redirect('/', '/home');
 Route::redirect('/admin', '/dashboard/index');
 Route::redirect('dashboard', '/dashboard/index');
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/search', 'HomeController@search')->name('search');
 Route::get('/about', 'HomeController@about')->name('about');
 Route::get('/contact', 'HomeController@contact')->name('contact');
+
+Route::get('save/phone/form/{auth}/{user_id}', 'HomeController@savePhoneForm')->name('save.phone.form');
+
+Route::get('save/phone', 'HomeController@savePhone')->name('save.phone');
 
 Route::get('/price', 'HomeController@price')->name('price');
 
@@ -55,6 +59,9 @@ Route::middleware(['auth','checkcompany'])
 
 Route::get('index', 'DashboardController@index')->name('dashboard.index');
 
+
+// send message
+Route::get('telegram/send/message/{id}', 'TelegramController@sendMessage')->name('telegram.send.message');
 
 
 // profile
