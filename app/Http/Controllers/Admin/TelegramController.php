@@ -26,7 +26,7 @@ class TelegramController extends Controller
     	$message .= '<b>Kargo Durumu: </b>'.$cargo->cargoStatus->name.' '.PHP_EOL;
     	$message .='<b>Kargo Takip No : </b>'.$cargo->number.' '.PHP_EOL;
 
-    	$response = Http::post('http://beknaji.online/telegrambot/sendMessage.php',
+    	$response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
                 [
                     'id' => $customer->telegram_id,
                     'message' => $message,
