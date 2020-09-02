@@ -123,7 +123,7 @@ class HomeController extends Controller
             $customer->telegram_id = $request->user_id;
             $customer->save();
 
-            $response = Http::post('http://telegrambot.test/sendMessage.php',
+            $response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
                 [
                     'id' => $customer->telegram_id,
                     'message' => '<b>Telefon numarniz kaydedildi!</b>'.PHP_EOL.'Göndermiş olduğunuz kargo hakkında anlık olarak bilgilendirileceksiniz',
