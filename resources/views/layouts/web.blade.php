@@ -5,7 +5,7 @@
     <title>Portal Kargo</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,700|Oswald:400,700" rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('web')}}/fonts/icomoon/style.css">
