@@ -13,6 +13,8 @@
 				&nbsp;
 				<button id="filter" type="button" class="btn btn-info"><i class="fa fa-filter" aria-hidden="true"></i></button>
 				<button id="change" type="button" class="btn btn-warning"> Seçilen  Kayitların Durumunu Değiştir</button>
+
+				<button id="sendMessageTelegram" type="button" class="btn btn-success"> Seçilen  Kayitlara Mesaj Gönder</button>
 				
 				
 				<hr>
@@ -89,6 +91,7 @@
 @include('admin.cargo.createModal')
 @include('admin.cargo.filterModal')
 @include('admin.cargo.changeStatusModal')
+@include('admin.cargo.sendMessageTelegramModal')
 @include('admin.cargo.script')
 
 @endsection

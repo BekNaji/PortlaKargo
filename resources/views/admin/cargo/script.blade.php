@@ -15,9 +15,27 @@ $(document).ready(function(){
 		$('#createModal').modal('show');
 	});
 
+
 	// show filter modal
 	$(document).on('click','#filter',function(){
 		$('#filterModal').modal('show');
+	});
+
+	// show send message modal
+	$(document).on('click','#sendMessageTelegram',function(){
+		var id = [];
+		$('.cargo:checked').each(function(){
+			id.push($(this).data('id'));
+		});
+		if(id.length > 0)
+		{
+			$('#cargoIdsforTelegram').val(id);
+			$('#sendMessageTelegramModal').modal('show');
+		}else
+		{
+			toastr.warning("Seçilmiş oğe bulunamadı!");
+		}
+		
 	});
 
 	// show Change Status modal

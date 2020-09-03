@@ -39,6 +39,8 @@ Route::get('/telegram', 'TelegrambotController@index')->name('telegram');
 
 Route::get('/testtest', 'TelegrambotController@sendMessage');
 
+
+
 Route::middleware('auth')
 	   ->prefix('dashboard')->namespace('Admin')->group(function(){
 	Route::get('company/index', 'CompanyController@index')->name('company.index');
@@ -62,6 +64,11 @@ Route::get('index', 'DashboardController@index')->name('dashboard.index');
 
 // send message
 Route::get('telegram/send/message/{id}', 'TelegramController@sendMessage')->name('telegram.send.message');
+
+// send one more message
+Route::post('telegram/send/multiple/message/', 
+	'TelegramController@sendMultipleMessage')
+    ->name('telegram.send.multiple.message');
 
 
 // profile
