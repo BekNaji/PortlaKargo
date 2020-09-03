@@ -46,11 +46,11 @@
 						<a class="btn btn-success" 
 						href="{{route('customer.create',encrypt($cargo->id))}}">Gönderici Ekle</a>
 						@endif
-						@if($cargo->sender->telegram_id)
+						@isset($cargo->sender->telegram_id)
 							<a  
 							class="btn btn-primary" 
 							href="{{route('telegram.send.message',$cargo->id)}}">Telegram Mesaj Gönder!</a>
-							@endif
+							@endisset
 					</div>
 				</div>
 			</div>
