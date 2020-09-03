@@ -69,7 +69,7 @@ class ReceiverController extends Controller
 
     public function create(Request $request)
     {
-        $type = $request->type;
+        $cargoId = decrypt($request->id);
         return view('admin.receiver.create',compact('cargoId'));
     }
 

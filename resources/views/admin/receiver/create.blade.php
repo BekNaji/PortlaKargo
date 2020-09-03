@@ -4,7 +4,7 @@
 <br><br>
 <div class="row">
     <div class="col-md-6 offset-3 ">
-        <a class="btn btn-primary " href="{{route('cargo.show',encrypt($type))}}">Geri git</a>
+        <a class="btn btn-primary " href="{{route('cargo.show',encrypt($cargoId))}}">Geri git</a>
         <br><br>
         
         <div class="card">
@@ -45,6 +45,9 @@
                         <label>Ülke</label>
                         <select name="country" class="form-control">
                             <option value="Uzbekistan">Uzbekistan</option>
+                            <option value="Rusya">Rusya</option>
+                            <option value="Turkmenistan">Turkmenistan</option>
+                            
                         </select>
                     </div>
                     <div class="form-group">
