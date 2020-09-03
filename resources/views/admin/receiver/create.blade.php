@@ -4,7 +4,7 @@
 <br><br>
 <div class="row">
     <div class="col-md-6 offset-3 ">
-        <a class="btn btn-primary " href="{{route('cargo.show',$cargoId)}}">Geri git</a>
+        <a class="btn btn-primary " href="{{route('cargo.show',encrypt($type))}}">Geri git</a>
         <br><br>
         
         <div class="card">

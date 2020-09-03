@@ -86,7 +86,7 @@
 						[encrypt($cargo->receiver_id),$cargo->id])}}">Düzenle</a>
 						@else
 						<a class="btn btn-success" 
-						href="{{route('receiver.create',encrypt($cargo->id))}}">Gönderici Ekle</a>
+						href="{{route('receiver.create',encrypt($cargo->id))}}">Alıcı Ekle</a>
 						@endif
 					</div>
 				</div>
