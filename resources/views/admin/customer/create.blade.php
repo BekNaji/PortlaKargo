@@ -60,7 +60,7 @@
                         <label>Address</label>
                         <textarea id="address" class="form-control" name="address"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-success">Devam et</button>
+                    <button type="submit" class="btn btn-success">Kaydet</button>
                 </div>
             </div>
             <br>

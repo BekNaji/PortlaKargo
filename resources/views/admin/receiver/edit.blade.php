@@ -4,7 +4,11 @@
 <div class="row">
 	<div class="col-md-6 offset-3">
         <br>
+        @if($type != '')
         <a href="{{route('cargo.show',encrypt($type))}}" class="btn btn-primary" >Geri git</a>
+        @else
+        <a href="{{route('receiver.index')}}" class="btn btn-primary" >Geri git</a>
+        @endif
 		<br><br>
 		<div class="card">
 			<div class="card-body">
@@ -59,7 +63,7 @@
                     </div>
                     
                     <button type="submit" class="btn btn-success" >Güncelle</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" >Iptal</button>
+                    
                 </form>
 			</div>
 		</div>

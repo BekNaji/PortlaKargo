@@ -25,7 +25,7 @@ class CustomerController extends Controller
         
         if($this->checkPassport($request->passport))
         {
-
+ 
             $customer = Customer::where('passport',$request->passport)->get()->first();
             
         }else
@@ -68,6 +68,7 @@ class CustomerController extends Controller
     // edit function
     public function edit(Request $request)
     {
+        
     	$customer = Customer::find(decrypt($request->id));
         $type = $request->type;
     	return view('admin.customer.edit',compact('customer','type'));

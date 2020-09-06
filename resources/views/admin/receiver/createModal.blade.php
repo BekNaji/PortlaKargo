@@ -42,8 +42,12 @@
                     <div class="form-group">
                         <label>Ülke</label>
                         <select name="country" class="form-control">
-                            <option value="Uzbekistan">Uzbekistan</option>
                             <option value="Turkiye">Turkiye</option>
+                            <option value="Uzbekistan">Uzbekistan</option>
+                            <option value="Turkmenistan">Turkmenistan</option>
+                            <option value="Kyrgyzstan">Kyrgyzstan</option>
+                            <option value="Kazakhistan">Kazakhistan</option>
+                            <option value="Tajikistan">Tajikistan</option>
                         </select>
                     </div>
 
