@@ -9,7 +9,7 @@
 					<input type="hidden" name="auth" value="{{$auth}}">
 					<input type="hidden" name="user_id" value="{{$user_id}}"> 
 					<div class="form-group">
-						<label>Telefon Örnek: 05550156186</label>
+						<label>Telefon ( Örnek: 05550156186 )</label>
 						<input class="form-control" type="number" name="phone">
 					</div>
 					<button class="btn btn-success">Kaydet</button>

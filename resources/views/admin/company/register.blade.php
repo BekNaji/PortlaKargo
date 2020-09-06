@@ -20,7 +20,7 @@
                 		<input class="form-control" type="email" name="email" required>
                 	</div>
                 	<div class="form-group">
-                		<label>Phone</label>
+                		<label>Telefon ( 05550156185 )</label>
                 		<input class="form-control" type="text" name="phone" required>
                 	</div>
                 	
