@@ -59,17 +59,17 @@
 			
 									@if($cargo->sender_id != '')
 									<div class="col-md-6">
-										<b>Ad Soyad</b> <br>
+										<b>Full Name / ФИО </b> <br>
 										{{$cargo->sender->name ?? ''}} {{$cargo->sender->surname ?? ''}} <br><br>
 						
-										<b>Ülke ve Şehir</b><br>
+										<b>Country and city / Страна и город</b><br>
 										{{$cargo->sender->country ?? ''}} {{$cargo->sender->city ?? ''}}<br><br>
 									</div>
 									<div class="col-md-6">
 					
-										<b>Telefon</b><br>
+										<b>Phone / Телефон</b><br>
 										{{$cargo->sender->phone ?? ''}}<br><br>
-										<b>Address</b><br>
+										<b>Address / Aдрес</b><br>
 										{{$cargo->sender->address ?? ''}}<br><br>
 									</div>
 									
@@ -96,21 +96,20 @@
 									</div>
 									@if($cargo->receiver_id != '')
 									<div class="col-md-6">
-										<b>Ad Soyad</b> <br>
+										<b>Full Name / ФИО </b> <br>
 										{{$cargo->receiver->name ?? ''}} {{$cargo->receiver->surname ?? ''}} <br><br>
 										
-										<b>Ülke ve Şehir</b><br>
+										<b>Country and city / Страна и город</b><br>
 										{{$cargo->receiver->country ?? ''}} {{$cargo->receiver->city ?? ''}}<br><br>
 									</div>
 									<div class="col-md-6">
 										<b>Passport</b><br>
 										{{$cargo->receiver->passport ?? ''}}<br><br>
-										<b>Telefon</b><br>
+										<b>Phone / Телефон</b><br>
 										{{$cargo->receiver->phone}}<br><br>
-										<b>Address</b><br>
+										<b>Address / Aдрес</b><br>
 										{{$cargo->receiver->address ?? ''}}<br><br>
 									</div>
-						
 									@endif
 								</div>
 							</div>
