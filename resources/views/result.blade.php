@@ -13,7 +13,7 @@
                         {{substr($cargo->sender->surname ?? '',0,2)}}***
                     </div>
                     @endif
-                    @if($cargo->sender->name ?? '' != '')
+                    @if($cargo->receiver->name ?? '' != '')
                     <div class="col-md-4">
                         <b>Alıcı:</b>
                         {{substr($cargo->receiver->name ?? '',0,2)}}***

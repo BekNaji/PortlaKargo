@@ -9,6 +9,8 @@ use App\Models\CargoStatus;
 use App\Models\CargoLog;
 use App\Models\Product;
 use App\Models\Company;
+use App\Models\Customer;
+use App\Models\Receiver;
 use Auth;
 use App;
 use Illuminate\Support\Carbon;
@@ -41,6 +43,12 @@ class CargoController extends Controller
     	return view('admin.cargo.index',compact('cargos','statuses'));
     }
 
+    public function create()
+    {
+         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
+        return view('admin.cargo.create',compact('statuses'));
+    }
+
     public function edit(Request $request)
     {
 
@@ -53,14 +61,16 @@ class CargoController extends Controller
     public function show(Request $request)
     {
         $cargo = Cargo::find(decrypt($request->id));
+        $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
         $products = Product::where('cargo_id',$cargo->id)->get();
         
-        return view('admin.cargo.show',compact('cargo','products'));
+        return view('admin.cargo.show',
+               compact('cargo','products','statuses'));
     }
-
-    public function store(Request $request)
+    
+        public function store(Request $request)
     {
-    	
+        
         $cargo = new Cargo();
         $cargo->company_id = Auth::user()->company_id;
         $cargo->payment_type = $request->payment_type;
@@ -77,6 +87,8 @@ class CargoController extends Controller
 
         return redirect()->route('cargo.show',encrypt($cargo->id));      
     }
+
+ 
 
     public function update(Request $request)
     {
@@ -205,7 +217,129 @@ public function getBarcode($data)
     
     return $barcontent.'?barcode='.rand(1111,9999);  
 
-}
+    }
 
+    public function storeAll(Request $request)
+    {
+
+        $sender = new Customer();
+        $sender->name = $request->sender_name;
+        $sender->phone = $request->sender_phone;
+        $sender->company_id = Auth::user()->company_id;
+        $sender->save();
+        $sender_id = $sender->id;
+
+        $receiver = new Receiver();
+        $receiver->name = $request->receiver_name;
+        $receiver->passport = $request->receiver_passport;
+        $receiver->phone = $request->receiver_phone;
+        $receiver->address = $request->receiver_address;
+        $receiver->company_id = Auth::user()->company_id;
+        $receiver->save();
+        $receiver_id = $receiver->id;
+
+        $cargo = new Cargo();
+        $cargo->company_id = Auth::user()->company_id;
+        $cargo->payment_type = $request->payment_type;
+        $cargo->status = $request->status;
+        $cargo->total_kg = $request->total_kg;
+        $cargo->cargo_price = $request->cargo_price;
+        $cargo->sender_id = $sender_id;
+        $cargo->receiver_id = $receiver_id;
+        $cargo->save();
+
+        $cargo = Cargo::find($cargo->id);
+        $cargo->number = Auth::user()->company->cargo_letter.sprintf("%05s",$cargo->id);
+        $cargo->save();
+        $cargo_id = $cargo->id;
+
+        $this->storeLog($cargo->id,$cargo->status);
+
+        foreach ($request->product_name as $key=> $name) 
+        {
+            if($name != '')
+            {
+                $product = new Product();
+                $product->name = $request->product_name[$key];
+                $product->count = $request->product_count[$key];
+                $product->product_kg = $request->product_kg[$key];
+                $product->product_total_kg = $request->product_total_kg[$key];
+                $product->cost = $request->product_price[$key];
+                $product->total = $request->product_total_price[$key];
+                $product->cargo_id = $cargo_id;
+                $product->save();
+            }
+        }
+
+        return redirect()->route('cargo.show',encrypt($cargo->id));
+
+
+    }
+
+    public function updateAll(Request $request)
+    {
+
+        $sender = Customer::find($request->sender_id);
+        $sender->name = $request->sender_name;
+        $sender->phone = $request->sender_phone;
+        $sender->company_id = Auth::user()->company_id;
+        $sender->save();
+        $sender_id = $sender->id;
+
+        $receiver = Receiver::find($request->receiver_id);
+        $receiver->name = $request->receiver_name;
+        $receiver->passport = $request->receiver_passport;
+        $receiver->phone = $request->receiver_phone;
+        $receiver->address = $request->receiver_address;
+        $receiver->company_id = Auth::user()->company_id;
+        $receiver->save();
+        $receiver_id = $receiver->id;
+
+        $cargo = Cargo::find($request->cargo_id);
+        $cargo->company_id = Auth::user()->company_id;
+        $cargo->payment_type = $request->payment_type;
+        $cargo->status = $request->status;
+        $cargo->total_kg = $request->total_kg;
+        $cargo->cargo_price = $request->cargo_price;
+        $cargo->sender_id = $sender_id;
+        $cargo->receiver_id = $receiver_id;
+        $cargo->save();
+
+        $cargo->save();
+        $cargo_id = $cargo->id;
+
+        $this->storeLog($cargo->id,$cargo->status);
+
+        foreach ($request->product_name as $key=> $name) 
+        {
+            if($name != '')
+            {
+                $product = Product::find($request->product_id[$key]);
+                $product->name = $request->product_name[$key];
+                $product->count = $request->product_count[$key];
+                $product->product_kg = $request->product_kg[$key];
+                $product->product_total_kg = $request->product_total_kg[$key];
+                $product->cost = $request->product_price[$key];
+                $product->total = $request->product_total_price[$key];
+                $product->cargo_id = $cargo_id;
+                $product->save();
+            }
+        }
+
+        return redirect()->route('cargo.show',encrypt($cargo->id));
+    }
+    public function print(Request $request)
+    {
+
+        $cargo = Cargo::find(decrypt($request->id));
+        $barcode = $this->getBarcode($cargo->number);
+        $products = Product::where('cargo_id',$cargo->id)->get();
+        $company = Company::find(Auth::user()->company_id);
+        $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
+
+    
+
+        return view('admin.cargo.print',compact('cargo','products','barcode','company','statuses'));
+    }
 
 }

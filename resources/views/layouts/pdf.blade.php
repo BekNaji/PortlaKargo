@@ -16,8 +16,10 @@
         </title>
         <link href="{{ asset('assets') }}/css/styles.css" rel="stylesheet" />
         <link href="{{ asset('assets') }}/css/bootstrap-select.min.css" rel="stylesheet" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css">
+        <style>@page { size: A5 }</style>
     </head>
-    <body >
+    <body class="A5" >
         <div class="container-fluid" >
             @yield('content')
         </div>

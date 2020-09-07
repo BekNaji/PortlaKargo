@@ -9,7 +9,7 @@
 				
 				<i class="fa fa-list" aria-hidden="true"></i> Kargo Listesi&#160;&#160;&#160;
 				@csrf
-				<button id="create" class="btn btn-success "><i class="fa fa-plus" aria-hidden="true"></i></button>
+				<a href="{{route('cargo.create')}}" class="btn btn-success "><i class="fa fa-plus" aria-hidden="true"></i></a>
 				&nbsp;
 				<button id="filter" type="button" class="btn btn-info"><i class="fa fa-filter" aria-hidden="true"></i></button>
 				<button id="change" type="button" class="btn btn-warning"> Seçilen  Kayitların Durumunu Değiştir</button>
@@ -58,7 +58,7 @@
 							<td>{{$cargo->created_at->toDateString()}}</td>
 							<td>
 								<a type="submit" target="_blank" 
-									href="{{route('cargo.pdf',encrypt($cargo->id))}}" >
+									href="{{route('cargo.print',encrypt($cargo->id))}}" >
 									<span class="badge badge-info">
 									<i class="fa fa-print"></i>
 									</span>
