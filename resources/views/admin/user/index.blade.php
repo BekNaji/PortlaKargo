@@ -22,18 +22,18 @@
 				
 
 				<hr>
-				<table class="table table-bordered" id="dataTable">
+				<table class="table table-bordered">
 					<thead>
 						<tr>
 							<td>#</td>
 							@if(Auth::user()->role == 'root')
-							<td>Company Name</td>
+							<td><b>Company Name</b></td>
 							@endif
-							<td>Ad</td>
-							<td>Email</td>
-							<td>Yetkı</td>
-							<td>Resim</td>
-							<td>#</td>
+							<td><b>Ad</b></td>
+							<td><b>Email</b></td>
+							<td><b>Yetkı</b></td>
+							<td><b>Resim</b></td>
+							<td><b>#</b></td>
 						</tr>
 					</thead>
 					<tbody>

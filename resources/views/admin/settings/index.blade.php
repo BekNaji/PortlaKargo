@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
 
-	<div class="col-md-8 offset-2">
+	<div class="col-md-8 offset-md-2">
 		<br>
 		<div class="card">
 			<div class="card-body">
@@ -16,8 +16,22 @@
 				<strong>Bildirim!</strong>{{session('message')}}
 				</div>
 				@endif
-				<form action="{{route('settings.update')}}" method="POST">
+				<center style="border:1px solid;">
+					@if(Auth::user()->company->logo)
+					<img style="width:auto"; height="100px" 
+					src="{{asset(Auth::user()->company->logo ?? '')}}">
+					@else
+					<img style="width:auto"; height="100px" src="https://seeklogo.com/images/W/w-letter-company-logo-3102E4E551-seeklogo.com.png">
+					@endif
+
+
+				</center><br>
+				<form action="{{route('settings.update')}}" method="POST" enctype="multipart/form-data">
 					@csrf
+					<div class="form-group">
+						<label>Logo</label>
+						<input  class="form-control" type="file" name="logo">
+					</div>
 					<div class="form-group">
 						<label>Şirket adı</label>
 						<input value="{{Auth::user()->company->name ?? ''}}" class="form-control" type="text" name="name" required>
@@ -27,21 +41,23 @@
 						<input value="{{Auth::user()->company->email ?? ''}}" class="form-control" type="email" name="email" required>
 					</div>
 					<div class="form-group">
-						<label>Telefon</label>
+						<label>Instagram</label>
+						<input value="{{Auth::user()->company->instagram ?? ''}}" class="form-control" type="text" name="instagram" required>
+					</div>
+					<div class="form-group">
+						<label>Telefon 1</label>
 						<input value="{{Auth::user()->company->phone ?? ''}}" class="form-control" type="text" name="phone" required>
+					</div>
+					<div class="form-group">
+						<label>Telefon 2</label>
+						<input value="{{Auth::user()->company->second_phone ?? ''}}" class="form-control" type="text" name="second_phone" >
 					</div>
 					<div class="form-group">
 						<label>Kargo Numara ilk harfı</label>
 						<input value="{{Auth::user()->company->cargo_letter ?? ''}}" class="form-control" type="text" name="cargo_letter" required>
 					</div>
-					<div class="form-group">
-						<label>Hakkinda</label>
-						<textarea class="form-control" name="about">{{Auth::user()->company->about ?? ''}}</textarea>
-					</div>
-					<div class="form-group">
-						<label>İletişim</label>
-						<textarea class="form-control" name="contact">{{Auth::user()->company->contact ?? ''}}</textarea>
-					</div>
+
+					
 					<div class="form-group">
 						<label>Şirket adresı</label>
 						<textarea class="form-control" name="address">{{Auth::user()->company->address ?? ''}}</textarea>

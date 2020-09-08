@@ -11,7 +11,7 @@
             <!-- Modal body -->
             <div class="modal-body">
 
-                <b id="name"></b> adlı Kullanıcıyı silmeyı onayliyor musun?
+                <b id="name"></b> adlı veriyi silmeyı onayliyor musun?
                 <br>
                 <form action="{{route('customer.delete')}}" method="POST">
                     @csrf

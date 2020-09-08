@@ -44,19 +44,7 @@
 				<?php } ?>
 				
 			</table>
-			{{-- <table class="table-bordered" style="width:100%">
-				<tr >
-					<td class="text-center" style="padding:15px;" colspan="2">Company Info</td>
-				</tr>
-				<tr>
-					<td style="padding:0 15px 0 15px;"><b>CSM: </b></td>
-					<td style="padding:0 15px 0 15px;">+90 555 057 70 07</td>
-				</tr>
-				<tr>
-					<td style="padding:0 15px 0 15px;"><b>CSM: </b></td>
-					<td style="padding:0 15px 0 15px;" >+90 555 057 70 07</td>
-				</tr>
-			</table> --}}
+
 		</div>
 		<div class="col-md-4">
 			{{-- sender info --}}
@@ -65,10 +53,7 @@
 				<tr>
 					<td class="text-center" style="padding:5px;" colspan="2">Gönderici bilgileri</td>
 				</tr>
-				<tr>
-					<td style="padding:0 15px 0 15px;"><b>Tarih / Saat</b> </td>
-					<td style="padding:0 15px 0 15px;">@php echo date('d.m.Y H:i') @endphp</td>
-				</tr>
+			
 				{{-- sender name --}}
 				<tr>
 					<td style="padding:0 15px 0 15px;"><b>Ad Soyad</b></td>
@@ -98,11 +83,16 @@
 					<td style="padding:0 15px 0 15px;"><b>Passport</b></td>
 					<td><input style="width:100%" type="text" name="receiver_passport" required></td>
 				</tr>
-				{{-- sender phone --}}
+				{{-- revceiver phone --}}
 				<tr>
-					<td style="padding:0 15px 0 15px;"><b>Telefon </b></td>
+					<td style="padding:0 15px 0 15px;"><b>Tel 1</b></td>
+					<td><input style="width:100%" type="text" name="receiver_phone" required></td>
+				</tr>
+				{{-- sender other phone --}}
+				<tr>
+					<td style="padding:0 15px 0 15px;"><b>Tel 2 </b></td>
 					<td>
-						<textarea style="width:100%" type="text" name="receiver_phone" required></textarea>
+						<input  style="width:100%" type="text" name="receiver_other_phone" >
 					</td>
 				</tr>
 				
@@ -121,11 +111,11 @@
 				</tr>
 				<tr>
 					<td>Kargo Kg</td>
-					<td><input style="width:100%" type="number" name="total_kg"></td>
+					<td><input style="width:100%" step="0.1" type="number" name="total_kg"></td>
 				</tr>
 				<tr>
 					<td>Kargo Ücretı</td>
-					<td><input style="width:100%" type="number" name="cargo_price"></td>
+					<td><input style="width:100%" step="0.1" type="number" name="cargo_price"></td>
 				</tr>
 				<tr>
 					<td>Cargo Status</td>

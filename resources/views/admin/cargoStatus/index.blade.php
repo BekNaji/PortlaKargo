@@ -9,12 +9,12 @@
 				<button id="create" class="btn btn-success "><i class="fa fa-plus" aria-hidden="true"></i></button> &nbsp;
 				
 				<hr>
-				<table class="table table-bordered" id="dataTable">
+				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<td>#</td>
-							<td>Ad</td>
-							<td>#</td>
+							<td><b>#</b></td>
+							<td><b>Ad</b></td>
+							<td><b>#</b></td>
 						</tr>
 					</thead>
 					<tbody>

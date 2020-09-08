@@ -13,20 +13,51 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 		<style type="text/css">
 			body{
-				font-size: 8px;
+				font-size:10px;
 			}
 		</style>
 	</head>
 	<body>
-		<div class="container">
-			@csrf
+		<div class="container-fluid">
+			<br>
+			
 			<div class="row">
+				
+
 				<div class="col-md-4">
-					<h1>Kargo bilgileri gelecek</h1>
+					<center>
+					
+					<img style="width:auto"; height="100px" 
+					src="{{asset($company->logo)}}">
+					</center>
+					<br>
+					<center><h4>{{ $company->name }}</h4></center>
+					<table class="table-bordered" style="width:100%">
+					<tr>
+						<td style="padding:0 15px 0 15px;"><b>Tel 1: </b></td>
+						<td style="padding:0 15px 0 15px;">{{$company->phone}}</td>
+					</tr>
+					<tr>
+						<td style="padding:0 15px 0 15px;"><b>Tel 2: </b></td>
+						<td style="padding:0 15px 0 15px;">{{$company->second_phone ?? ''}}</td>
+					</tr>
+					<tr>
+						<td style="padding:0 15px 0 15px;"><b>Instagram </b></td>
+						<td style="padding:0 15px 0 15px;">{{$company->instagram ?? ''}}</td>
+					</tr>
+					<tr>
+						<td style="padding:0 15px 0 15px;"><b>Address: </b></td>
+						<td style="padding:0 15px 0 15px;">{{$company->address}}</td>
+					</tr>
+					<tr>
+						<td style="padding:0 15px 0 15px;"><b>Email </b></td>
+						<td style="padding:0 15px 0 15px;">{{$company->email}}</td>
+					</tr>
+					</table>
 				</div>
 				<div class="col-md-4">
 					{{-- sender info --}}
-					<br>
+					<center><h1>Invoice</h1></center><br>
 					<table class="table-bordered" style="width:100%">
 						<input type="hidden" name="sender_id"
 						value="{{$cargo->sender->id}}">
@@ -87,7 +118,7 @@
 					
 				</div>
 				<div class="col-md-4">
-					<br>
+					<center><img src="{{url($barcode)}}"></center><br>
 					<table class="table-bordered" style="width:100%">
 						<input type="hidden" name="cargo_id"
 						value="{{$cargo->id}}">

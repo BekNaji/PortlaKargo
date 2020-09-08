@@ -18,21 +18,21 @@
 				
 				
 				<hr>
-				<table class="table  table-striped table-responsive-lg" id="dataTable">
-					<thead class="bg-dark text-white">
+				<table class="table  table-bordered">
+					<thead>
 						<tr>
 							<td style="width:50px;"><input 
 								type="checkbox" id="selectAll"></td>
-							<td>#</td>
-							<td>Takip No</td>
-							<td>Durum</td>
-							<td>Ödeme</td>
-							<td>Göderici</td>
-							<td>Alıcı</td>
-							<td>Toplam Kg</td>
-							<td>Toplam Ücret</td>
-							<td>Oluşturma Tarih</td>
-							<td>#</td>
+							<td><b>#</b></td>
+							<td><b>Takip No</b></td>
+							<td><b>Durum</b></td>
+							<td><b>Ödeme</b></td>
+							<td><b>Göderici</b></td>
+							<td><b>Alıcı</b></td>
+							<td><b>Toplam Kg</b></td>
+							<td><b>Kargo Ücreti</b></td>
+							<td><b>Oluşturma Tarih</b></td>
+							<td><b>#</b></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -54,7 +54,7 @@
 							<td>{{$cargo->sender->name ?? ''}} {{$cargo->sender->surname ?? ''}}</td>
 							<td>{{$cargo->receiver->name ?? ''}} {{$cargo->receiver->surname ?? ''}}</td>
 							<td>{{$cargo->total_kg ?? ''}}KG</td>
-							<td>{{$cargo->total_price ?? '$0.0'}}</td>
+							<td>{{$cargo->cargo_price ?? '$0.0'}}</td>
 							<td>{{$cargo->created_at->toDateString()}}</td>
 							<td>
 								<a type="submit" target="_blank" 

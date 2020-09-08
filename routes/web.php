@@ -104,8 +104,10 @@ Route::post('product/delete', 'ProductController@delete')->name('product.delete'
 // Cargo route
 Route::post('cargo/store/all', 
 	'CargoController@storeAll')->name('cargo.store.all');
+
 Route::post('cargo/update/all', 
 	'CargoController@updateAll')->name('cargo.update.all');
+
 Route::get('cargo/print/{id}', 'CargoController@print')->name('cargo.print');
 
 Route::get('cargo/index', 'CargoController@index')->name('cargo.index');

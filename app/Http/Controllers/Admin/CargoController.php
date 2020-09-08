@@ -68,47 +68,6 @@ class CargoController extends Controller
                compact('cargo','products','statuses'));
     }
     
-        public function store(Request $request)
-    {
-        
-        $cargo = new Cargo();
-        $cargo->company_id = Auth::user()->company_id;
-        $cargo->payment_type = $request->payment_type;
-        $cargo->status = $request->status;
-        $cargo->total_kg = $request->total_kg;
-        $cargo->save();
-
-        $cargo = Cargo::find($cargo->id);
-        $cargo->number = Auth::user()->company->cargo_letter.sprintf("%05s",$cargo->id);
-        $cargo->save();
-
-
-        $this->storeLog($cargo->id,$cargo->status);
-
-        return redirect()->route('cargo.show',encrypt($cargo->id));      
-    }
-
- 
-
-    public function update(Request $request)
-    {
-        
-        $cargo = Cargo::find($request->id);
-        
-        if($cargo->status != $request->status)
-        {
-            $this->storeLog($cargo->id,$request->status);
-        } 
-
-        $cargo->payment_type = $request->payment_type;
-        $cargo->status = $request->status;
-        $cargo->total_kg = $request->total_kg;
-        $cargo->save();
-
-        return redirect()->route('cargo.show',encrypt($cargo->id));
-          
-    }
-
     public function delete(Request $request)
     {
         $cargo = Cargo::find($request->id);
@@ -116,21 +75,7 @@ class CargoController extends Controller
         return back()->with(['success'=>'Silindi!']);
     }
 
-  
-
-    public function pdf(Request $request)
-    {
-
-        $cargo = Cargo::find(decrypt($request->id));
-        $barcode = $this->getBarcode($cargo->number);
-        $products = Product::where('cargo_id',$cargo->id)->get();
-        $company = Company::find(Auth::user()->company_id);
-
-    
-
-        return view('admin.cargo.pdf',compact('cargo','products','barcode','company'));
-    }
-
+ 
     public function filter(Request $request)
     {
         
@@ -179,7 +124,7 @@ class CargoController extends Controller
         return back()->with(['success'=>'Güncellendi']);
     }
     
-       public function storeLog($id,$status)
+    public function storeLog($id,$status)
     {
 
         $cargoLog = new CargoLog();
@@ -189,54 +134,41 @@ class CargoController extends Controller
 
     }
 
-public function getBarcode($data)
-{
-    //Generate into customize folder under public
-    $bar = App::make('BarCode');
-    $barcode = [
-        'text' => $data,
-        'size' => 30,
-        'orientation' => 'horizontal',
-        'code_type' => 'code39',
-        'print' => true,
-        'sizefactor' => 2,
-        'filename' => 'image1.jpeg',
-        'filepath' => 'barcode'
-    ];
-    $barcontent = $bar->barcodeFactory()->renderBarcode(
-    $text=$barcode["text"], 
-    $size=$barcode['size'], 
-    $orientation=$barcode['orientation'], 
-    $code_type=$barcode['code_type'], // code_type : code128,code39,code128b,code128a,code25,codabar 
-    $print=$barcode['print'], 
-    $sizefactor=$barcode['sizefactor'],
-    $filename = $barcode['filename'],
-    $filepath = $barcode['filepath']
-    )->filename($barcode['filename']);
+    public function getBarcode($data)
+    {
+        //Generate into customize folder under public
+        $bar = App::make('BarCode');
+        $barcode = [
+            'text' => $data,
+            'size' => 30,
+            'orientation' => 'horizontal',
+            'code_type' => 'code39',
+            'print' => true,
+            'sizefactor' => 2,
+            'filename' => 'image1.jpeg',
+            'filepath' => 'barcode'
+        ];
+        $barcontent = $bar->barcodeFactory()->renderBarcode(
+        $text=$barcode["text"], 
+        $size=$barcode['size'], 
+        $orientation=$barcode['orientation'], 
+        $code_type=$barcode['code_type'], // code_type : code128,code39,code128b,code128a,code25,codabar 
+        $print=$barcode['print'], 
+        $sizefactor=$barcode['sizefactor'],
+        $filename = $barcode['filename'],
+        $filepath = $barcode['filepath']
+        )->filename($barcode['filename']);
 
-    
-    return $barcontent.'?barcode='.rand(1111,9999);  
+        return $barcontent.'?barcode='.rand(1111,9999);  
 
     }
 
     public function storeAll(Request $request)
     {
+        
+        $sender_id = $this->storeCustomer($request);
 
-        $sender = new Customer();
-        $sender->name = $request->sender_name;
-        $sender->phone = $request->sender_phone;
-        $sender->company_id = Auth::user()->company_id;
-        $sender->save();
-        $sender_id = $sender->id;
-
-        $receiver = new Receiver();
-        $receiver->name = $request->receiver_name;
-        $receiver->passport = $request->receiver_passport;
-        $receiver->phone = $request->receiver_phone;
-        $receiver->address = $request->receiver_address;
-        $receiver->company_id = Auth::user()->company_id;
-        $receiver->save();
-        $receiver_id = $receiver->id;
+        $receiver_id = $this->storeReceiver($request);
 
         $cargo = new Cargo();
         $cargo->company_id = Auth::user()->company_id;
@@ -270,32 +202,22 @@ public function getBarcode($data)
                 $product->save();
             }
         }
-
         return redirect()->route('cargo.show',encrypt($cargo->id));
-
-
     }
 
     public function updateAll(Request $request)
     {
 
-        $sender = Customer::find($request->sender_id);
-        $sender->name = $request->sender_name;
-        $sender->phone = $request->sender_phone;
-        $sender->company_id = Auth::user()->company_id;
-        $sender->save();
-        $sender_id = $sender->id;
+        $sender_id = $this->storeCustomer($request);
 
-        $receiver = Receiver::find($request->receiver_id);
-        $receiver->name = $request->receiver_name;
-        $receiver->passport = $request->receiver_passport;
-        $receiver->phone = $request->receiver_phone;
-        $receiver->address = $request->receiver_address;
-        $receiver->company_id = Auth::user()->company_id;
-        $receiver->save();
-        $receiver_id = $receiver->id;
+        $receiver_id = $this->storeReceiver($request);
 
         $cargo = Cargo::find($request->cargo_id);
+
+        if($cargo->status != $request->status)
+        {
+            $this->storeLog($cargo->id,$request->status);
+        }
         $cargo->company_id = Auth::user()->company_id;
         $cargo->payment_type = $request->payment_type;
         $cargo->status = $request->status;
@@ -308,26 +230,36 @@ public function getBarcode($data)
         $cargo->save();
         $cargo_id = $cargo->id;
 
-        $this->storeLog($cargo->id,$cargo->status);
+        
 
         foreach ($request->product_name as $key=> $name) 
         {
-            if($name != '')
+     
+            if($request->product_id[$key] != '')
             {
                 $product = Product::find($request->product_id[$key]);
-                $product->name = $request->product_name[$key];
-                $product->count = $request->product_count[$key];
-                $product->product_kg = $request->product_kg[$key];
-                $product->product_total_kg = $request->product_total_kg[$key];
-                $product->cost = $request->product_price[$key];
-                $product->total = $request->product_total_price[$key];
-                $product->cargo_id = $cargo_id;
-                $product->save();
+
+                if($request->product_name[$key] != '')
+                {
+                    $product->name = $request->product_name[$key];
+                    $product->count = $request->product_count[$key];
+                    $product->product_kg = $request->product_kg[$key];
+                    $product->product_total_kg = $request->product_total_kg[$key];
+                    $product->cost = $request->product_price[$key];
+                    $product->total = $request->product_total_price[$key];
+                    $product->cargo_id = $cargo_id;
+                    $product->save();
+                }else
+                {
+                    $product->delete();
+                }
             }
+            
         }
 
         return redirect()->route('cargo.show',encrypt($cargo->id));
     }
+
     public function print(Request $request)
     {
 
@@ -337,9 +269,42 @@ public function getBarcode($data)
         $company = Company::find(Auth::user()->company_id);
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
 
-    
-
         return view('admin.cargo.print',compact('cargo','products','barcode','company','statuses'));
     }
+
+    public function storeCustomer($request)
+    {
+        $sender = Customer::where('phone','=',$request->sender_phone)->get()->first();
+
+        if(!$sender)
+        {
+            $sender = new Customer();
+        }
+
+        $sender->name = $request->sender_name;
+        $sender->phone = $request->sender_phone;
+        $sender->company_id = Auth::user()->company_id;
+        $sender->save();
+
+        return $sender->id;
+        
+    }
+
+    public function storeReceiver($request)
+    {
+        $receiver = Receiver::where('phone','=',$request->receiver_phone)->get()->first();
+        if(!$receiver)
+        {
+            $receiver = new Receiver();
+        }
+        $receiver->name = $request->receiver_name;
+        $receiver->passport = $request->receiver_passport;
+        $receiver->phone = $request->receiver_phone;
+        $receiver->address = $request->receiver_address;
+        $receiver->company_id = Auth::user()->company_id;
+        $receiver->save();
+        return  $receiver->id;
+    }
+
 
 }

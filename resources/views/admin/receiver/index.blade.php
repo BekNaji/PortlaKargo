@@ -1,8 +1,9 @@
-@extends('layouts.admin');
+@extends('layouts.admin')
 @section('title','Alıcılar Listesı')
 @section('content')
 <div class="row">
 	<div class="col-md-12">
+		<br>
 		@if(session('warning'))
 		<div class="alert alert-warning alert-dismissible fade show" role="alert">
 		<strong>Hata</strong>{{session('warning')}}
@@ -13,36 +14,29 @@
 		@endif
 		<div class="card">
 			<div class="card-body">
-				<i class="fa fa-list" aria-hidden="true"></i> Alıcılar Listesı&#160;&#160;&#160;
+				<i class="fa fa-list" aria-hidden="true"></i><b> Alıcılar Listesı</b>&#160;&#160;&#160;
 				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp;
 			
 				<hr>
-				<table class="table table-bordered" id="dataTable">
+				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<td>#</td>
-							<td>Ad Soyad</td>
-							<td>Passport</td>
-							<td>Ülke</td>
-							<td>Şehir</td>
-							<td>Address</td>
-							<td>Telefon</td>
-							<td>Email</td>
-							<td>#</td>
+							<td><b>#</b></td>
+							<td><b>Ad Soyad</b></td>
+							<td><b>Passport</b></td>
+							<td><b>Telefon</b></td>
+							<td><b>Address</b></td>
+							<td><b>#</b></td>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($receivers as $receiver)
 						<tr>
 							<td>{{$loop->iteration}}</td>
-							<td>{{$receiver->name}} {{$receiver->surname}}</td>
+							<td>{{$receiver->name}}</td>
 							<td>{{$receiver->passport}}</td>
-							<td>{{$receiver->country}}</td>
-							<td>{{$receiver->city}}</td>
-							<td>{{$receiver->address}}</td>
 							<td>{{$receiver->phone}}</td>
-							<td>{{$receiver->email}}</td>
-							
+							<td>{{$receiver->address}}</td>
 							<td>
 								<a type="submit" 
 								href="{{route('receiver.edit',encrypt($receiver->id))}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
@@ -64,8 +58,6 @@
 @include('admin.receiver.deleteModal')
 
 @include('admin.receiver.createModal')
-
-@include('admin.receiver.filterModal')
 
 @include('admin.receiver.script')
 

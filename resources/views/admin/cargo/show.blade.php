@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title','Kargo Ekle')
 @section('content')
-<form action="{{route('cargo.store.all')}}" method="POST">
+<form action="{{route('cargo.update.all')}}" method="POST">
 	@csrf
 	<div class="row">
 		
@@ -20,9 +20,12 @@
 				
 				<?php $key = 0; for($i=1; $i<25; $i++){ ?>
 				<tr>
-					<input type="hidden" name="product_id" 
-					value="{{$products[$key]->id ?? ''}}">
-					<td><?php echo $i ?></td>
+					
+					<td>{{$i}} 
+						<input 
+						type="hidden" 
+						name="product_id[]" 
+					value ="{{ $products[$key]->id ?? ''}}"></td>
 					<td><input style="width:100%;"
 					name="product_name[]" 
 					value="{{ $products[$key]->name ?? ''}}" type="text"></td>
@@ -59,7 +62,7 @@
 			<br>
 			<table class="table-bordered" style="width:100%">
 				<input type="hidden" name="sender_id" 
-				value="{{$cargo->sender->id}}">
+				value="{{$cargo->sender->id ?? ''}}">
 				<tr>
 					<td class="text-center" style="padding:5px;" colspan="2"><b>Gönderici bilgileri</b></td>
 				</tr>
@@ -70,20 +73,20 @@
 				{{-- sender name --}}
 				<tr>
 					<td style="padding:0 15px 0 15px;"><b>Ad Soyad</b></td>
-					<td><input style="width:100%" type="text" name="sender_name" value="{{$cargo->sender->name}}" required></td>
+					<td><input style="width:100%" type="text" name="sender_name" value="{{$cargo->sender->name ?? ''}}" required></td>
 				</tr>
 				
 				{{-- sender phone --}}
 				<tr>
 					<td style="padding:0 15px 0 15px;"><b>Telefon</b></td>
-					<td><input style="width:100%" type="text" name="sender_phone" value="{{$cargo->sender->phone}}" required></td>
+					<td><input style="width:100%" type="text" name="sender_phone" value="{{$cargo->sender->phone ?? ''}}" required></td>
 				</tr>
 			</table>
 			{{-- receiver info --}}
 			<br>
 			<table class="table-bordered" style="width:100%">
 				<input type="hidden" name="receiver_id" 
-				value="{{$cargo->receiver->id}}">
+				value="{{$cargo->receiver->id ?? ''}}">
 				<tr>
 					<td class="text-center" style="padding:5px;" colspan="2"><b>Alıcı bilgileri</b></td>
 				</tr>
@@ -91,25 +94,31 @@
 				{{-- Receiver name --}}
 				<tr>
 					<td style="padding:0 15px 0 15px;"><b>Ad Soyad</b></td>
-					<td><input style="width:100%" type="text" name="receiver_name" value="{{$cargo->receiver->name}}" required></td>
+					<td><input style="width:100%" type="text" name="receiver_name" value="{{$cargo->receiver->name ?? ''}}" required></td>
 				</tr>
 				{{-- receiver passport --}}
 				<tr>
 					<td style="padding:0 15px 0 15px;"><b>Passport</b></td>
-					<td><input style="width:100%" type="text" name="receiver_passport" value="{{$cargo->receiver->passport}}" required></td>
+					<td><input style="width:100%" type="text" name="receiver_passport" value="{{$cargo->receiver->passport ?? ''}}" required></td>
 				</tr>
-				{{-- sender phone --}}
+				{{-- revceiver phone --}}
 				<tr>
-					<td style="padding:0 15px 0 15px;"><b>Telefon </b></td>
+					<td style="padding:0 15px 0 15px;"><b>Tel 1</b></td>
+					<td><input style="width:100%" type="text" name="receiver_phone" value="{{$cargo->receiver->phone ?? ''}}" required></td>
+				</tr>
+				{{-- sender other phone --}}
+				<tr>
+					<td style="padding:0 15px 0 15px;"><b>Tel 2 </b></td>
 					<td>
-						<textarea style="width:100%" type="text" name="receiver_phone" required>{{$cargo->receiver->phone}}</textarea>
+						<input value="{{$cargo->receiver->other_phone ?? ''}}" 
+						style="width:100%" type="text" name="receiver_other_phone" >
 					</td>
 				</tr>
 				
 				<tr>
 					<td style="padding:0 15px 0 15px;"><b>Address </b></td>
 					<td>
-						<textarea style="width:100%" type="text" name="receiver_address" required>{{$cargo->receiver->address}}</textarea>
+						<textarea style="width:100%" type="text" name="receiver_address" required>{{$cargo->receiver->address ?? ''}}</textarea>
 					</td>
 				</tr>
 			</table>
@@ -126,11 +135,11 @@
 				</tr>
 				<tr>
 					<td>Kargo Kg</td>
-					<td><input style="width:100%" type="number" name="total_kg" value="{{$cargo->total_kg}}"></td>
+					<td><input style="width:100%" step="0.1" type="number" name="total_kg" value="{{$cargo->total_kg ?? ''}}"></td>
 				</tr>
 				<tr>
 					<td>Kargo Ücretı</td>
-					<td><input style="width:100%" type="number" name="cargo_price" value="{{$cargo->cargo_price}}"></td>
+					<td><input style="width:100%" step="0.1" type="number" name="cargo_price" value="{{$cargo->cargo_price ?? ''}}"></td>
 				</tr>
 				<tr>
 					<td>Cargo Status</td>
@@ -141,7 +150,7 @@
                             @foreach($statuses as $status)
                             <option value="{{$status->id}}"
                                 {{($cargo->status == $status->id) ? "selected":''}}
-                                >{{$status->name}}</option>
+                                >{{$status->name ?? ''}}</option>
                             @endforeach
                         </select>
 						

@@ -1,37 +1,31 @@
-@extends('layouts.admin');
+@extends('layouts.admin')
 @section('title','Gödericiler listesi')
 @section('content')
 <div class="row">
+
 	<div class="col-md-12">
+		<br>
 		<div class="card">
 			<div class="card-body">
-				<i class="fa fa-list" aria-hidden="true"></i> Göndericiler&#160;&#160;&#160;
+				<i class="fa fa-list" aria-hidden="true"></i> <b>Göndericiler</b>&#160;&#160;&#160;
 				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp;
 				
 				<hr>
-				<table class="table table-bordered" id="dataTable">
+				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<td>#</td>
-							<td>Ad Soyad</td>
-							<td>Passport</td>
-							<td>Telefon</td>
-							<td>Ülke</td>
-							<td>Şehir</td>
-							<td>Address</td>
-							<td>#</td>
+							<td><b>#</b></td>
+							<td><b>Ad Soyad</b></td>
+							<td><b>Telefon</b></td>
+							<td><b>#</b></td>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($customers as $customer)
 						<tr>
 							<td>{{$loop->iteration}}</td>
-							<td>{{$customer->name}} {{$customer->surname}}</td>
-							<td>{{$customer->passport}}</td>
-							<td>{{$customer->phone}}</td>
-							<td>{{$customer->country}}</td>
-							<td>{{$customer->city}}</td>
-							<td>{{$customer->address}}</td>							
+							<td>{{$customer->name}}</td>
+							<td>{{$customer->phone}}</td>						
 							<td>
 								
 								<a type="submit" 
@@ -54,8 +48,6 @@
 @include('admin.customer.deleteModal')
 
 @include('admin.customer.createModal')
-
-@include('admin.customer.filterModal')
 
 @include('admin.customer.script')
 
