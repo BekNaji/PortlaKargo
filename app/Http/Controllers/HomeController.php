@@ -137,5 +137,12 @@ class HomeController extends Controller
 
         abort('419');
     }
+
+    public function botInfo(Request $request)
+    {
+        $company = Company::find(2);
+       
+        return $company->bot_info;
+    }
     
 }

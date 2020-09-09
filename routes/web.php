@@ -26,6 +26,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/search', 'HomeController@search')->name('search');
 Route::get('/about', 'HomeController@about')->name('about');
 Route::get('/contact', 'HomeController@contact')->name('contact');
+Route::get('/bot/info','HomeController@botInfo')->name('bot.info');
 
 Route::get('save/phone/form/{auth}/{user_id}', 'HomeController@savePhoneForm')->name('save.phone.form');
 
