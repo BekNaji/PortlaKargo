@@ -62,15 +62,17 @@
 						<input type="hidden" name="sender_id"
 						value="{{$cargo->sender->id}}">
 						<tr>
-							<td class="text-center" style="padding:5px;" colspan="2"><b>Gönderici bilgileri</b></td>
+							<td class="text-center" style="padding:5px;" colspan="2">
+								<b>Sender Info</b>
+							</td>
 						</tr>
 						<tr>
-							<td style="padding:0 15px 0 15px;"><b>Tarih / Saat</b> </td>
+							<td style="padding:0 15px 0 15px;"><b>Date</b> </td>
 							<td style="padding:0 15px 0 15px;">{{$cargo->sender->created_at ?? ''}}</td>
 						</tr>
 						{{-- sender name --}}
 						<tr>
-							<td style="padding:0 15px 0 15px;"><b>Ad Soyad</b></td>
+							<td style="padding:0 15px 0 15px;"><b>Full Name</b></td>
 							<td style="padding:0 15px 0 15px;">{{$cargo->sender->name}}</td>
 						</tr>
 						
@@ -86,12 +88,14 @@
 						<input type="hidden" name="receiver_id"
 						value="{{$cargo->receiver->id}}">
 						<tr>
-							<td class="text-center" style="padding:5px;" colspan="2"><b>Alıcı bilgileri</b></td>
+							<td class="text-center" style="padding:5px;" colspan="2">
+								<b>Receiver Info</b>
+							</td>
 						</tr>
 						
 						{{-- Receiver name --}}
 						<tr>
-							<td style="padding:0 15px 0 15px;"><b>Ad Soyad</b></td>
+							<td style="padding:0 15px 0 15px;"><b>Full Name</b></td>
 							<td style="padding:0 15px 0 15px;">{{$cargo->receiver->name}}</td>
 						</tr>
 						{{-- receiver passport --}}
@@ -129,20 +133,20 @@
 							<td colspan="2" class="text-center"><h1>{{$cargo->number ?? ''}}</h1></td>
 						</tr>
 						<tr>
-							<td>Kargo Kg</td>
+							<td>Cargo Kg</td>
 							<td style="padding:0 15px 0 15px;">{{$cargo->total_kg}}</td>
 						</tr>
 						<tr>
-							<td>Kargo Ücretı</td>
+							<td>Shipping fee</td>
 							<td style="padding:0 15px 0 15px;">{{$cargo->cargo_price}}</td>
 						</tr>
 						<tr>
-							<td>Ödeme türü</td>
+							<td>Payment type</td>
 							<td style="padding:0 15px 0 15px;">
-								{{$cargo->payment_type == 1 ? "Gönderıcı Öder":""}}
+								{{$cargo->payment_type == 1 ? "Sender Pays":""}}
 								
 								
-								{{$cargo->payment_type == 2 ? "Alıcı Öder":""}}
+								{{$cargo->payment_type == 2 ? "Receiver Pays":""}}
 								
 							</td>
 						</tr>
@@ -161,28 +165,51 @@
 							<td style="padding-left: 15px;padding-right: 15px;">Цена</td>
 						</tr>
 						
-						<?php $key = 0; for($i=1; $i<25; $i++){ ?>
+						<?php $key = 0; for($i=1; $i<21; $i++){ ?>
 						<tr>
 							<input type="hidden" name="product_id"
-							value="{{$products[$key]->id ?? ''}}">
-							<td><?php echo $i ?></td>
-							<td>{{ $products[$key]->name ?? ''}}</td>
-							<td>{{ $products[$key]->count ?? ''}}</td>
-							<td>
+							value="{{ $products[$key]->id ?? '' }}">
+							<td style="padding-left: 15px; padding-right: 15px">{{ $i }}</td>
+							<td style="padding-left: 15px;padding-right: 15px">
+								{{ $products[$key]->name ?? ''}}</td>
+							<td style="padding-left: 15px;padding-right: 15px;">{{ $products[$key]->count ?? ''}}</td>
+							<td style="padding-left: 15px;padding-right: 15px;">
 							{{ $products[$key]->product_kg ?? ''}}</td>
-							<td>
+							<td style="padding-left: 15px;padding-right: 15px;">
 							{{ $products[$key]->product_total_kg ?? ''}}</td>
-							<td>
+							<td style="padding-left: 15px;padding-right: 15px;">
 								{{ $products[$key]->cost ?? ''}}
-							</td>
-							<td>{{ $products[$key]->total ?? ''}}</td>
+							</td >
+							<td style="padding-left: 15px;padding-right: 15px;">{{ $products[$key]->total ?? '-'}}</td>
 						</tr>
 						<?php $key++; } ?>
+						<tr>
+							<td style="padding-left: 15px;padding-right: 15px;" colspan="5" rowspan="2">
+								<p>Decelaration Statment. I hereby certify that the information in this invoice is true and correct and the contents and value of this shipment is a stated above</p>
+							</td>
+							<td style="padding-left: 15px;padding-right: 15px;" >
+								<center><h6>TOTAL WEIGHT </h6></center></td>
+							<td style="padding-left: 15px;padding-right: 15px;" colspan="2">
+								<h6>{{$cargo->total_kg ?? '0'}} KG</h6>
+							</td>
+						</tr>
+						<tr>
+							
+							<td style="padding-left: 15px;padding-right: 15px;" >
+								<center><h6>TOTAL PRICE </h6></center></td>
+							<td style="padding-left: 15px;padding-right: 15px;" colspan="2">
+								<h6>{{$cargo->total_price ?? '0'}} $</h6>
+							</td>
+						</tr>
 					</table>
 				</div>
 				
 			</div>
 		</div>
+		
+
+
+
 		<script type="text/javascript">
 		window.print();
 		</script>

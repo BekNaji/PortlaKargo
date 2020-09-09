@@ -48,6 +48,7 @@ class SettingsController extends Controller
         $company->contact = $request->contact;
         $company->address = $request->address;
         $company->other_address = $request->other_address;
+        $company->bot_info = $request->bot_info;
          if($request->logo != '')
         {
             $upload = new Upload();

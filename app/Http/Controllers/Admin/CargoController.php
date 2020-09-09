@@ -184,6 +184,7 @@ class CargoController extends Controller
         $cargo->number = Auth::user()->company->cargo_letter.sprintf("%05s",$cargo->id);
         $cargo->save();
         $cargo_id = $cargo->id;
+        $total_price = '0';
 
         $this->storeLog($cargo->id,$cargo->status);
 
@@ -194,15 +195,22 @@ class CargoController extends Controller
                 $product = new Product();
                 $product->name = $request->product_name[$key];
                 $product->count = $request->product_count[$key];
-                $product->product_kg = $request->product_kg[$key];
-                $product->product_total_kg = $request->product_total_kg[$key];
                 $product->cost = $request->product_price[$key];
                 $product->total = $request->product_total_price[$key];
                 $product->cargo_id = $cargo_id;
                 $product->save();
+
+                $total_price += $request->product_total_price[$key];
             }
         }
-        return redirect()->route('cargo.show',encrypt($cargo->id));
+
+        $cargo = Cargo::find($cargo_id);
+        $cargo->total_price = $total_price;
+        $cargo->save();
+
+        return redirect()
+        ->route('cargo.show',encrypt($cargo->id))
+        ->with(['success'=>'Kaydedildi!']);
     }
 
     public function updateAll(Request $request)
@@ -231,6 +239,7 @@ class CargoController extends Controller
         $cargo_id = $cargo->id;
 
         
+        $total_price = '0';
 
         foreach ($request->product_name as $key=> $name) 
         {
@@ -239,25 +248,43 @@ class CargoController extends Controller
             {
                 $product = Product::find($request->product_id[$key]);
 
-                if($request->product_name[$key] != '')
+                if($name != '')
                 {
                     $product->name = $request->product_name[$key];
                     $product->count = $request->product_count[$key];
-                    $product->product_kg = $request->product_kg[$key];
-                    $product->product_total_kg = $request->product_total_kg[$key];
                     $product->cost = $request->product_price[$key];
                     $product->total = $request->product_total_price[$key];
+                    $total_price += $request->product_total_price[$key];
                     $product->cargo_id = $cargo_id;
                     $product->save();
                 }else
                 {
                     $product->delete();
                 }
+            }else
+            {
+                if($name != '')
+                {
+                    $product = new Product();
+                    $product->name = $request->product_name[$key];
+                    $product->count = $request->product_count[$key];
+                    $product->cost = $request->product_price[$key];
+                    $product->total = $request->product_total_price[$key];
+                    $total_price += $request->product_total_price[$key];
+                    $product->cargo_id = $cargo_id;
+                    $product->save();
+                }
             }
             
         }
+        $cargo = Cargo::find($cargo_id);
+        $cargo->total_price = $total_price;
+        $cargo->save();
 
-        return redirect()->route('cargo.show',encrypt($cargo->id));
+
+        return redirect()
+        ->route('cargo.show',encrypt($cargo->id))
+        ->with(['success'=>'Güncellendi!']);
     }
 
     public function print(Request $request)

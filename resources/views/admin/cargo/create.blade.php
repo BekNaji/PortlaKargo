@@ -12,8 +12,6 @@
 					<td style="padding-left: 15px;padding-right: 15px;">No:</td>
 					<td style="padding-left: 15px;padding-right: 15px;">НАЗВАНИЕ</td>
 					<td style="padding-left: 15px;padding-right: 15px;">Кол-вo</td>
-					<td style="padding-left: 15px;padding-right: 15px;">Весь несто</td>
-					<td style="padding-left: 15px;padding-right: 15px;">Вес брутто</td>
 					<td style="padding-left: 15px;padding-right: 15px;">Цена за ед.</td>
 					<td style="padding-left: 15px;padding-right: 15px;">Цена</td>
 				</tr>
@@ -21,25 +19,25 @@
 				<?php for($i=1; $i<25; $i++){ ?>
 				<tr>
 					<td><?php echo $i ?></td>
+
 					<td><input style="width:100%;"
 					name="product_name[]" type="text"></td>
 					<td>
 						<input style="width:100%;"
-						name="product_count[]" type="number" step="0.1">
-					</td>
+						name="product_count[]" 
+						type="number" step="0.1"
+						class="product_count count{{$i}}" data-id="{{$i}}" 
 
-					<td>
-						<input type="number" step="0.1" style="width:100%;" name="product_kg[]" type="text">
+						>
 					</td>
-
 					<td>
-						<input style="width:100%;" name="product_total_kg[]" type="text">
+						<input 
+						type="number" step="0.1" 
+						style="width:100%;" name="product_price[]" type="text"
+						class="product_price price{{$i}}" data-id="{{$i}}" 
+						>
 					</td>
-					
-					<td>
-						<input type="number" step="0.1" style="width:100%;" name="product_price[]" type="text">
-					</td>
-					<td><input type="number" step="0.1" style="width:100%;" name="product_total_price[]" type="text"></td>
+					<td><input class="total_price{{$i}}" type="number" step="0.1" style="width:100%;" name="product_total_price[]" type="text" readonly></td>
 				</tr>
 				<?php } ?>
 				
@@ -150,4 +148,23 @@
 		</div>
 	</div>
 </form>
+@endsection
+@section('js')
+<script type="text/javascript">
+	
+	$(document).on('keyup','.product_count',function(){
+		var row = $(this).data('id');
+		var product_count = $('.count'+row).val();
+		var product_price = $('.price'+row).val();
+		$('.total_price'+row).val(product_count*product_price);
+	});
+
+	$(document).on('keyup','.product_price',function(){
+		var row = $(this).data('id');
+		var product_count = $('.count'+row).val();
+		var product_price = $('.price'+row).val();
+		$('.total_price'+row).val(product_count*product_price);
+	});
+	
+</script>
 @endsection

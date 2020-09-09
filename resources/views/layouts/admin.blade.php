@@ -21,6 +21,8 @@
 		<link href="{{ asset('assets') }}/css/dataTables.min.css" rel="stylesheet" />
 		<link href="{{ asset('assets') }}/css/toastr.min.css" rel="stylesheet" />
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+		<script src="{{asset('ckeditor/ckeditor.js')}}"></script>
 	</head>
 	<body class="sb-nav-fixed">
 		<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">

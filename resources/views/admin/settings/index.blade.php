@@ -66,11 +66,20 @@
 						<label>Yurtdışı Adres</label>
 						<textarea class="form-control" name="other_address">{{Auth::user()->company->other_address ?? ''}}</textarea>
 					</div>
+
+					<div class="form-group">
+						<label>Telegram Bot Info</label>
+						<textarea id="editor1" class="form-control" name="bot_info"></textarea>
+					</div>
+
 					<button class="btn btn-success">Güncelle</button>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
+<script>
 
+CKEDITOR.replace( 'editor1' );
+</script>
 @endsection
