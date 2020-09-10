@@ -21,6 +21,11 @@ $(document).ready(function(){
 		$('#filterModal').modal('show');
 	});
 
+	// show manafes modal
+	$(document).on('click','#manafes',function(){
+		$('#excelModal').modal('show');
+	});
+
 	// show send message modal
 	$(document).on('click','#sendMessageTelegram',function(){
 		var id = [];

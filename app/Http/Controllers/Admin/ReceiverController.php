@@ -64,7 +64,7 @@ class ReceiverController extends Controller
     {
 
     	$receiver = Receiver::find($request->id); 
-
+        $receiver->delete();
         return back()->with(['success'=>'Silindi!']);
     }
 

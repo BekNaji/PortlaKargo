@@ -12,9 +12,11 @@
 				<a href="{{route('cargo.create')}}" class="btn btn-success "><i class="fa fa-plus" aria-hidden="true"></i></a>
 				&nbsp;
 				<button id="filter" type="button" class="btn btn-info"><i class="fa fa-filter" aria-hidden="true"></i></button>
-				<button id="change" type="button" class="btn btn-warning"> Seçilen  Kayitların Durumunu Değiştir</button>
+				<button id="change" type="button" class="btn btn-warning">Status Değiştir</button>
 
-				<button id="sendMessageTelegram" type="button" class="btn btn-success"> Seçilen  Kayitlara Mesaj Gönder</button>
+				<button id="sendMessageTelegram" type="button" class="btn btn-primary">SMS Telegram</button>
+
+				<button id="manafes" type="button" class="btn btn-info">Manafes Hazırla</button>
 				
 				
 				<hr>
@@ -90,6 +92,7 @@
 @include('admin.cargo.deleteModal')
 @include('admin.cargo.createModal')
 @include('admin.cargo.filterModal')
+@include('admin.cargo.excelModal')
 @include('admin.cargo.changeStatusModal')
 @include('admin.cargo.sendMessageTelegramModal')
 @include('admin.cargo.script')

@@ -14,6 +14,7 @@ use App\Models\Receiver;
 use Auth;
 use App;
 use Illuminate\Support\Carbon;
+use Excel;
 
 
 
@@ -333,5 +334,47 @@ class CargoController extends Controller
         return  $receiver->id;
     }
 
+    public function manafesExcel(Request $request)
+    {
+        $cargos = Cargo::where('company_id',Auth::user()->company_id);
+        if($request->start !='')
+        {
+            $from = Carbon::parse($request->start.' 00:00:00')->format('Y-m-d H:i:s');
+            $cargos->where('created_at','>=',$from)->get();
+        }
+        if($request->end !='')
+        {
+            $to   = Carbon::parse($request->end.' 23:59:59')->format('Y-m-d H:i:s');
+            $cargos->where('created_at','<=',$to)->get();
+
+        }
+        
+        if($request->status != 'all')
+        {
+            $cargos->where('status','=',$request->status);
+        }
+        $cargos = $cargos->get();
+
+        $datas = [
+                    [ 'Invoice No','Name','Passport','Total KG','Total Price'],
+                ];
+        foreach ($cargos as $key => $value) {
+            
+            $data = [   
+                        $value->number ?? '',
+                        $value->receiver->name ?? '',
+                        $value->receiver->passport ?? '',
+                        $value->total_kg ?? '',
+                        '$'.$value->total_price ?? ''
+                    ];
+
+            array_push($datas, $data);
+            
+        }
+     
+        $date = date('d.m.Y');
+        $filename = $date.'-manafes.xlsx';
+        return Excel::download(new App\Exports\CargoExcel($datas), $filename);
+    }
 
 }

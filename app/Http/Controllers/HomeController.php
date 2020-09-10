@@ -142,7 +142,7 @@ class HomeController extends Controller
     {
         $company = Company::find(2);
        
-        return $company->bot_info;
+        return json_encode($company->bot_info);
     }
     
 }

@@ -15,24 +15,36 @@ class TelegramController extends Controller
 
     public function sendMessage(Request $request)
     {
-    	$message = '';
-    	$cargo = Cargo::find($request->id);
+        $message = '';
+        $cargo = Cargo::find($request->id);
 
-    	$customer = Customer::find($cargo->sender_id);
+        $customer = Customer::find($cargo->sender_id);
 
-    	$company = Company::find($customer->company_id);
+        $company = Company::find($customer->company_id);
 
-    	$message .= '<b>Şirket adı:</b> '.$company->name.' '.PHP_EOL;
-    	$message .= '<b>Kargo Durumu: </b>'.$cargo->cargoStatus->name.' '.PHP_EOL;
-    	$message .='<b>Kargo Takip No : </b>'.$cargo->number.' '.PHP_EOL;
-
-    	$response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
+        $message .= '<b>Şirket adı:</b> '.$company->name.' '.PHP_EOL;
+        $message .= '<b>Kargo Durumu: </b>'.$cargo->cargoStatus->name.' '.PHP_EOL;
+        $message .='<b>Kargo Takip No : </b>'.$cargo->number.' '.PHP_EOL;
+        if($company->telegram_url != '')
+        {
+            $url = $company->telegram_url;
+            $response = Http::post($url.'sendMessage.php',
                 [
                     'id' => $customer->telegram_id,
                     'message' => $message,
                 ]);
+        }
+        else
+        {
+            $response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
+                [
+                    'id' => $customer->telegram_id,
+                    'message' => $message,
+                ]);
+        }
+        
 
-    	return back()->with(['success'=>'Kargo durmu müşteriye iletildi!']);
+        return back()->with(['success'=>'Kargo durmu müşteriye iletildi!']);
     }
 
     public function sendMultipleMessage(Request $request)
@@ -41,8 +53,6 @@ class TelegramController extends Controller
         $message = '';
 
         $sms = '';
-
-        
 
         $ids = explode(',', $request->ids);
 
@@ -71,12 +81,16 @@ class TelegramController extends Controller
                 }
                 $message .='<b>Kargo Takip No : </b>'.$cargo->number.''.PHP_EOL.PHP_EOL;
                 $message .= $sms;
-           
-                $response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
-                [
-                'id' => $customer->telegram_id,
-                'message' => $message,
-                ]);
+                
+                if($company->telegram_url != '')
+                {
+                    $url = $company->telegram_url;
+                    $response = Http::post($url.'sendMessage.php',
+                    [
+                    'id' => $customer->telegram_id,
+                    'message' => $message,
+                    ]);
+                }
             }
 
             $message = '';

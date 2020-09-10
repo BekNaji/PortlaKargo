@@ -121,6 +121,7 @@ Route::post('cargo/delete', 'CargoController@delete')->name('cargo.delete');
 Route::get('cargo/pdf/{id}', 'CargoController@pdf')->name('cargo.pdf');
 Route::get('cargo/filter', 'CargoController@filter')->name('cargo.filter');
 Route::post('cargo/changeStatus', 'CargoController@changeStatus')->name('cargo.change.status');
+Route::get('cargo/manafes', 'CargoController@manafesExcel')->name('cargo.manafes');
 // Cargo Status route
 Route::get('status/cargo/index', 'CargoStatusController@index')->name('status.cargo.index');
 Route::get('status/cargo/create', 'CargoStatusController@create')->name('status.cargo.create');

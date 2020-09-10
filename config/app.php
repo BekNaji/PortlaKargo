@@ -181,16 +181,9 @@ return [
         //Telegram
         Telegram\Bot\Laravel\TelegramServiceProvider::class,
 
+        // Excell
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         
-
-
-        
-
-
-
-    
-
-
 
     ],
 
@@ -249,10 +242,10 @@ return [
         // peal barcode
         'BarCode' => peal\barcodegenerator\Facades\BarCode::class,
 
-        'Telegram'  => Telegram\Bot\Laravel\Facades\Telegram::class
+        'Telegram'  => Telegram\Bot\Laravel\Facades\Telegram::class,
 
 
-       
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
 
 
