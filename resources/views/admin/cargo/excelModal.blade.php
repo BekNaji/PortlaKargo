@@ -30,6 +30,14 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label>Yedek Türü</label>
+                        <select class="form-control" name="type" required >
+                            
+                            <option value="manafes">Manafes</option>
+                            <option value="baza">Baza</option>
+                        </select>
+                    </div>
 
                     <button type="submit" class="btn btn-success">Ok</button>
                 </form>

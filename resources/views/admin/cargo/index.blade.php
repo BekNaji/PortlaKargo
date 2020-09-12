@@ -16,11 +16,11 @@
 
 				<button id="sendMessageTelegram" type="button" class="btn btn-primary">SMS Telegram</button>
 
-				<button id="manafes" type="button" class="btn btn-info">Manafes Hazırla</button>
+				<button id="manafes" type="button" class="btn btn-info">Excel Hazırla</button>
 				
 				
 				<hr>
-				<table class="table  table-bordered">
+				<table class="table  table-bordered table-responsive-sm">
 					<thead>
 						<tr>
 							<td style="width:50px;"><input 

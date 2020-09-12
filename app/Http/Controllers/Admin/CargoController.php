@@ -355,25 +355,93 @@ class CargoController extends Controller
         }
         $cargos = $cargos->get();
 
+
+
+        
+
+        if($request->type == 'manafes')
+        {
         $datas = [
-                    [ 'Invoice No','Name','Passport','Total KG','Total Price'],
-                ];
-        foreach ($cargos as $key => $value) {
+                [ 'Invoice No','Name','Passport','Total KG','Total Price'],
+            ];
+        foreach ($cargos as $key => $value) 
+        {
             
             $data = [   
                         $value->number ?? '',
                         $value->receiver->name ?? '',
                         $value->receiver->passport ?? '',
                         $value->total_kg ?? '',
-                        '$'.$value->total_price ?? ''
+                        $value->total_price,
                     ];
 
             array_push($datas, $data);
             
         }
+
      
         $date = date('d.m.Y');
         $filename = $date.'-manafes.xlsx';
+        }
+        if($request->type == 'baza')
+        {
+            
+            $datas = [
+                    ['Invoice No','Tarih','Sender','Sender Tel','Recevier','Receiver Tel:1','Receiver Tel:2','Address','Total KG','Total Price','Passport','']
+                ];
+            $product_headers = ['Product Name','Total Count','Price','Total Price',''];
+            for($i=1; $i<22; $i++)
+            {
+            array_push($datas[0], 'Product Name. '.$i);
+            array_push($datas[0], 'Total Count. '.$i);
+            array_push($datas[0], 'Price. '.$i);
+            array_push($datas[0], 'Total Price. '.$i);
+            array_push($datas[0],'');
+            }
+            
+            foreach ($cargos as $key => $cargo) 
+            {
+                $products = Product::where('cargo_id','=',$cargo->id)->get();
+                
+
+                $data = [   
+                        $cargo->number ?? '',
+                        $cargo->created_at ?? '',
+                        $cargo->sender->name ?? '',
+                        $cargo->sender->phone ?? '',
+                        $cargo->receiver->name ?? '',
+                        $cargo->receiver->phone ?? '',
+                        $cargo->receiver->other_phone ?? '',
+                        $cargo->receiver->address ?? '',
+                        $cargo->total_kg ?? '',
+                        $cargo->total_price ?? '',
+                        $cargo->receiver->passport ?? '',
+                        '',
+                        ];
+              
+
+                foreach ($products as $key => $product) 
+                {
+                    if($cargo->id == $product->cargo_id)
+                    {
+                        
+                        array_push($data, $product->name ?? '');
+                        array_push($data, $product->count ?? '');
+                        array_push($data, $product->cost ?? '');
+                        array_push($data, $product->total ?? '');
+                        array_push($data, '');
+                       
+                    }
+                }
+                
+                array_push($datas, $data);
+
+            }
+            $date = date('d.m.Y');
+            $filename = $date.'-baza.xlsx';
+            // dd($datas);
+        }
+
         return Excel::download(new App\Exports\CargoExcel($datas), $filename);
     }
 

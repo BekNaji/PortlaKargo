@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
 		<title>{{Auth::user()->company->name ?? ''}}</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 		<!-- jQuery library -->
@@ -13,7 +13,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 		<style type="text/css">
 			body{
-				font-size:10px;
+				font-size:9px;
 			}
 		</style>
 	</head>
@@ -24,7 +24,7 @@
 			<div class="row">
 				
 
-				<div class="col-md-4">
+				<div class="col-sm-4">
 					<center>
 					
 					<img style="width:auto"; height="100px" 
@@ -53,9 +53,13 @@
 						<td style="padding:0 15px 0 15px;"><b>Email </b></td>
 						<td style="padding:0 15px 0 15px;">{{$company->email}}</td>
 					</tr>
+					<tr>
+						<td style="padding:0 15px 0 15px;"><b>User</b></td>
+						<td style="padding:0 15px 0 15px;">{{ Auth::user()->name }}</td>
+					</tr>
 					</table>
 				</div>
-				<div class="col-md-4">
+				<div class="col-sm-4">
 					{{-- sender info --}}
 					<center><h1>Invoice</h1></center><br>
 					<table class="table-bordered" style="width:100%">
@@ -85,8 +89,7 @@
 					{{-- receiver info --}}
 					<br>
 					<table class="table-bordered" style="width:100%">
-						<input type="hidden" name="receiver_id"
-						value="{{$cargo->receiver->id}}">
+						
 						<tr>
 							<td class="text-center" style="padding:5px;" colspan="2">
 								<b>Receiver Info</b>
@@ -105,11 +108,15 @@
 						</tr>
 						{{-- sender phone --}}
 						<tr>
-							<td style="padding:0 15px 0 15px;"><b>Telefon </b></td>
+							<td style="padding:0 15px 0 15px;"><b>Telefon: 1 </b></td>
 							<td style="padding:0 15px 0 15px;">{{$cargo->receiver->phone}}
 							</td>
 						</tr>
-						
+						<tr>
+							<td style="padding:0 15px 0 15px;"><b>Telefon: 2 </b></td>
+							<td style="padding:0 15px 0 15px;">{{$cargo->receiver->other_phone ?? '-'}}
+							</td>
+						</tr>
 						<tr>
 							<td style="padding:0 15px 0 15px;"><b>Address </b></td>
 							<td style="padding:0 15px 0 15px;">
@@ -121,27 +128,27 @@
 					
 					
 				</div>
-				<div class="col-md-4">
+				<div class="col-sm-4">
 					<center><img src="{{url($barcode)}}"></center><br>
 					<table class="table-bordered" style="width:100%">
 						<input type="hidden" name="cargo_id"
 						value="{{$cargo->id}}">
 						<tr>
-							<td class="text-center" style="padding:5px;" colspan="2"><b>Kargo Bilgileri</b></td>
+							<td class="text-center" style="padding:5px;" colspan="2"><b>Kargo Info</b></td>
 						</tr>
 						<tr>
 							<td colspan="2" class="text-center"><h1>{{$cargo->number ?? ''}}</h1></td>
 						</tr>
 						<tr>
-							<td>Cargo Kg</td>
+							<td><b>Cargo Kg</b></td>
 							<td style="padding:0 15px 0 15px;">{{$cargo->total_kg}}</td>
 						</tr>
 						<tr>
-							<td>Shipping fee</td>
+							<td><b>Shipping fee</b></td>
 							<td style="padding:0 15px 0 15px;">{{$cargo->cargo_price}}</td>
 						</tr>
 						<tr>
-							<td>Payment type</td>
+							<td><b>Payment type</b></td>
 							<td style="padding:0 15px 0 15px;">
 								{{$cargo->payment_type == 1 ? "Sender Pays":""}}
 								
@@ -152,7 +159,7 @@
 						</tr>
 					</table>
 				</div>
-				<div class="col-md-12">
+				<div class="col-sm-12">
 					<br>
 					<table class="table-bordered" style="width:100%;" >
 						<tr>

@@ -56,6 +56,13 @@
                     <h2>Ne teklif ediyoruz </h2>
                     <p>
                     Bu web site Türkiyede özellikle İstanbul’da bulunan, Rusya ve Orta Asya ülkelerine  kargo hizmeti veren şirketler müşterilere daha iyi hizmet verebileri için yapılmıştır. Portal kargo ile kargonuz nerede olduğunu  kolayca oğrenebilirsiniz. Kargo şirketleri kendi işlerini kolayca yönetebilirler. Şirketler için aşağidaki özellikleri sunmaktayız!</p>
+                    <ul class="list-group">
+                        <li class="list-group-item text-info">Her Gönderi İçin Özel Kargo Takip No</li>
+                        <li class="list-group-item text-info">Kargo Telegram Bilgilendirmesi</li>
+                        <li class="list-group-item text-success">Dinamik Invoice</li>
+                        <li class="list-group-item text-danger">Manafes Hazırlama - Excel</li>
+                        <li class="list-group-item text-primary">Baza Hazırlama - Excel</li>
+                    </ul>
                 </div>
             </div>
         </div>
