@@ -464,7 +464,7 @@ class CargoController extends Controller
         $message .='<b>Kargo Takip No : </b>'.$cargo->number.' '.PHP_EOL;
         if($cargo->company->telegram_url != '')
         {
-            $url = $company->telegram_url;
+            $url = $cargo->company->telegram_url;
             $response = Http::post($url.'sendMessage.php',
                 [
                     'id' => $cargo->sender->telegram_id,
