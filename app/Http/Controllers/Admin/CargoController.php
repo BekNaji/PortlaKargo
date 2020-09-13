@@ -117,12 +117,13 @@ class CargoController extends Controller
             if($cargo->status != $request->status)
             {
                 $this->storeLog($cargo->id,$request->status);
+                $this->sendMessage($cargo->id,$request->status);
 
             } 
             $cargo->status = $request->status;
             $cargo->save();
 
-            $this->sendMessage($cargo->id);
+            
         }
 
 
@@ -136,7 +137,8 @@ class CargoController extends Controller
         $cargoLog->cargo_id = $id;
         $cargoLog->cargo_status_id = $status;
         $cargoLog->save();
-        
+        $status = CargoStatus::find($status);
+        $this->sendMessage($id,$status->name);
 
     }
 
@@ -214,7 +216,7 @@ class CargoController extends Controller
         $cargo->total_price = $total_price;
         $cargo->save();
 
-        $this->sendMessage($cargo->id);
+        
 
         return redirect()
         ->route('cargo.show',encrypt($cargo->id))
@@ -233,6 +235,7 @@ class CargoController extends Controller
         if($cargo->status != $request->status)
         {
             $this->storeLog($cargo->id,$request->status);
+
         }
         $cargo->company_id = Auth::user()->company_id;
         $cargo->payment_type = $request->payment_type;
@@ -289,7 +292,7 @@ class CargoController extends Controller
         $cargo->total_price = $total_price;
         $cargo->save();
 
-        $this->sendMessage($cargo->id);
+        
 
         return redirect()
         ->route('cargo.show',encrypt($cargo->id))
@@ -454,13 +457,13 @@ class CargoController extends Controller
         return Excel::download(new App\Exports\CargoExcel($datas), $filename);
     }
 
-    public function sendMessage($id)
+    public function sendMessage($id,$status)
     {
         $message = '';
         $cargo = Cargo::find($id);
 
         $message .= '<b>Şirket adı:</b> '.$cargo->company->name.' '.PHP_EOL;
-        $message .= '<b>Kargo Durumu: </b>'.$cargo->cargoStatus->name.' '.PHP_EOL;
+        $message .= '<b>Kargo Durumu: </b>'.$status.' '.PHP_EOL;
         $message .='<b>Kargo Takip No : </b>'.$cargo->number.' '.PHP_EOL;
         if($cargo->company->telegram_url != '')
         {

@@ -6,7 +6,7 @@
 <div class="card">
      <div class="card-body">
         <h3>Invoice NO: {{ $cargo->number ?? ''}} <br> </h3>
-        <p class="p-2 bg-info rounded"><b>{{$cargo->cargoStatus->name}}</b></p>
+        <p class="p-2 bg-info rounded"><b>{{$cargo->cargoStatus->name ?? ''}}</b></p>
         <hr>
         <b>Gönderen: </b>{{$cargo->sender->name ?? ''}} <br>
         <b>Tel: </b> {{$cargo->sender->phone ?? ''}} <br>
@@ -33,7 +33,7 @@
                     <option value="" selected>Seç</option>
                     
                     @foreach($statuses as $status)
-                    <option value="{{$status->id}}">{{$status->name}}</option>
+                    <option value="{{$status->id ?? ''}}">{{$status->name ?? ''}} </option>
                     @endforeach
                 </select>
                 @else

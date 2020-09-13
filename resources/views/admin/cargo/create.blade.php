@@ -55,7 +55,10 @@
 				{{-- sender name --}}
 				<tr>
 					<td style="padding:0 15px 0 15px;"><b>Ad Soyad</b></td>
-					<td><input style="width:100%" type="text" name="sender_name" required></td>
+					<td><input style="width:100%" type="text" name="sender_name" required>
+						
+
+					</td>
 				</tr>
 				
 				{{-- sender phone --}}
@@ -166,5 +169,6 @@
 		$('.total_price'+row).val(product_count*product_price);
 	});
 	
+
 </script>
 @endsection

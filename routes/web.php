@@ -94,6 +94,9 @@ Route::post('customer/update', 'CustomerController@update')->name('customer.upda
 Route::post('customer/store', 'CustomerController@store')->name('customer.store');
 Route::post('customer/delete', 'CustomerController@delete')->name('customer.delete');
 Route::get('customer/get', 'CustomerController@get')->name('customer.get');
+Route::get('customer/getName', 'CustomerController@getName')->name('customer.getName');
+
+
 // Receiver Route
 Route::get('receiver/index', 'ReceiverController@index')->name('receiver.index');
 Route::get('cargo/receiver/create/{id}', 'ReceiverController@create')->name('receiver.create');
