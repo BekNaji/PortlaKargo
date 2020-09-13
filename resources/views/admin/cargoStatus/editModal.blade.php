@@ -17,6 +17,13 @@
                         <label>Status Adı</label>
                         <input value="" id="edit_name" class="form-control" type="text" name="name">
                     </div>
+                     <div class="form-group">
+                        <select class="form-control" name="type" required>
+                            <option value="" selected>Seç</option>
+                            <option value="personal">Personal</option>
+                            <option value="kurye">Kurye</option>
+                        </select>
+                    </div>
                     <button type="submit" class="btn btn-success" >Güncelle</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal" >Iptal</button>
                 </form>

@@ -14,7 +14,14 @@
                     @csrf
                     <div class="form-group">
                         <label>Status Adı</label>
-                        <input class="form-control" type="text" name="name">
+                        <input class="form-control" type="text" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="type" required>
+                            <option value="" selected>Seç</option>
+                            <option value="personal">Personal</option>
+                            <option value="kurye">Kurye</option>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-success" >Kaydet</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal" >Iptal</button>

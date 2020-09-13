@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -15,6 +15,7 @@ use Auth;
 use App;
 use Illuminate\Support\Carbon;
 use Excel;
+use Illuminate\Support\Facades\Http;
 
 
 
@@ -120,7 +121,10 @@ class CargoController extends Controller
             } 
             $cargo->status = $request->status;
             $cargo->save();
+
+            $this->sendMessage($cargo->id);
         }
+
 
         return back()->with(['success'=>'Güncellendi']);
     }
@@ -132,6 +136,7 @@ class CargoController extends Controller
         $cargoLog->cargo_id = $id;
         $cargoLog->cargo_status_id = $status;
         $cargoLog->save();
+        
 
     }
 
@@ -209,6 +214,8 @@ class CargoController extends Controller
         $cargo->total_price = $total_price;
         $cargo->save();
 
+        $this->sendMessage($cargo->id);
+
         return redirect()
         ->route('cargo.show',encrypt($cargo->id))
         ->with(['success'=>'Kaydedildi!']);
@@ -282,6 +289,7 @@ class CargoController extends Controller
         $cargo->total_price = $total_price;
         $cargo->save();
 
+        $this->sendMessage($cargo->id);
 
         return redirect()
         ->route('cargo.show',encrypt($cargo->id))
@@ -383,6 +391,7 @@ class CargoController extends Controller
         $date = date('d.m.Y');
         $filename = $date.'-manafes.xlsx';
         }
+
         if($request->type == 'baza')
         {
             
@@ -443,6 +452,36 @@ class CargoController extends Controller
         }
 
         return Excel::download(new App\Exports\CargoExcel($datas), $filename);
+    }
+
+    public function sendMessage($id)
+    {
+        $message = '';
+        $cargo = Cargo::find($id);
+
+        $message .= '<b>Şirket adı:</b> '.$cargo->company->name.' '.PHP_EOL;
+        $message .= '<b>Kargo Durumu: </b>'.$cargo->cargoStatus->name.' '.PHP_EOL;
+        $message .='<b>Kargo Takip No : </b>'.$cargo->number.' '.PHP_EOL;
+        if($cargo->company->telegram_url != '')
+        {
+            $url = $company->telegram_url;
+            $response = Http::post($url.'sendMessage.php',
+                [
+                    'id' => $cargo->sender->telegram_id,
+                    'message' => $message,
+                ]);
+        }
+        else
+        {
+            $response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
+                [
+                    'id' => $cargo->sender->telegram_id,
+                    'message' => $message,
+                ]);
+        }
+        
+
+        return ;
     }
 
 }

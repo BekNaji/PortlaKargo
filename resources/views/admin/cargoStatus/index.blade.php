@@ -14,6 +14,7 @@
 						<tr>
 							<td><b>#</b></td>
 							<td><b>Ad</b></td>
+							<td><b>Tür</b></td>
 							<td><b>#</b></td>
 						</tr>
 					</thead>
@@ -22,6 +23,7 @@
 						<tr>
 							<td>{{$loop->iteration}}</td>
 							<td>{{$status->name}}</td>
+							<td>{{$status->type}}</td>
 							<td>
 								
 								<a id="edit" data-id="{{$status->id}}"

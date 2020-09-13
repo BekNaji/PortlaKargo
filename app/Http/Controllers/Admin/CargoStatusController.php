@@ -27,6 +27,7 @@ class CargoStatusController extends Controller
     	$status = new CargoStatus();
         $status->company_id = Auth::user()->company_id;
     	$status->name = $request->name;
+        $status->type = $request->type;
     	$status->save();
 
     	return back()->with(['success'=>'Kaydedildi!']);
@@ -36,6 +37,7 @@ class CargoStatusController extends Controller
     {
     	$status = CargoStatus::find($request->id);
     	$status->name = $request->name;
+        $status->type = $request->type;
     	$status->save();
 
     	return back()->with(['success'=>'Güncellendi!']);

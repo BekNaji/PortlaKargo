@@ -19,6 +19,7 @@ Route::get('locale/{locale}', function ($locale){
 Route::get('/api/cargo/status', 'Api\CargoControllerApi@index');
 
 
+	
 Route::redirect('/', '/home');
 Route::redirect('/admin', '/dashboard/index');
 Route::redirect('dashboard', '/dashboard/index');
@@ -59,6 +60,10 @@ Route::middleware('auth')
 Auth::routes();
 Route::middleware(['auth','checkcompany'])
 	   ->prefix('dashboard')->namespace('Admin')->group(function(){
+
+Route::get('delivery/index','DeliveryController@index')->name('delivery.index');
+Route::get('delivery/edit','DeliveryController@edit')->name('delivery.edit');
+Route::get('delivery/store','DeliveryController@store')->name('delivery.store');
 
 Route::get('index', 'DashboardController@index')->name('dashboard.index');
 
