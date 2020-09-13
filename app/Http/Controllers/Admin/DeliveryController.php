@@ -61,7 +61,7 @@ class DeliveryController extends Controller
         $message .= '<b>Teslim Alan: </b>'.$cargo->receiver_name ?? 'Teslim alinmadi'.' '.PHP_EOL;
         if($cargo->company->telegram_url != '')
         {
-            $url = $company->telegram_url;
+            $url = $cargo->company->telegram_url;
             $response = Http::post($url.'sendMessage.php',
                 [
                     'id' => $cargo->sender->telegram_id,
