@@ -10,6 +10,7 @@ use App\Models\CargoStatus;
 use App\Models\Company;
 use App\Models\Follower;
 use App\Models\Customer;
+use App\Models\Receiver;
 
 class HomeController extends Controller
 {
