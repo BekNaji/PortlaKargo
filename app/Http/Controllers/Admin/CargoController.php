@@ -47,7 +47,7 @@ class CargoController extends Controller
 
     public function create()
     {
-         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
+        $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
         return view('admin.cargo.create',compact('statuses'));
     }
 
@@ -60,6 +60,7 @@ class CargoController extends Controller
         return view('admin.cargo.edit',compact('cargo','statuses'));
     }
 
+    # show cargo info
     public function show(Request $request)
     {
         $cargo = Cargo::find(decrypt($request->id));
@@ -70,6 +71,7 @@ class CargoController extends Controller
                compact('cargo','products','statuses'));
     }
     
+    # delete cargo
     public function delete(Request $request)
     {
         $cargo = Cargo::find($request->id);
@@ -77,7 +79,7 @@ class CargoController extends Controller
         return back()->with(['success'=>'Silindi!']);
     }
 
- 
+    # make filter
     public function filter(Request $request)
     {
         
@@ -107,6 +109,7 @@ class CargoController extends Controller
         return view('admin.cargo.index',compact('cargos','statuses'));
     }
 
+    # change status
     public function changeStatus(Request $request)
     {
         $ids = explode(',', $request->ids);
@@ -129,6 +132,7 @@ class CargoController extends Controller
         return back()->with(['success'=>'Güncellendi']);
     }
     
+    # store log
     public function storeLog($id,$status)
     {
 
@@ -141,6 +145,7 @@ class CargoController extends Controller
 
     }
 
+    # make barcode
     public function getBarcode($data)
     {
         //Generate into customize folder under public
@@ -170,6 +175,7 @@ class CargoController extends Controller
 
     }
 
+    # store cargo
     public function storeAll(Request $request)
     {
         
@@ -222,6 +228,7 @@ class CargoController extends Controller
         ->with(['success'=>'Kaydedildi!']);
     }
 
+    # update cargo
     public function updateAll(Request $request)
     {
 
@@ -298,6 +305,7 @@ class CargoController extends Controller
         ->with(['success'=>'Güncellendi!']);
     }
 
+    # print cargo
     public function print(Request $request)
     {
 
@@ -310,6 +318,7 @@ class CargoController extends Controller
         return view('admin.cargo.print',compact('cargo','products','barcode','company','statuses'));
     }
 
+    # store and update Sender
     public function storeCustomer($request)
     {
         $sender = Customer::where('phone','=',$request->sender_phone)->get()->first();
@@ -319,7 +328,7 @@ class CargoController extends Controller
             $sender = new Customer();
         }
 
-        $sender->name = $request->sender_name;
+        $sender->name = strtoupper($request->sender_name);
         $sender->phone = $request->sender_phone;
         $sender->company_id = Auth::user()->company_id;
         $sender->save();
@@ -328,6 +337,7 @@ class CargoController extends Controller
         
     }
 
+    # store and update Receiver
     public function storeReceiver($request)
     {
         $receiver = Receiver::where('phone','=',$request->receiver_phone)->get()->first();
@@ -335,15 +345,16 @@ class CargoController extends Controller
         {
             $receiver = new Receiver();
         }
-        $receiver->name = $request->receiver_name;
-        $receiver->passport = $request->receiver_passport;
+        $receiver->name = strtoupper($request->receiver_name);
+        $receiver->passport = strtoupper($request->receiver_passport);
         $receiver->phone = $request->receiver_phone;
-        $receiver->address = $request->receiver_address;
+        $receiver->address = strtoupper($request->receiver_address);
         $receiver->company_id = Auth::user()->company_id;
         $receiver->save();
         return  $receiver->id;
     }
 
+    # make excel
     public function manafesExcel(Request $request)
     {
         $cargos = Cargo::where('company_id',Auth::user()->company_id);
@@ -456,6 +467,7 @@ class CargoController extends Controller
         return Excel::download(new App\Exports\CargoExcel($datas), $filename);
     }
 
+    # send message to user with telegram bot
     public function sendMessage($id,$status)
     {
         $message = '';
