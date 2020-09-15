@@ -74,7 +74,9 @@ Route::get('telegram/send/message/{id}', 'TelegramController@sendMessage')->name
 // send one more message
 Route::post('telegram/send/multiple/message/', 'TelegramController@sendMultipleMessage')->name('telegram.send.multiple.message');
 
-
+Route::get('get/balance', 'TelegramController@getBalance')->name('get.balance');
+Route::get('get/header', 'TelegramController@getHeader')->name('get.header');
+Route::get('send/sms', 'TelegramController@sendSMS')->name('send.sms');
 // profile
 Route::get('profile/index', 'ProfileController@index')->name('profile.index');
 Route::post('profile/update', 'ProfileController@update')->name('profile.update');
@@ -143,10 +145,7 @@ Route::get('status/log/store', 'CargoLogController@store')->name('cargo.log.stor
 Route::get('settings/index', 'SettingsController@index')->name('settings.index');
 Route::post('settings/update', 'SettingsController@update')->name('settings.update');
 
-//sms
-Route::get('getbalance', 'SmsController@getBalance')->name('get.balance');
 
-Route::get('sendsms', 'SmsController@sendSMS')->name('send.sms');
 
 
 });

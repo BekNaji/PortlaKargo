@@ -110,20 +110,19 @@ class CargoController extends Controller
     public function changeStatus(Request $request)
     {
         $ids = explode(',', $request->ids);
-
+        
         foreach ($ids as $key => $id) 
         {
             $cargo = Cargo::find($id);
             if($cargo->status != $request->status)
             {
                 $this->storeLog($cargo->id,$request->status);
-                $this->sendMessage($cargo->id,$request->status);
+                
 
             } 
             $cargo->status = $request->status;
             $cargo->save();
 
-            
         }
 
 
@@ -465,25 +464,35 @@ class CargoController extends Controller
         $message .= '<b>Şirket adı:</b> '.$cargo->company->name.' '.PHP_EOL;
         $message .= '<b>Kargo Durumu: </b>'.$status.' '.PHP_EOL;
         $message .='<b>Kargo Takip No : </b>'.$cargo->number.' '.PHP_EOL;
+        $message .= '<b>Gönderici: </b>'.$cargo->sender->name ?? '-';
+        $message .= PHP_EOL;
+        $message .= '<b>Alıcı: </b>'.$cargo->receiver->name ?? '-';
+        $message .= PHP_EOL;
         if($cargo->company->telegram_url != '')
         {
             $url = $cargo->company->telegram_url;
-            $response = Http::post($url.'sendMessage.php',
+
+            if($cargo->sender->telegram_id != '')
+            {
+
+                $response = Http::post($url.'sendMessage.php',
                 [
                     'id' => $cargo->sender->telegram_id,
                     'message' => $message,
                 ]);
-        }
-        else
-        {
-            $response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
+            }
+
+            if($cargo->receiver->telegram_id != '')
+            {
+                $response = Http::post($url.'sendMessage.php',
                 [
-                    'id' => $cargo->sender->telegram_id,
+                    'id' => $cargo->receiver->telegram_id,
                     'message' => $message,
                 ]);
+            }
+            
         }
         
-
         return ;
     }
 

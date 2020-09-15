@@ -108,41 +108,50 @@ class HomeController extends Controller
 
         if($request->user_id != '')
         {
-            $customer = Customer::
-            where('phone','=',$request->phone)
-            ->get()
-            ->first();
+            $customer = Customer::where('phone','=',$request->phone)
+            ->get()->first();
+
+            $receiver = Receiver::where('phone','=',$request->phone)
+            ->get()->first();
 
             if(!$customer)
             {
-                return redirect()
-                ->route('save.phone.form',[$request->auth,$request->user_id])
-                ->with(['warning'=>'Telefon nunamara bulunamadi!']);
-            }
+                if(!$receiver)
+                {
+                  return redirect()
+                    ->route('save.phone.form',[$request->auth,$request->user_id])
+                    ->with(['warning'=>'Telefon nunamara bulunamadi!']);  
+                }else
+                {
+                    $receiver->telegram_id = $request->user_id;
+                    $receiver->save();
 
-            $customer->telegram_id = $request->user_id;
-            $customer->save();
-
-            $response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
-                [
+                    $response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
+                    [
                     'id' => $customer->telegram_id,
-                    'message' => '<b>Telefon numarniz kaydedildi!</b>'.PHP_EOL.'Göndermiş olduğunuz kargo hakkında anlık olarak bilgilendirileceksiniz',
-                ]);
-            
+                    'message' => '<b>Telefon numaraniz kaydedildi!</b>'.PHP_EOL.'Göndermiş olduğunuz kargo hakkında anlık olarak bilgilendirileceksiniz',
+                    ]);
+                }
+                
+            }else
+            {
+                $customer->telegram_id = $request->user_id;
+                $customer->save();
 
-            return redirect()
-            ->route('home')
+                $response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
+                [
+                'id' => $customer->telegram_id,
+                'message' => '<b>Telefon numarniz kaydedildi!</b>'.PHP_EOL.'Göndermiş olduğunuz kargo hakkında anlık olarak bilgilendirileceksiniz',
+                ]);
+            }
+            
+            return redirect()->route('home')
             ->with(['success'=>'Telefon numara kaydedildi!']);
         }
 
         abort('419');
     }
 
-    public function botInfo(Request $request)
-    {
-        $company = Company::find(2);
-       
-        return json_encode($company->bot_info);
-    }
+
     
 }

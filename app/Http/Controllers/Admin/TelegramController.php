@@ -6,46 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Cargo;
-use App\Models\Customer;
-use App\Models\Company;
-
 
 class TelegramController extends Controller
 {
-
-    public function sendMessage(Request $request)
-    {
-        $message = '';
-        $cargo = Cargo::find($request->id);
-
-        $customer = Customer::find($cargo->sender_id);
-
-        $company = Company::find($customer->company_id);
-
-        $message .= '<b>Şirket adı:</b> '.$company->name.' '.PHP_EOL;
-        $message .= '<b>Kargo Durumu: </b>'.$cargo->cargoStatus->name.' '.PHP_EOL;
-        $message .='<b>Kargo Takip No : </b>'.$cargo->number.' '.PHP_EOL;
-        if($company->telegram_url != '')
-        {
-            $url = $company->telegram_url;
-            $response = Http::post($url.'sendMessage.php',
-                [
-                    'id' => $customer->telegram_id,
-                    'message' => $message,
-                ]);
-        }
-        else
-        {
-            $response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
-                [
-                    'id' => $customer->telegram_id,
-                    'message' => $message,
-                ]);
-        }
-        
-
-        return back()->with(['success'=>'Kargo durmu müşteriye iletildi!']);
-    }
+   
 
     public function sendMultipleMessage(Request $request)
     {
@@ -61,45 +25,107 @@ class TelegramController extends Controller
             $sms .= '<b>Bildirim: </b>';
             $sms .= $request->sms;
         }
-
+        $ids = array_filter($ids);
         foreach ($ids as $key => $id) 
         {
             $cargo = Cargo::find($id);
-
-            $customer = Customer::find($cargo->sender_id);
-
-            $company = Company::find($customer->company_id);
-
-            if($customer->telegram_id != '')
+            
+            
+            # can send cargo info to sender
+            if($request->status == 'yes')
             {
+                $message .= '<b>Şirket adı:</b> '.$cargo->company->name.''.PHP_EOL;
+                $message .= '<b>Kargo Durumu: </b>'.$cargo->cargoStatus->name.''.PHP_EOL;
                 
-                if($request->status == 'yes')
+            }
+            # define cargo truck number
+            $message .='<b>Kargo Takip No : </b>'.$cargo->number.''.PHP_EOL.PHP_EOL;
+            $message .= '<b>Gönderici: </b>'.$cargo->sender->name ?? '-';
+            $message .= PHP_EOL;
+            $message .= '<b>Alıcı: </b>'.$cargo->receiver->name ?? '-';
+            $message .= PHP_EOL;
+            $message .= $sms;
+            
+            # has speacial telegram bot of comapny 
+            if($cargo->company->telegram_url != '')
+            {
+                $url = $cargo->company->telegram_url;
+
+                # has sender telegram id
+                if($cargo->sender->telegram_id != '')
                 {
-                    $message .= '<b>Şirket adı:</b> '.$company->name.''.PHP_EOL;
-                    $message .= '<b>Kargo Durumu: </b>'.$cargo->cargoStatus->name.''.PHP_EOL;
-                    
-                }
-                $message .='<b>Kargo Takip No : </b>'.$cargo->number.''.PHP_EOL.PHP_EOL;
-                $message .= $sms;
-                
-                if($company->telegram_url != '')
-                {
-                    $url = $company->telegram_url;
                     $response = Http::post($url.'sendMessage.php',
                     [
-                    'id' => $customer->telegram_id,
+                    'id' => $cargo->sender->telegram_id,
+                    'message' => $message,
+                    ]);
+                }
+
+                # has sender telegram id
+                if($cargo->receiver->telegram_id != '')
+                {
+                    $response = Http::post($url.'sendMessage.php',
+                    [
+                    'id' => $cargo->receiver->telegram_id,
                     'message' => $message,
                     ]);
                 }
             }
+           
 
             $message = '';
         }
         
         return back()->with(['success'=>'Mesajlar gönerildi!']);
         
+    }
 
-        
+    public function getBalance()
+    {
+        $url = "http://api.v2.masgsm.com.tr/v2/get/balance";
+        $response = $this->MASGSM($url);
+        $result = json_decode($response);
+        dd($result->response->balance);
+    }
+
+    public function getHeader()
+    {
+        $url = "http://api.v2.masgsm.com.tr/v2/get/originators";
+        $response = $this->MASGSM($url);
+        $result = json_decode($response);
+        dd($result->response->originators[0]);
+    }
+    public function sendSMS()
+    {
+        $url = "http://api.v2.masgsm.com.tr/v2/sms/basic";
+        $body = 
+            [
+                "originator"=>"MASGSMTEST",
+                "message"=>"BU BIR TEST SMS BEKZOD",
+                "to"=>['5550156185'],
+                "encoding"=>"default"
+            ];
+        $response = $this->MASGSM($url,$body);
+        $result = json_decode($response);
+        dd($result->response);
+    }
+
+    function MASGSM($Url, $body = null)
+    {
+        $API_KEY = "vPiiqCCL6c1KkuHjAcLqnfrEApnQpN8d8Mtv1efqWgVx";
+
+        $ch   = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $Url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json',"Authorization: Key {$API_KEY}"));
+        if($body):
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
+        endif;
+        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
     }
 
 

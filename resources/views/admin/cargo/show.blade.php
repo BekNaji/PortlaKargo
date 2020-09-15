@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Kargo Ekle')
+@section('title','Kargo Güncelle')
 @section('content')
 <form action="{{route('cargo.update.all')}}" method="POST">
 	@csrf
