@@ -40,7 +40,7 @@ class DeliveryController extends Controller
     public function store(Request $request)
     {
         $cargo = Cargo::find($request->id);
-        $cargo->receiver_name = $request->receiver;
+        $cargo->receiver_name = strtoupper($request->receiver);
         $cargo->status = $request->status ?? '';
         $cargo->save();
 
@@ -58,24 +58,35 @@ class DeliveryController extends Controller
         $message .= '<b>Şirket adı:</b> '.$cargo->company->name.' '.PHP_EOL;
         $message .= '<b>Kargo Durumu: </b>'.$cargo->cargoStatus->name.' '.PHP_EOL;
         $message .='<b>Kargo Takip No : </b>'.$cargo->number.' '.PHP_EOL;
-        $message .= '<b>Teslim Alan: </b>'.$cargo->receiver_name ?? 'Teslim alinmadi'.' '.PHP_EOL;
+        $message .= '<b>Gönderici: </b>'.$cargo->sender->name ?? '-';
+        $message .= PHP_EOL;
+        $message .= '<b>Alıcı: </b>'.$cargo->receiver->name ?? '-';
+        $message .= PHP_EOL.PHP_EOL;
+        $message .= '<b>Teslim Alan: </b>'.$cargo->receiver_name ?? '-'.' '.PHP_EOL;
         if($cargo->company->telegram_url != '')
         {
             $url = $cargo->company->telegram_url;
-            $response = Http::post($url.'sendMessage.php',
+
+            if($cargo->sender->telegram_id != '')
+            {
+                $response = Http::post($url.'sendMessage.php',
                 [
                     'id' => $cargo->sender->telegram_id,
                     'message' => $message,
                 ]);
-        }
-        else
-        {
-            $response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
+            }
+
+            if($cargo->receiver->telegram_id != '')
+            {
+                $response = Http::post($url.'sendMessage.php',
                 [
-                    'id' => $cargo->sender->telegram_id,
+                    'id' => $cargo->receiver->telegram_id,
                     'message' => $message,
                 ]);
+            }
+            
         }
+        
         
 
         return ;
