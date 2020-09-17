@@ -12,7 +12,7 @@
 				<hr>
 				    <form action="{{route('customer.update')}}" method="POST" enctype="multipart/form-data">
                     @csrf
-                   
+                    <input type="hidden" name="id" value="{{$customer->id}}">
                     <div class="form-group">
                         <label>Ad ve Soyad</label>
                         <input value="{{$customer->name}}" class="form-control" type="text" name="name" required>
