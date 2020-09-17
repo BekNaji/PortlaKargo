@@ -47,7 +47,7 @@ class SendSMS
         dd($body);
         $response = self::MASGSM($url,$body);
         $result = json_decode($response);
-        return $result->response;
+        return $result;
     }
 
     static function MASGSM($Url, $body = null)

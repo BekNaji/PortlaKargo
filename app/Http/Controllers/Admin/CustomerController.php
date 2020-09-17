@@ -80,7 +80,7 @@ class CustomerController extends Controller
             {
                 $sms = new SendSMS();
         
-                dd($sms->sendSms($request->sms,$sender->phone));
+                $sms->sendSms($request->sms,$sender->phone);
             } 
 
         }
