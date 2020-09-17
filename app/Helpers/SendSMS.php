@@ -28,7 +28,7 @@ class SendSMS
     public function getTitle()
     {
         $url = "http://api.v2.masgsm.com.tr/v2/get/originators";
-        $response = $this->MASGSM($url);
+        $response = self::MASGSM($url);
         $result = json_decode($response);
         return $result;
     }
@@ -45,7 +45,7 @@ class SendSMS
                 "encoding"=>"default"
             ];
        
-        $response = $this->MASGSM($url,$body);
+        $response = self::MASGSM($url,$body);
         $result = json_decode($response);
         return $result->response;
     }
