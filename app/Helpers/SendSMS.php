@@ -44,7 +44,7 @@ class SendSMS
                 "to"=>[$tel],
                 "encoding"=>"default"
             ];
-       
+        dd($body);
         $response = self::MASGSM($url,$body);
         $result = json_decode($response);
         return $result->response;
