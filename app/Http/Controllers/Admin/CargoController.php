@@ -145,7 +145,7 @@ class CargoController extends Controller
         $this->sendMessage($id,$status->name);
         if($status->send_phone == 'true')
         {
-            dd($this->sendPhone($id,$status->name));
+            $this->sendPhone($id,$status->name);
         }
 
     }
