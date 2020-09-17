@@ -13,8 +13,27 @@ $(document).ready(function(){
 	$(document).on('click','#edit',function(){
 		id = $(this).data('id');
 		name = $(this).data('name');
+		type = $(this).data('type');
+		sms = $(this).data('sms');
 		$('#edit_id').val(id);
 		$('#edit_name').val(name);
+		//alert(sms);
+		if(type == 'personal')
+		{
+			$("#personal").prop('selected',true);
+		}
+		if(type == 'kurye')
+		{
+			$("#kurye").prop('selected',true);
+		}
+		if(sms == true)
+		{
+			$('#yes_send').prop('selected',true)
+		}
+		if(sms == false)
+		{
+			$('#no_send').prop('selected',true)
+		}
 		$('#editModal').modal('show');
 	});
 

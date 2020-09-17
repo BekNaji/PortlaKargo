@@ -8,12 +8,16 @@
 		<div class="card">
 			<div class="card-body">
 				<i class="fa fa-list" aria-hidden="true"></i> <b>Göndericiler</b>&#160;&#160;&#160;
-				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp;
+				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp; <button id="sendSms" type="button" class="btn btn-primary">SMS Gönder</button>
 				
 				<hr>
 				<table class="table table-bordered">
 					<thead>
 						<tr>
+							<td style="width:50px;">
+								<input 
+								type="checkbox" id="selectAll">
+							</td>
 							<td><b>#</b></td>
 							<td><b>Ad Soyad</b></td>
 							<td><b>Telefon</b></td>
@@ -23,6 +27,7 @@
 					<tbody>
 						@foreach($customers as $customer)
 						<tr>
+							<td><input class="sender" type="checkbox" name="sender[]" data-id="{{$customer->id}}"></td>
 							<td>{{$loop->iteration}}</td>
 							<td>{{$customer->name}}</td>
 							<td>{{$customer->phone}}</td>						
@@ -48,6 +53,7 @@
 @include('admin.customer.deleteModal')
 
 @include('admin.customer.createModal')
+@include('admin.customer.sendSmsModal')
 
 @include('admin.customer.script')
 

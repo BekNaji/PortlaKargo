@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Cargo;
 use Auth;
+use App\Helpers\SendSMS;
 
 use Response;
 
@@ -68,6 +69,27 @@ class CustomerController extends Controller
         $customer->delete();
         return back()->with(['success'=>'Silindi!']);
     }
+
+    public function sendSms(Request $request)
+    {
+        
+        $ids = explode(',', $request->ids);
+        
+        foreach ($ids as $key => $id) 
+        {
+            $sender = Customer::find($id);
+
+            if($sender->phone !='')
+            {
+                $sms = new SendSMS();
+        
+                $sms->sendSms($request->sms,$sender->phone);
+            } 
+
+        }
+        return back()->with(['success'=>'SMS gönderildi!']);
+    }
+    
 
  
 

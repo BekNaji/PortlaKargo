@@ -115,6 +115,12 @@
 								><div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
 							Genel Ayarlar</a
 							>
+							<a class="nav-link
+								{{request()->is('dashboard/sms/*')  ?'active' : ''}} "
+								href="{{route('sms.index')}}"
+								><div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
+							SMS Ayarlar</a
+							>
 							@endif
 							@if(Auth::user()->role == 'root')
 							<a class="nav-link

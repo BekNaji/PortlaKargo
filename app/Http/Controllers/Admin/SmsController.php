@@ -4,97 +4,34 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Auth;
+use App\Models\Company;
+use App\Helpers\SendSMS;
 
 class SmsController extends Controller
 {
 
-	protected $key;
-	protected $hash;
-	protected $orgin_name;
-	protected $date;
-
-	public function __construct()
-	{
-		$this->key 	= '8717964ad7bd253aa0a2668f499747e0';
-		$hide_key 	= '$2y$12$BDVopkjen2sJNjjQWsjvRe8glh4qC6nKGGoJDCsrzwzsfNVLWralK';
-		$this->hash = hash_hmac('sha256', $this->key, $hide_key);
-		$this->orgin_name = 'APITEST';
-		
-	}
-
 	
-
-	public function sendSMS($text='',$phone='')
+	public function index()
 	{
-		$authentication = array('key'=>$this->key,'hash'=>$this->hash);
+		$company = Company::find(Auth::user()->company_id);
+		$sms = new SendSMS();
+		$balance = $sms->getBalance();
+		$sms_title = $sms->getTitle();
 
-		$number 		= array('5550156185');
-
-		$receipents 	= array('number' =>	$number);
-
-		$message		=array(
-			'text'			=> 'Bu sms test qilish uchun yuborildi',
-			'receipents'	=> $receipents);
-
-		$order = array(
-			'sender'		=> $this->orgin_name,
-			'sendDateTime'	=> array(),
-			'message'		=> $message);
-
-
-		$all = array('authentication'=> $authentication,'order'=> $order);
-		$array = array('request' => $all);
-	
-		$data = json_encode($array);
-
-		
-		$result = $this->sendRequest('http://api.iletimerkezi.com/v1/send-sms/json',$data,array('Content-Type: text/json'));
-
-		$result = json_decode($result);
-
-		dd($result);
-		
-	
+		return view('admin.sms.index',compact('company','balance','sms_title'));
 	}
 
-	public function getBalance()
+	public function update(Request $request)
 	{
-		
+		$company = Company::find(Auth::user()->company_id);
+		$company->api_key = $request->api_key;
+		$company->sms_title = $request->sms_title;
+		$company->save();
 
-
-		$array = array('request'
-					=>array('authentication' =>array('key'=>$this->key,'hash'=>$this->hash)));
-		
-		$data = json_encode($array);
-		// return $data;
-
-		$result = $this->sendRequest('https://api.iletimerkezi.com/v1/get-balance/json',
-			$data,array('Content-Type: text/json'));
-		$result = json_decode($result);
-		return $result->response->balance->sms;
-		
+		return back()->with(['success'=>'Güncellendi!']);
 	}
 
-	function sendRequest($site_name,$send_xml,$header_type) 
-	{
-
-    	
-    	$ch = curl_init();
-    	curl_setopt($ch, CURLOPT_URL,$site_name);
-    	curl_setopt($ch, CURLOPT_POST, 1);
-    	curl_setopt($ch, CURLOPT_POSTFIELDS,$send_xml);
-    	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,0);
-    	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,0);
-    	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-    	curl_setopt($ch, CURLOPT_HTTPHEADER,$header_type);
-    	curl_setopt($ch, CURLOPT_HEADER, 0);
-    	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    	curl_setopt($ch, CURLOPT_TIMEOUT, 120);
-
-    	$result = curl_exec($ch);
-
-    	return $result;
-	}
 
 	
 }

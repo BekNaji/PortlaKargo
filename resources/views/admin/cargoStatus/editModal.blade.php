@@ -19,11 +19,20 @@
                     </div>
                      <div class="form-group">
                         <select class="form-control" name="type" required>
-                            <option value="" selected>Seç</option>
-                            <option value="personal">Personal</option>
-                            <option value="kurye">Kurye</option>
+                            
+                            <option id="personal" value="personal">Personal</option>
+                            <option id="kurye" value="kurye">Kurye</option>
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <label>Bu statuye çekildiğinde SMS göndersin mi?</label>
+                        <select class="form-control" name="send_phone" required>
+                            <option id="yes_send" value="true">Evet</option>
+                            <option id="no_send" value="false">Hayır</option>
+                        </select>
+                    </div>
+                    
                     <button type="submit" class="btn btn-success" >Güncelle</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal" >Iptal</button>
                 </form>

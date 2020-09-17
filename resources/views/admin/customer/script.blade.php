@@ -20,6 +20,31 @@ $(document).ready(function(){
 		$('#filterModal').modal('show');
 	});
 
+	$('#selectAll').click(function(){
+		if ($(this).prop('checked')) {
+            $('.sender').prop('checked', true);
+        } else {
+            $('.sender').prop('checked', false);
+        }
+	});
+
+	// show send message modal
+	$(document).on('click','#sendSms',function(){
+		var id = [];
+		$('.sender:checked').each(function(){
+			id.push($(this).data('id'));
+		});
+		if(id.length > 0)
+		{
+			$('#senderIds').val(id);
+			$('#sendSmsModal').modal('show');
+		}else
+		{
+			toastr.warning("Seçilmiş oğe bulunamadı!");
+		}
+		
+	});
+
 	// show password scripts
 	$(document).on('click','#showPassword',function(){
 		if($(this).prop('checked') == true ){

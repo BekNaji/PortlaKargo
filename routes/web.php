@@ -74,9 +74,10 @@ Route::get('telegram/send/message/{id}', 'TelegramController@sendMessage')->name
 // send one more message
 Route::post('telegram/send/multiple/message/', 'TelegramController@sendMultipleMessage')->name('telegram.send.multiple.message');
 
-Route::get('get/balance', 'TelegramController@getBalance')->name('get.balance');
-Route::get('get/header', 'TelegramController@getHeader')->name('get.header');
-Route::get('send/sms', 'TelegramController@sendSMS')->name('send.sms');
+Route::get('sms/index','SmsController@index')->name('sms.index');
+Route::post('sms/update','SmsController@update')->name('sms.update');
+
+
 // profile
 Route::get('profile/index', 'ProfileController@index')->name('profile.index');
 Route::post('profile/update', 'ProfileController@update')->name('profile.update');
@@ -97,6 +98,8 @@ Route::post('customer/store', 'CustomerController@store')->name('customer.store'
 Route::post('customer/delete', 'CustomerController@delete')->name('customer.delete');
 Route::get('customer/get', 'CustomerController@get')->name('customer.get');
 Route::get('customer/getName', 'CustomerController@getName')->name('customer.getName');
+Route::post('customer/send/sms', 'CustomerController@sendSms')
+->name('customer.send.sms');
 
 
 // Receiver Route

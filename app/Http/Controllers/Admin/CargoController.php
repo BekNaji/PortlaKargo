@@ -16,6 +16,7 @@ use App;
 use Illuminate\Support\Carbon;
 use Excel;
 use Illuminate\Support\Facades\Http;
+use App\Helpers\SendSMS;
 
 
 
@@ -142,6 +143,10 @@ class CargoController extends Controller
         $cargoLog->save();
         $status = CargoStatus::find($status);
         $this->sendMessage($id,$status->name);
+        if($status->send_phone == 'true')
+        {
+            dd($this->sendPhone($id,$status->name));
+        }
 
     }
 
@@ -506,6 +511,23 @@ class CargoController extends Controller
         }
         
         return ;
+    }
+
+    public function sendPhone($id,$status)
+    {
+        $message = 'Sn. Müşterimiz ';
+        $cargo = Cargo::find($id);
+        $message .= $cargo->number;
+        $message .= ' nolu gonderi hk bilgi!'.PHP_EOL;
+        $message .= 'Status: '.$status.PHP_EOL;
+        if($cargo->receiver->name != '')
+        {
+           $message .= 'Teslim Alan:'.$cargo->receiver->name; 
+        }
+        $sms = new SendSMS();
+        
+        return $sms->sendSms($message,$cargo->sender->phone);
+        
     }
 
 }

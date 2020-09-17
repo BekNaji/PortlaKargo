@@ -1,8 +1,9 @@
-@extends('layouts.admin');
+@extends('layouts.admin')
 @section('title','Kargo Status')
 @section('content')
 <div class="row">
 	<div class="col-md-12">
+		<br>
 		<div class="card">
 			<div class="card-body">
 				<i class="fa fa-hashtag" aria-hidden="true"></i> Kargo Status Ayarları &#160;&#160;&#160;
@@ -15,6 +16,7 @@
 							<td><b>#</b></td>
 							<td><b>Ad</b></td>
 							<td><b>Tür</b></td>
+							<td><b>SMS</b></td>
 							<td><b>#</b></td>
 						</tr>
 					</thead>
@@ -24,15 +26,24 @@
 							<td>{{$loop->iteration}}</td>
 							<td>{{$status->name}}</td>
 							<td>{{$status->type}}</td>
+							@if($status->send_phone == 'true')
 							<td>
-								
+								<span class="badge badge-success">SMS gönderilsin</span>
+							</td>
+							@else
+							<td><span class="badge badge-danger">SMS gönderilmesin
+							</span>
+						</td>
+							@endif
+							<td>
 								<a id="edit" data-id="{{$status->id}}"
+									data-type="{{$status->type}}"
+									data-sms="{{$status->send_phone}}"
 									data-name="{{$status->name}}" href="#edit" class="btn btn-warning"><i class="fa fa-pen"></i>
 								</a>
 								<a id="delete" data-id="{{$status->id}}"
 									data-name="{{$status->name}}" href="#delete" class="btn btn-danger"><i class="fa fa-trash-alt"></i>
 								</a>
-								
 								
 							</td>
 						</tr>
