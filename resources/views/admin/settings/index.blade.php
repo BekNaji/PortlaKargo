@@ -53,6 +53,10 @@
 						<input value="{{Auth::user()->company->second_phone ?? ''}}" class="form-control" type="text" name="second_phone" >
 					</div>
 					<div class="form-group">
+						<label>Kargo Numara  </label>
+						<input value="{{Auth::user()->company->cargo_row ?? ''}}" class="form-control" type="text" name="cargo_row" required>
+					</div>
+					<div class="form-group">
 						<label>Kargo Numara ilk harfı</label>
 						<input value="{{Auth::user()->company->cargo_letter ?? ''}}" class="form-control" type="text" name="cargo_letter" required>
 					</div>

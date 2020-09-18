@@ -131,7 +131,7 @@ class CargoController extends Controller
 
 
         return back()->with(['success'=>'Güncellendi']);
-    }
+    } 
     
     # store log
     public function storeLog($id,$status)
@@ -143,6 +143,7 @@ class CargoController extends Controller
         $cargoLog->save();
         $status = CargoStatus::find($status);
         $this->sendMessage($id,$status->name);
+
         if($status->send_phone == 'true')
         {
             $this->sendPhone($id,$status->name);
@@ -188,6 +189,12 @@ class CargoController extends Controller
 
         $receiver_id = $this->storeReceiver($request);
 
+        $company = Company::find(Auth::user()->company_id);
+
+        $company->cargo_row++;
+        $company->save();
+
+
         $cargo = new Cargo();
         $cargo->company_id = Auth::user()->company_id;
         $cargo->payment_type = $request->payment_type;
@@ -196,13 +203,14 @@ class CargoController extends Controller
         $cargo->cargo_price = $request->cargo_price;
         $cargo->sender_id = $sender_id;
         $cargo->receiver_id = $receiver_id;
-        $cargo->save();
-
-        $cargo = Cargo::find($cargo->id);
-        $cargo->number = Auth::user()->company->cargo_letter.sprintf("%05s",$cargo->id);
+        
+        $cargo->number = Auth::user()
+        ->company->cargo_letter.sprintf("%05s",$company->cargo_row);
         $cargo->save();
         $cargo_id = $cargo->id;
-        $total_price = '0';
+
+        
+        $total_price = 0;
 
         $this->storeLog($cargo->id,$cargo->status);
 
@@ -520,10 +528,7 @@ class CargoController extends Controller
         $message .= $cargo->number;
         $message .= ' nolu gonderi hk bilgi!'.PHP_EOL;
         $message .= 'Status: '.$status.PHP_EOL;
-        if($cargo->receiver->name != '')
-        {
-           $message .= 'Teslim Alan:'.$cargo->receiver->name; 
-        }
+        
         $sms = new SendSMS();
         
         return $sms->sendSms($message,$cargo->sender->phone);

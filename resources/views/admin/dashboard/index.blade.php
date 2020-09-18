@@ -62,6 +62,26 @@
         </div>
         @endif
 
+        <br>
+    <div class="card">
+        <div class="card-body">
+            <p><b>Yeni Sürüm  Version 5.6</b></p> 
+            <ul>
+                <li><b>Hata Düzeltildi</b>Teslim edildi statusunde SMS gönderme sorunu çözüldü</li>
+                <li><b>Önemlı:</b> Genel Ayarlardan Kargo numara sırasını değiştirme özelliği eklendi! 
+                    <b>Örnek:</b> Ben Genel ayarlara gittim ve << Kargo numara >> kısmını 50 yazdım ve kayd ettım. Sonra Yenı Kargo Kaydı oluşturdum oluşturduğum Kargo numarası AB00051 diye devam edecek! 
+                </li>
+            </ul>
+            <hr>
+            <p><b>Gelecek olan Yenı sürümde </b></p>
+            <ul>
+                <li>Kargo Listesi sayfasıda Toplu şekilde Telefona SMS gönderme işlemi yapılabilir olacak</li>
+                <li>Göndericiler Listesini excel dosyasına hızlı bir şekilde oluşturulabilir olacak!</li>
+            </ul>
+            <p>Farklı bir Sorun Çıkarsa benimle +905550156185 telefon numarasından ulaşabilirsiniz!</p>
+        </div>
+    </div>
+
     </div>
 </div>
 <script type="text/javascript">

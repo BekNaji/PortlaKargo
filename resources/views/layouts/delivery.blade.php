@@ -22,6 +22,7 @@
                 </div>
             </div>
         </div>
+        @yield('js');
         <script type="text/javascript">
         @if(session('success'))
         Swal.fire(
