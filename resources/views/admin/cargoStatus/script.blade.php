@@ -15,6 +15,7 @@ $(document).ready(function(){
 		name = $(this).data('name');
 		type = $(this).data('type');
 		sms = $(this).data('sms');
+		
 		$('#edit_id').val(id);
 		$('#edit_name').val(name);
 		//alert(sms);
@@ -26,13 +27,13 @@ $(document).ready(function(){
 		{
 			$("#kurye").prop('selected',true);
 		}
-		if(sms == true)
+		if(sms == true || sms == 'true')
 		{
-			$('#yes_send').prop('selected',true)
+			$("#send_sms option[value=true]").prop('selected',true)
 		}
-		if(sms == false)
+		if(sms == false || sms == 'false')
 		{
-			$('#no_send').prop('selected',true)
+			$("#send_sms option[value=false]").prop('selected',true)
 		}
 		$('#editModal').modal('show');
 	});
