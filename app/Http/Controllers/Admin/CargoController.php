@@ -190,7 +190,7 @@ class CargoController extends Controller
         $receiver_id = $this->storeReceiver($request);
 
         $company = Company::find(Auth::user()->company_id);
-        $cargo_row = $company+1;
+        $cargo_row = $company->cargo_row + 1;
 
         $company->cargo_row = $cargo_row;
         $company->save();
