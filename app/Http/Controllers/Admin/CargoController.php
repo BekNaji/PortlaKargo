@@ -366,6 +366,7 @@ class CargoController extends Controller
         $receiver->name = strtoupper($request->receiver_name);
         $receiver->passport = strtoupper($request->receiver_passport);
         $receiver->phone = $request->receiver_phone;
+        $receiver->other_phone = $request->receiver_other_phone;
         $receiver->address = strtoupper($request->receiver_address);
         $receiver->company_id = Auth::user()->company_id;
         $receiver->save();

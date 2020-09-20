@@ -114,7 +114,8 @@
 						</tr>
 						<tr>
 							<td style="padding:0 15px 0 15px;"><b>Telefon: 2 </b></td>
-							<td style="padding:0 15px 0 15px;">{{$cargo->receiver->other_phone ?? '-'}}
+							<td style="padding:0 15px 0 15px;">
+								{{ $cargo->receiver->other_phone ?? ' '}}
 							</td>
 						</tr>
 						<tr>
