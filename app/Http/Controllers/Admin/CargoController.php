@@ -142,7 +142,7 @@ class CargoController extends Controller
         $cargoLog->cargo_status_id = $status;
         $cargoLog->save();
         $status = CargoStatus::find($status);
-        $this->sendMessage($id,$status->name);
+        //$this->sendMessage($id,$status->name);
 
         if($status->send_phone == 'true')
         {

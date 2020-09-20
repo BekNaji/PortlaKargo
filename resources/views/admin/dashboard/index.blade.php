@@ -67,10 +67,8 @@
         <div class="card-body">
             <p><b>Yeni Sürüm  Version 5.6</b></p> 
             <ul>
-                <li><b>Hata Düzeltildi</b>Teslim edildi statusunde SMS gönderme sorunu çözüldü</li>
-                <li><b>Önemlı:</b> Genel Ayarlardan Kargo numara sırasını değiştirme özelliği eklendi! 
-                    <b>Örnek:</b> Ben Genel ayarlara gittim ve << Kargo numara >> kısmını 50 yazdım ve kayd ettım. Sonra Yenı Kargo Kaydı oluşturdum oluşturduğum Kargo numarası AB00051 diye devam edecek! 
-                </li>
+                <li><b>Önemlı Bilgilendirme</b> Kısa süreline Telegram sms gönderme işlemi yapılamiyor. En fazla 24 saat  içinde düzeltilecektir!</li>
+               
             </ul>
             <hr>
             <p><b>Gelecek olan Yenı sürümde </b></p>
