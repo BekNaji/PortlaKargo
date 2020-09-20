@@ -534,6 +534,8 @@ class CargoController extends Controller
         $message .= $cargo->number;
         $message .= ' nolu gonderi hk bilgi!'.PHP_EOL;
         $message .= 'Status: '.$status.PHP_EOL;
+        $message .= 'Kargo Nerede ?'.PHP_EOL;
+        $message .= '08504411101';
         
         $sms = new SendSMS();
         
