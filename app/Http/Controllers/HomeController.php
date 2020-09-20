@@ -106,42 +106,55 @@ class HomeController extends Controller
         {
             abort('404');
         }
-
+        // dd($request);
         if($request->user_id != '')
         {
             $customer = Customer::where('phone','=',$request->phone)
-            ->get()->first();
+            ->get();
 
             $receiver = Receiver::where('phone','=',$request->phone)
-            ->get()->first();
+            ->get();
 
-            if(!$customer)
+           
+
+            if($customer->count() == 0)
             {
-                if(!$receiver)
+                
+                if($receiver->count() == 0)
                 {
                   return redirect()
                     ->route('save.phone.form',[$request->auth,$request->user_id])
                     ->with(['warning'=>'Telefon nunamara bulunamadi!']);  
                 }else
-                {
-                    $receiver->telegram_id = $request->user_id;
-                    $receiver->save();
+                {   
+                    foreach ($receiver->telegram_id as $value) 
+                    {
+                        $value->telegram_id = $request->user_id;
+                        $value->save();
+                    }
+                    
 
                     $response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
                     [
-                    'id' => $receiver->telegram_id,
+                    'id' => $receiver[0]->telegram_id,
                     'message' => '<b>Telefon numaraniz kaydedildi!</b>',
                     ]);
                 }
                 
             }else
             {
-                $customer->telegram_id = $request->user_id;
-                $customer->save();
+                
+                foreach ($customer as $key => $value) {
+
+                    $value->telegram_id = $request->user_id;
+                    $value->save();
+                }
+                // $customer->telegram_id = $request->user_id;
+                // $customer->save();
 
                 $response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
                 [
-                'id' => $customer->telegram_id,
+                'id' => $customer[0]->telegram_id,
                 'message' => '<b>Telefon numarniz kaydedildi!</b>',
                 ]);
             }
