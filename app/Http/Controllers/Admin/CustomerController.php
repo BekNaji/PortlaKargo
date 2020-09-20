@@ -22,11 +22,15 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        $customer = Customer::where('phone','=',$request->phone)->get()->first();
-        if(!$request->phone)
+        $customer = Customer::where('phone','=',$request->phone)
+        ->where('company_id','=',Auth::user()->company_id)
+        ->get()->first();
+        
+        if(!$customer)
         {
             $customer = new Customer();
         }
+      
     	$customer->company_id = Auth::user()->company_id;
         $customer->name     = strtoupper($request->name);
         $customer->phone    = strtoupper($request->phone);

@@ -37,7 +37,7 @@ Route::get('/price', 'HomeController@price')->name('price');
 
 Route::post('/save/email', 'HomeController@saveEmail')->name('save.email');
 
-Route::get('/telegram', 'TelegrambotController@index')->name('telegram');
+Route::any('/telegram', 'TelegrambotController@index')->name('telegram.index');
 
 Route::get('/testtest', 'TelegrambotController@sendMessage');
 

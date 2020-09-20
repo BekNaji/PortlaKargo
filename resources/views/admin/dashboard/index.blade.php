@@ -65,12 +65,7 @@
         <br>
     <div class="card">
         <div class="card-body">
-            <p><b>Yeni Sürüm  Version 5.6</b></p> 
-            <ul>
-                <li><b>Önemlı Bilgilendirme</b> Kısa süreline Telegram sms gönderme işlemi yapılamiyor. En fazla 24 saat  içinde düzeltilecektir!</li>
-               
-            </ul>
-            <hr>
+            
             <p><b>Gelecek olan Yenı sürümde </b></p>
             <ul>
                 <li>Kargo Listesi sayfasıda Toplu şekilde Telefona SMS gönderme işlemi yapılabilir olacak</li>

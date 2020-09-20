@@ -18,12 +18,15 @@ class ReceiverController extends Controller
 
     public function store(Request $request)
     {
+        $receiver = Receiver::where('phone','=',$request->phone)
+        ->where('company_id','=',Auth::user()->company_id)
+        ->get()->first();
         
-        $receiver = Receiver::where('phone','=',$request->phone)->get()->first();
         if(!$receiver)
         {
             $receiver = new Receiver();
         }
+        
     	$receiver->company_id = Auth::user()->company_id;
         $receiver->name     = strtoupper($request->name);
         $receiver->passport = strtoupper($request->passport);
@@ -45,11 +48,8 @@ class ReceiverController extends Controller
 
     public function update(Request $request)
     {
-    	$receiver = Receiver::where('phone','=',$request->phone)->get()->first();
-        if(!$receiver)
-        {
-            $receiver = Receiver::find($request->id);
-        }
+        $receiver = Receiver::find($request->id);
+        
         $receiver->company_id = Auth::user()->company_id;
         $receiver->name     = strtoupper($request->name);
         $receiver->passport = strtoupper($request->passport);

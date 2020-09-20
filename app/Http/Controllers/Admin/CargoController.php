@@ -142,7 +142,7 @@ class CargoController extends Controller
         $cargoLog->cargo_status_id = $status;
         $cargoLog->save();
         $status = CargoStatus::find($status);
-        //$this->sendMessage($id,$status->name);
+        $this->sendMessage($id,$status->name);
 
         if($status->send_phone == 'true')
         {
@@ -334,7 +334,9 @@ class CargoController extends Controller
     # store and update Sender
     public function storeCustomer($request)
     {
-        $sender = Customer::where('phone','=',$request->sender_phone)->get()->first();
+        $sender = Customer::where('phone','=',$request->sender_phone)
+        ->where('company_id','=',Auth::user()->company_id)
+        ->get()->first();
 
         if(!$sender)
         {
@@ -353,7 +355,9 @@ class CargoController extends Controller
     # store and update Receiver
     public function storeReceiver($request)
     {
-        $receiver = Receiver::where('phone','=',$request->receiver_phone)->get()->first();
+        $receiver = Receiver::where('phone','=',$request->receiver_phone)
+        ->where('company_id','=',Auth::user()->company_id)
+        ->get()->first();
         if(!$receiver)
         {
             $receiver = new Receiver();

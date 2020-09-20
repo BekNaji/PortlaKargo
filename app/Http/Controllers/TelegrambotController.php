@@ -1,50 +1,45 @@
 <?php
+
+//include (__DIR__ . '/vendor/irazasyed/telegram-bot-sdk/src/Api.php');
+
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use Telegram\Bot\Api;
-use Telegram;
+
 use Illuminate\Support\Facades\Http;
+
+
 class TelegrambotController extends Controller
 {
-    protected $telegram;
-    protected $chat_id;
-    protected $username;
-    protected $text;
-
-    public function __construct()
-    {
-        $this->telegram = new Telegram('1327273177:AAGsQR9gbP3bzOs0wRmknzGXcsPxmP_U9wY');
-    }
+    // 617396608
 
     public function index(Request $request)
     {
+        //$id = $request->message['chat']['id'];
+        $id = 1;
+        // $text = $request->message['text'];
+        // $token = '1189155685:AAGljmd5avC5vBqTxCzlbp6AngNUl97GTSU';
+        // //$url = 'https://api.telegram.org/bot'.$token.'/sendMessage';
+        $url = 'https://bek.requestcatcher.com/';
         
-        // $telegram = new Telegram('1327273177:AAGsQR9gbP3bzOs0wRmknzGXcsPxmP_U9wY');
-
-        // $updates = Telegram::getUpdates();
-
-        // $chat_id = end($updates)->message->chat->id;
+        $buttons = [
+            ['text' => 'Selam']
+        ];
         
-        // $text = end($updates)->message->chat->text;
-        // if($text == '/test')
-        // {
-        //     $this->sendMessage($chat_id,"You wrote Test");
-        // }
-        // $this->sendMessage($chat_id,"Hello World");
-
-        return response()->json(['test'=>'it is testing']);
         
+        $response = Http::post($url,
+            [
+                'chat_id' => $id,
+                'text' => 'Selam Gardes',
+                'reply_markup'=>$buttons,
+            ]);
+     
+
+     
+
     }
 
-    public function sendMessage()
-    {
-        
 
-        $response = Http::asForm()->post('http://telegrambot.test', [
-            'name' => 'Steve',
-            'role' => 'Network Administrator',
-        ]);
-        $data = $response->json();
-        dd($data);
-    }
+    
+
+
 }
