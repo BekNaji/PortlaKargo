@@ -25,6 +25,7 @@
 							<td><b>Ad Soyad</b></td>
 							<td><b>Passport</b></td>
 							<td><b>Telefon</b></td>
+							<td><b>Telegram</b></td>
 							<td><b>Address</b></td>
 							<td><b>#</b></td>
 						</tr>
@@ -36,6 +37,12 @@
 							<td>{{$receiver->name}}</td>
 							<td>{{$receiver->passport}}</td>
 							<td>{{$receiver->phone}}</td>
+							@if($receiver->telegram_id != '')
+							<td><span class="badge badge-success">Kayitli</span></td>
+							@else
+							<td><span class="badge badge-danger">Kayitsiz</span></td>	
+							@endif					
+							
 							<td>{{$receiver->address}}</td>
 							<td>
 								<a type="submit" 

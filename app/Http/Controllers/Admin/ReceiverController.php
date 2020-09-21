@@ -26,7 +26,8 @@ class ReceiverController extends Controller
         {
             $receiver = new Receiver();
         }
-        
+        //$address = explode(' ', $request->address);
+
     	$receiver->company_id = Auth::user()->company_id;
         $receiver->name     = strtoupper($request->name);
         $receiver->passport = strtoupper($request->passport);

@@ -14,6 +14,7 @@ class TelegramController extends Controller
     public function sendMultipleMessage(Request $request)
     {
 
+
         $message = '';
 
         $sms = '';
@@ -46,30 +47,29 @@ class TelegramController extends Controller
             $message .= PHP_EOL;
             $message .= $sms;
             
-            # has speacial telegram bot of comapny 
-            if($cargo->company->telegram_url != '')
+           
+            $url = $cargo->company->telegram_url;
+
+            # has sender telegram id
+            if($cargo->sender->telegram_id != '')
             {
-                $url = $cargo->company->telegram_url;
+                
+                $response = Http::post($url.'sendMessage.php',
+                [
+                'id' => $cargo->sender->telegram_id,
+                'message' => $message,
+                ]);
 
-                # has sender telegram id
-                if($cargo->sender->telegram_id != '')
-                {
-                    $response = Http::post($url.'sendMessage.php',
-                    [
-                    'id' => $cargo->sender->telegram_id,
-                    'message' => $message,
-                    ]);
-                }
+            }
 
-                # has sender telegram id
-                if($cargo->receiver->telegram_id != '')
-                {
-                    $response = Http::post($url.'sendMessage.php',
-                    [
-                    'id' => $cargo->receiver->telegram_id,
-                    'message' => $message,
-                    ]);
-                }
+            # has sender telegram id
+            if($cargo->receiver->telegram_id != '')
+            {
+                $response = Http::post($url.'sendMessage.php',
+                [
+                'id' => $cargo->receiver->telegram_id,
+                'message' => $message,
+                ]);
             }
            
 

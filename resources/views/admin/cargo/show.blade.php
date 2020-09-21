@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Kargo Güncelle')
+@section('title',$cargo->number)
 @section('content')
 <form action="{{route('cargo.update.all')}}" method="POST">
 	@csrf
@@ -190,7 +190,8 @@
 			</table>
 			<br>
 			<button class="btn btn-success" type="submit">Güncelle</button>
-			<a target="_blank" href="{{route('cargo.print',encrypt($cargo->id))}}" class="btn btn-info" type="button">Print</a>
+			<a target="_blank" href="{{ route('cargo.print',encrypt($cargo->id)) }}" class="btn btn-info" type="button">Print</a>
+			
 		</div>
 	</div>
 </form>

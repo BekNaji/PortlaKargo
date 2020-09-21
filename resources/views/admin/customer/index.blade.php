@@ -21,6 +21,7 @@
 							<td><b>#</b></td>
 							<td><b>Ad Soyad</b></td>
 							<td><b>Telefon</b></td>
+							<td><b>Telegram</b></td>
 							<td><b>#</b></td>
 						</tr>
 					</thead>
@@ -30,7 +31,12 @@
 							<td><input class="sender" type="checkbox" name="sender[]" data-id="{{$customer->id}}"></td>
 							<td>{{$loop->iteration}}</td>
 							<td>{{$customer->name}}</td>
-							<td>{{$customer->phone}}</td>						
+							<td>{{$customer->phone}}</td>
+							@if($customer->telegram_id != '')
+							<td><span class="badge badge-success">Kayitli</span></td>
+							@else
+							<td><span class="badge badge-danger">Kayitsiz</span></td>	
+							@endif					
 							<td>
 								
 								<a type="submit" 

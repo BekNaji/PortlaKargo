@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title','Kargo Ekle')
 @section('content')
-<form action="{{route('cargo.store.all')}}" method="POST">
+<form target="_blank" action="{{route('cargo.store.all')}}" method="POST">
 	@csrf
 	<div class="row">
 		

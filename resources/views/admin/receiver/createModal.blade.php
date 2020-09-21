@@ -30,8 +30,6 @@
                         <label>Telefon 2</label>
                         <input class="form-control" type="number" name="other_phone">
                     </div>
-
-
                     <div class="form-group">
                         <label>Address</label>
                         <textarea name="address" class="form-control"></textarea>

@@ -428,7 +428,7 @@ class CargoController extends Controller
         {
             
             $datas = [
-                    ['Invoice No','Tarih','Sender','Sender Tel','Recevier','Receiver Tel:1','Receiver Tel:2','Address','Total KG','Total Price','Passport','']
+                    ['Invoice No','Tarih','Sender','Sender Tel','Recevier','Receiver Tel:1','Receiver Tel:2','City','Town','Street','Total KG','Total Price','Passport','']
                 ];
             $product_headers = ['Product Name','Total Count','Price','Total Price',''];
             for($i=1; $i<22; $i++)
@@ -444,7 +444,8 @@ class CargoController extends Controller
             {
                 $products = Product::where('cargo_id','=',$cargo->id)->get();
                 
-
+                $address = explode(' ', $cargo->receiver->address ?? '');
+                
                 $data = [   
                         $cargo->number ?? '',
                         $cargo->created_at ?? '',
@@ -453,7 +454,9 @@ class CargoController extends Controller
                         $cargo->receiver->name ?? '',
                         $cargo->receiver->phone ?? '',
                         $cargo->receiver->other_phone ?? '',
-                        $cargo->receiver->address ?? '',
+                        $address[0] ?? '',
+                        $address[1] ?? '',
+                        $address[2] ?? '',
                         $cargo->total_kg ?? '',
                         $cargo->total_price ?? '',
                         $cargo->receiver->passport ?? '',
