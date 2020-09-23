@@ -129,13 +129,14 @@
 					
 					
 				</div>
+
 				<div class="col-sm-4">
-					<center><img src="{{url($barcode)}}"></center><br>
+					<center><img style="width:auto; height:125px;" src="{{url($barcode)}}"></center>
 					<table class="table-bordered" style="width:100%">
 						<input type="hidden" name="cargo_id"
 						value="{{$cargo->id}}">
 						<tr>
-							<td class="text-center" style="padding:5px;" colspan="2"><b>Kargo Info</b></td>
+							<td class="text-center" style="padding:5px;" colspan="2"><b>Cargo Info</b></td>
 						</tr>
 						<tr>
 							<td colspan="2" class="text-center"><h1>{{$cargo->number ?? ''}}</h1></td>
