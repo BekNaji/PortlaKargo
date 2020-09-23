@@ -20,7 +20,7 @@
 				
 				
 				<hr>
-				<table class="table  table-bordered table-responsive-sm">
+				<table id="dataTable" class="table  table-bordered table-responsive-sm">
 					<thead>
 						<tr>
 							<td style="width:50px;"><input 
