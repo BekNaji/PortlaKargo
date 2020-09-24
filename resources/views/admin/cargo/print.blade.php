@@ -131,7 +131,7 @@
 				</div>
 
 				<div class="col-sm-4">
-					<center><img style="width:auto; height:125px;" src="{{url($barcode)}}"></center>
+					<center><img style="height:80px" src="{{url($barcode)}}"></center>
 					<table class="table-bordered" style="width:100%">
 						<input type="hidden" name="cargo_id"
 						value="{{$cargo->id}}">
