@@ -11,7 +11,34 @@
 				</div>
             	@endif
             	<div class="alert alert-info">
-				<strong>Kaydınız daha onaylanmamiştır! <b>bekturk333@gmail.com</b> adresinden bizimle iletişime geçiniz!</strong>
+				<strong>Kaydınız daha onaylanmamiştır! Kısa sürede sizinle iletişime geçilecektir! <br> 
+                    <ul class="list-unstyled footer-link">
+                        <li class="d-block mb-3">
+                            <span class="d-block text-black">
+                                Telegram
+                            </span>
+                            <span><a href="https://t.me/beknaji" target="_blank" >
+                                @beknaji</a>
+                            </span>
+                        </li>
+
+                        <li class="d-block mb-3">
+                            <span class="d-block text-black">
+                                Telefon
+                            </span>
+                            <span><a href="tel:+90555-015-61-85"> +90555-015-61-85</a>
+                            </span>
+                        </li>
+
+                        <li class="d-block mb-3">
+                            <span class="d-block text-black">
+                                Email
+                            </span>
+                            <span><a href = "mailto: bekturk333@gmail.com">bekturk333@gmail.com </a>
+                            </span>
+                        </li>
+                        
+                    </ul>
 				</div>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" >
                             @csrf
