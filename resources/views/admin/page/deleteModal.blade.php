@@ -13,7 +13,7 @@
 
                 <b id="name"></b> adlı Sayfayi silmeyı onayliyor musun?
                 <br>
-                <form action="{{route('user.delete')}}" method="POST">
+                <form action="{{route('page.delete')}}" method="POST">
                     @csrf
                     <input type="hidden" id="id" name="id" value="">
                     <br>

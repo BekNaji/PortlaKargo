@@ -7,8 +7,14 @@
 		<br>
 		<div class="card">
 			<div class="card-body">
+
 				<i class="fa fa-list" aria-hidden="true"></i> <b>Göndericiler</b>&#160;&#160;&#160;
-				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp; <button id="sendSms" type="button" class="btn btn-primary">SMS Gönder</button>
+				@if(Permission::check('sender-create'))
+				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp; 
+				@endif
+
+				
+				<button id="sendSms" type="button" class="btn btn-primary">SMS Gönder</button>
 				
 				<hr>
 				<table class="table table-bordered">
@@ -38,14 +44,15 @@
 							<td><span class="badge badge-danger">Kayitsiz</span></td>	
 							@endif					
 							<td>
-								
+								@if(Permission::check('sender-edit'))
 								<a type="submit" 
 								href="{{route('customer.edit',encrypt($customer->id))}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+								@endif
 
+								@if(Permission::check('sender-delete'))
 								<a id="delete" data-id="{{$customer->id}}" 
 									data-name="{{$customer->name}}" href="#delete" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
-
-								</form>
+								@endif
 								
 							</td>
 						</tr>

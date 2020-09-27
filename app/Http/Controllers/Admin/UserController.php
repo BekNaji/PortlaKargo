@@ -10,6 +10,7 @@ use Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Company;
 use Illuminate\Validation\Rule;
+use App\Models\Page;
 
 
 class UserController extends Controller
@@ -147,5 +148,28 @@ class UserController extends Controller
         $user->image = '';
         $user->save();
         return back();
+    }
+
+    // permissions
+    public function permission(Request $request)
+    {
+        $pages = Page::all();
+        $user = User::find(decrypt($request->id));
+        $user_permissions = explode(',', $user->permissions);
+        
+        return 
+        view('admin.user.permission',
+        compact('pages','user','user_permissions'));
+    }
+
+    public function permissionUpdate(Request $request)
+    {
+        $user = User::find($request->user_id);
+
+        $user->permissions = $request->ids;
+        $user->save();
+
+
+        return back()->with(['success'=>'Güncellendi!']);
     }
 }

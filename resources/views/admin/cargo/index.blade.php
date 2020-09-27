@@ -8,18 +8,28 @@
 			<div class="card-body">
 				
 				<i class="fa fa-list" aria-hidden="true"></i> Kargo Listesi&#160;&#160;&#160;
-				@csrf
+				
+				@if(Permission::check('cargo-create'))
 				<a href="{{route('cargo.create')}}" class="btn btn-success "><i class="fa fa-plus" aria-hidden="true"></i></a>
 				&nbsp;
+				@endif
+
+
+				@if(Permission::check('cargo-status-change'))
 				<button id="filter" type="button" class="btn btn-info"><i class="fa fa-filter" aria-hidden="true"></i></button>
 				<button id="change" type="button" class="btn btn-warning">Status Değiştir</button>
+				@endif
 
+				@if(Permission::check('telegram-sms'))
 				<button id="sendMessageTelegram" type="button" class="btn btn-primary">SMS Telegram</button>
+				@endif
 
+				@if(Permission::check('create-excel'))
 				<button id="manafes" type="button" class="btn btn-info">Excel Hazırla</button>
-				
+				@endif
 				
 				<hr>
+				@if(Permission::check('cargo-index'))
 				<table id="dataTable" class="table  table-bordered table-responsive-sm">
 					<thead>
 						<tr>
@@ -59,18 +69,23 @@
 							<td>{{$cargo->cargo_price ?? '$0.0'}}</td>
 							<td>{{$cargo->created_at->toDateString()}}</td>
 							<td>
+
 								<a type="submit" target="_blank" 
 									href="{{route('cargo.print',encrypt($cargo->id))}}" >
 									<span class="badge badge-info">
 									<i class="fa fa-print"></i>
 									</span>
 								</a>
+								@if(Permission::check('cargo-show'))
 								<a type="submit"
 									href="{{route('cargo.show',encrypt($cargo->id))}}" >
 									<span class="badge badge-warning">
 									<i class="fa fa-edit"></i>
 									</span>
 								</a>
+								@endif
+
+								@if(Permission::check('cargo-delete'))
 								<a id="delete" data-id="{{$cargo->id}}"
 									data-name="{{$cargo->number}}"
 								href="#delete">
@@ -78,6 +93,7 @@
 								<i class="fa fa-trash-alt "></i>
 								</span>
 								</a>
+								@endif
 								
 								
 							</td>
@@ -85,6 +101,9 @@
 						@endforeach
 					</tbody>
 				</table>
+				@else
+				<center><h4>Kargo listesini görmeye Yetkiniz yok!</h4></center>
+				@endif
 			</div>
 		</div>
 	</div>

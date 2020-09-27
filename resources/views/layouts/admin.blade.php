@@ -54,6 +54,7 @@
 					<div class="sb-sidenav-menu">
 						<div class="nav">
 							<!-- <div class="sb-sidenav-menu-heading">Core</div> -->
+
 							<a class="nav-link
 								{{request()->is('dashboard/index') || request()->is('dashboard/index/*') ?'active' : ''}} "
 								href="{{route('dashboard.index')}}"
@@ -61,25 +62,34 @@
 							Anasayfa</a
 							>
 							@if(Auth::user()->role == 'admin' || Auth::user()->role == 'user')
+							@if(Permission::check('cargo-index'))
 							<a class="nav-link
 								{{request()->is('dashboard/cargo/*')  ?'active' : ''}} "
 								href="{{route('cargo.index')}}"
 								><div class="sb-nav-link-icon"><i class="fas fa-truck"></i></div>
 							Kargo</a
 							>
+							@endif
 
+							@if(Permission::check('delivery-index'))
 							<a class="nav-link"
-								target="_blank" 
+								
 								href="{{route('delivery.index')}}"
 								><div class="sb-nav-link-icon"><i class="fas fa-hashtag"></i></div>
 							Teslimat</a
 							>
+							@endif
+
+							@if(Permission::check('sender-index'))
 							<a class="nav-link
 								{{request()->is('dashboard/customer/*')  ?'active' : ''}} "
 								href="{{route('customer.index')}}"
 								><div class="sb-nav-link-icon"><i class="fas fa-arrow-right"></i></div>
 							Göndericiler</a
 							>
+							@endif
+
+							@if(Permission::check('receiver-index'))
 							<a class="nav-link
 								{{request()->is('dashboard/receiver/*')  ?'active' : ''}} "
 								href="{{route('receiver.index')}}"
@@ -87,34 +97,46 @@
 							Alıcılar</a
 							>
 							@endif
+							@endif
+
+							@if(Permission::check('profile-index'))
 							<a class="nav-link
 								{{request()->is('dashboard/profile/*')  ?'active' : ''}} "
 								href="{{route('profile.index')}}"
 								><div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
 							Profil ayarları</a
 							>
-							@if(Auth::user()->role == 'admin' || Auth::user()->role == 'root')
+							@endif
+
+							@if(Permission::check('user-index')|| Auth::user()->role == 'root')
+
 							<a class="nav-link
 								{{request()->is('dashboard/user/*')  ?'active' : ''}} "
 								href="{{route('user.index')}}"
 								><div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
 							Kullanıcılar</a
 							>
-							
 							@endif
-							@if(Auth::user()->role == 'admin')
+
+
+							@if(Permission::check('cargo-status-index'))
 							<a class="nav-link
 								{{request()->is('dashboard/status/cargo*')  ?'active' : ''}} "
 								href="{{route('status.cargo.index')}}"
 								><div class="sb-nav-link-icon"><i class="fas fa-hashtag"></i></div>
 							Kargo Status Ayarları</a
 							>
+							@endif
+
+							@if(Permission::check('settings-index'))
 							<a class="nav-link
 								{{request()->is('dashboard/settings/*')  ?'active' : ''}} "
 								href="{{route('settings.index')}}"
 								><div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
 							Genel Ayarlar</a
 							>
+							@endif
+							@if(Permission::check('sms-settings-index'))
 							<a class="nav-link
 								{{request()->is('dashboard/sms/*')  ?'active' : ''}} "
 								href="{{route('sms.index')}}"
@@ -122,12 +144,22 @@
 							SMS Ayarlar</a
 							>
 							@endif
+
+
+
 							@if(Auth::user()->role == 'root')
 							<a class="nav-link
 								{{request()->is('dashboard/company/*')  ?'active' : ''}} "
 								href="{{route('company.index')}}"
 								><div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
 							Şirketler</a
+							>
+
+							<a class="nav-link
+								{{request()->is('dashboard/page/*')  ?'active' : ''}} "
+								href="{{route('page.index')}}"
+								><div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
+							Sayfalar</a
 							>
 							@endif
 						</div>
@@ -143,7 +175,7 @@
 				<footer class="py-4 bg-light mt-auto">
 					<div class="container-fluid">
 						<div class="d-flex align-items-center justify-content-between small">
-							<div class="text-muted">Copyright &copy; Bekzod Najmiddinov 2020</div>
+							<div class="text-muted">Copyright &copy; Portal Kargo 2020</div>
 						</div>
 					</div>
 				</footer>

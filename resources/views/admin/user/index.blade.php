@@ -55,7 +55,8 @@
 							</td>
 							<td>
 								
-								
+								<a href="{{route('user.permission',encrypt($user->id))}}" class="btn btn-info"><i class="fa fa-key"></i></a>
+
 								<a href="{{route('user.edit',encrypt($user->id))}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
 
 								<a id="delete" data-id="{{$user->id}}" 

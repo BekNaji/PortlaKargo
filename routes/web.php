@@ -87,6 +87,9 @@ Route::get('profile/remove/image/{id}', 'ProfileController@removeImage')
 
 // User Route
 Route::get('user/index', 'UserController@index')->name('user.index');
+Route::get('user/permission/{id}', 'UserController@permission')->name('user.permission');
+
+Route::post('user/permission/update', 'UserController@permissionUpdate')->name('user.permission.update');
 Route::get('user/edit/{id}', 'UserController@edit')->name('user.edit');
 Route::post('user/update', 'UserController@update')->name('user.update');
 Route::post('user/store', 'UserController@store')->name('user.store');
@@ -166,7 +169,12 @@ Route::get('status/log/store', 'CargoLogController@store')->name('cargo.log.stor
 Route::get('settings/index', 'SettingsController@index')->name('settings.index');
 Route::post('settings/update', 'SettingsController@update')->name('settings.update');
 
-
+// page routes
+Route::get('page/index', 'PageController@index')->name('page.index');
+Route::get('page/edit/{id}', 'PageController@edit')->name('page.edit');
+Route::post('page/update', 'PageController@update')->name('page.update');
+Route::post('page/store', 'PageController@store')->name('page.store');
+Route::post('page/delete', 'PageController@delete')->name('page.delete');
 
 
 });

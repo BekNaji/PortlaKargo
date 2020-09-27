@@ -17,6 +17,7 @@ use Illuminate\Support\Carbon;
 use Excel;
 use Illuminate\Support\Facades\Http;
 use App\Helpers\SendSMS;
+use Permission;
 
 
 
@@ -39,6 +40,11 @@ class CargoController extends Controller
 
     public function index()
     {
+        
+        if(!Permission::check('cargo-index'))
+        {
+            abort('419');
+        }
     	$cargos  = Cargo::where('company_id',Auth::user()->company_id)
         ->orderBy('id','DESC')->get();
 
@@ -48,22 +54,21 @@ class CargoController extends Controller
 
     public function create()
     {
+        if(!Permission::check('cargo-create'))
+        {
+            abort('419');
+        }
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
         return view('admin.cargo.create',compact('statuses'));
-    }
-
-    public function edit(Request $request)
-    {
-
-        $cargo = Cargo::find(decrypt($request->id));
-        $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
-        
-        return view('admin.cargo.edit',compact('cargo','statuses'));
     }
 
     # show cargo info
     public function show(Request $request)
     {
+        if(!Permission::check('cargo-show'))
+        {
+            abort('419');
+        }
         $cargo = Cargo::find(decrypt($request->id));
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
         $products = Product::where('cargo_id',$cargo->id)->get();
@@ -75,6 +80,10 @@ class CargoController extends Controller
     # delete cargo
     public function delete(Request $request)
     {
+        if(!Permission::check('cargo-delete'))
+        {
+            abort('419');
+        }
         $cargo = Cargo::find($request->id);
         $cargo->delete();
         return back()->with(['success'=>'Silindi!']);
@@ -83,6 +92,10 @@ class CargoController extends Controller
     # make filter
     public function filter(Request $request)
     {
+        if(!Permission::check('cargo-filter'))
+        {
+            abort('419');
+        }
         
         $cargos = Cargo::where('company_id',Auth::user()->company_id);
         if($request->start !='')
@@ -113,6 +126,10 @@ class CargoController extends Controller
     # change status
     public function changeStatus(Request $request)
     {
+        if(!Permission::check('cargo-status-change'))
+        {
+            abort('419');
+        }
         $ids = explode(',', $request->ids);
         
         foreach ($ids as $key => $id) 
@@ -184,7 +201,10 @@ class CargoController extends Controller
     # store cargo
     public function storeAll(Request $request)
     {
-        
+        if(!Permission::check('cargo-create'))
+        {
+            abort('419');
+        }
         $sender_id = $this->storeCustomer($request);
 
         $receiver_id = $this->storeReceiver($request);
@@ -245,7 +265,10 @@ class CargoController extends Controller
     # update cargo
     public function updateAll(Request $request)
     {
-
+        if(!Permission::check('cargo-create'))
+        {
+            abort('419');
+        }
         $sender_id = $this->storeCustomer($request);
 
         $receiver_id = $this->storeReceiver($request);
@@ -376,6 +399,10 @@ class CargoController extends Controller
     # make excel
     public function manafesExcel(Request $request)
     {
+        if(!Permission::check('create-excel'))
+        {
+            abort('419');
+        }
         $cargos = Cargo::where('company_id',Auth::user()->company_id);
         if($request->start !='')
         {

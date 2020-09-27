@@ -247,6 +247,10 @@ return [
 
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
+        'Permission' => App\Helpers\Permission::class,
+
+ 
+
 
 
     ],
