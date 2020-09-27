@@ -13,6 +13,7 @@ use App\Models\Customer;
 use App\Models\Receiver;
 use Auth;
 use App;
+use App\User;
 use Illuminate\Support\Carbon;
 use Excel;
 use Illuminate\Support\Facades\Http;
@@ -45,11 +46,21 @@ class CargoController extends Controller
         {
             abort('419');
         }
-    	$cargos  = Cargo::where('company_id',Auth::user()->company_id)
-        ->orderBy('id','DESC')->get();
+    	if(Auth::user()->role == 'admin')
+        {
+            $cargos  = Cargo::where('company_id',Auth::user()->company_id)
+            ->orderBy('id','DESC')->get();
+        }
+        if(Auth::user()->role == 'user')
+        {
+            $cargos  = Cargo::where('company_id',Auth::user()->company_id)
+            ->where('user_id','=',Auth::user()->id)
+            ->orderBy('id','DESC')->get();
+        }
 
+        $users = User::where('company_id','=',Auth::user()->company_id)->get();
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
-    	return view('admin.cargo.index',compact('cargos','statuses'));
+    	return view('admin.cargo.index',compact('cargos','statuses','users'));
     }
 
     public function create()
@@ -92,12 +103,10 @@ class CargoController extends Controller
     # make filter
     public function filter(Request $request)
     {
-        if(!Permission::check('cargo-filter'))
-        {
-            abort('419');
-        }
+        
         
         $cargos = Cargo::where('company_id',Auth::user()->company_id);
+        $users = User::where('company_id','=',Auth::user()->company_id)->get();
         if($request->start !='')
         {
             $from = Carbon::parse($request->start.' 00:00:00')->format('Y-m-d H:i:s');
@@ -114,13 +123,19 @@ class CargoController extends Controller
         {
             $cargos->where('status','=',$request->status);
         }
+
+        if($request->user != 'all')
+        {
+            $cargos->where('user_id','=',$request->user);
+        }
+
         $cargos = $cargos->orderBy('id','DESC')->get();
 
         
       
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
         
-        return view('admin.cargo.index',compact('cargos','statuses'));
+        return view('admin.cargo.index',compact('cargos','statuses','users'));
     }
 
     # change status
@@ -224,6 +239,7 @@ class CargoController extends Controller
         $cargo->cargo_price = $request->cargo_price;
         $cargo->sender_id = $sender_id;
         $cargo->receiver_id = $receiver_id;
+        $cargo->user_id = Auth::user()->id;
         
         $cargo->number = Auth::user()
         ->company->cargo_letter.sprintf("%05s",$company->cargo_row);
@@ -419,6 +435,10 @@ class CargoController extends Controller
         if($request->status != 'all')
         {
             $cargos->where('status','=',$request->status);
+        }
+        if($request->user != 'all')
+        {
+            $cargos->where('user_id','=',$request->user);
         }
         $cargos = $cargos->get();
 

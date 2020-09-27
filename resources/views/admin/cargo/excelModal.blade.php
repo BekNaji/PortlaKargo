@@ -30,6 +30,17 @@
                             @endforeach
                         </select>
                     </div>
+                    @if(Auth::user()->role == 'admin')
+                    <div class="form-group">
+                        <label>Kullanıcılar</label>
+                        <select class="form-control" name="user" >
+                            <option selected value="all">Hepsi</option>
+                            @foreach($users as $user)
+                            <option value="{{$user->id}}">{{$user->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @endif
                     <div class="form-group">
                         <label>Yedek Türü</label>
                         <select class="form-control" name="type" required >
