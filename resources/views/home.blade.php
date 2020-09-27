@@ -21,18 +21,19 @@
     <div class="ftco-service-image-1 pb-5">
         <div class="container">
             <div class="owl-carousel owl-all">
-                <div class="service text-center">
-                    <a href="#"><img src="{{asset('web')}}/images/cargo_sea_small.jpg" alt="Image" class="img-fluid"></a>
-                    <div class="px-md-3">
-                        <h3><a href="#">Deniz taşımacılığı</a></h3>
-                        <p>Deniz yolu ulaşımı, gemi, vapur, ve benzeri deniz araçlarıyla yapılmakta olan bir ulaşım şeklidir. .</p>
-                    </div>
-                </div>
+                
                 <div class="service text-center">
                     <a href="#"><img src="{{asset('web')}}/images/cargo_air_small.jpg" alt="Image" class="img-fluid"></a>
                     <div class="px-md-3">
                         <h3><a href="#">Hava Taşımacılığı</a></h3>
                         <p>Uluslararası havayolu taşımaları ve tamamlayıcı servis taleplerini karşılayacak hava nakliye hizmeti sunuyoruz.</p>
+                    </div>
+                </div>
+                <div class="service text-center">
+                    <a href="#"><img src="{{asset('web')}}/images/cargo_sea_small.jpg" alt="Image" class="img-fluid"></a>
+                    <div class="px-md-3">
+                        <h3><a href="#">Deniz taşımacılığı</a></h3>
+                        <p>Deniz yolu ulaşımı, gemi, vapur, ve benzeri deniz araçlarıyla yapılmakta olan bir ulaşım şeklidir. .</p>
                     </div>
                 </div>
                 <div class="service text-center">
