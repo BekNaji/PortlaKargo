@@ -38,7 +38,9 @@
 					<a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
 					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 						<a class="dropdown-item" href="{{route('profile.index')}}">Kullanıcı Ayarları</a>
+						@if(Permission::check('settings-index'))
 						<a class="dropdown-item" href="{{route('settings.index')}}">Genel Ayarlar</a>
+						@endif
 						<div class="dropdown-divider"></div>
 						<form id="logout-form" action="{{ route('logout') }}" method="POST" >
 							@csrf

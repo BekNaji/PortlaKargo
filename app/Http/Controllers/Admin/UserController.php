@@ -15,13 +15,11 @@ use App\Models\Page;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('checkact');
-    }
+   
     
     public function index()
     {
+        
         if(Auth::user()->role == 'root')
         {
             $users = User::all();

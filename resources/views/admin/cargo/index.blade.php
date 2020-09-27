@@ -36,6 +36,7 @@
 							<td style="width:50px;"><input 
 								type="checkbox" id="selectAll"></td>
 							<td><b>#</b></td>
+							<td><b>Kullanıcı</b></td>
 							<td><b>Takip No</b></td>
 							<td><b>Durum</b></td>
 							<td><b>Ödeme</b></td>
@@ -54,6 +55,7 @@
 							<input class="cargo" type="checkbox" name="cargo[]" data-id="{{$cargo->id}}">
 							</td>
 							<td>{{$loop->iteration}}</td>
+							<td>{{ $cargo->user->name }}</td>
 							<td>{{$cargo->number ?? ''}}</td>
 							<td>{{$cargo->cargoStatus->name ?? ''}}</td>
 							<td>

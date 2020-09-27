@@ -16,6 +16,10 @@ class CargoStatusController extends Controller
     }
     public function index()
     {
+         if(!Permission::check('cargo-status-index'))
+        {
+            abort('419');
+        }
     	$statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
  
     	return view('admin.cargoStatus.index',compact('statuses'));
@@ -23,7 +27,10 @@ class CargoStatusController extends Controller
 
     public function store(Request $request)
     {
-   
+        if(!Permission::check('cargo-status-create'))
+        {
+            abort('419');
+        }
     	$status = new CargoStatus();
         $status->company_id = Auth::user()->company_id;
     	$status->name = $request->name;
@@ -36,6 +43,10 @@ class CargoStatusController extends Controller
 
     public function update(Request $request)
     {
+        if(!Permission::check('cargo-status-create'))
+        {
+            abort('419');
+        }
     	$status = CargoStatus::find($request->id);
     	$status->name = $request->name;
         $status->type = $request->type;
@@ -47,6 +58,10 @@ class CargoStatusController extends Controller
 
     public function delete(Request $request)
     {
+        if(!Permission::check('cargo-status-create'))
+        {
+            abort('419');
+        }
     	$status = CargoStatus::find($request->id);
     	$status->name = $request->name;
     	$status->delete();
