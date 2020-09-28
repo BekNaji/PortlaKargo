@@ -44,15 +44,15 @@
 							<td><span class="badge badge-danger">Kayitsiz</span></td>	
 							@endif					
 							<td>
-								@if(Permission::check('sender-edit'))
+								
 								<a type="submit" 
 								href="{{route('customer.edit',encrypt($customer->id))}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-								@endif
+								
 
-								@if(Permission::check('sender-delete'))
+								
 								<a id="delete" data-id="{{$customer->id}}" 
 									data-name="{{$customer->name}}" href="#delete" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
-								@endif
+								
 								
 							</td>
 						</tr>
