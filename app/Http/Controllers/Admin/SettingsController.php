@@ -11,10 +11,7 @@ use App\Helpers\Upload;
 
 class SettingsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('checkact');
-    }
+    
     
     public function index()
     {

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\CargoStatus;
 use Auth;
 use Permission;
+
 class CargoStatusController extends Controller
 {
     
@@ -24,10 +25,7 @@ class CargoStatusController extends Controller
 
     public function store(Request $request)
     {
-        if(!Permission::check('cargo-status-create'))
-        {
-            abort('419');
-        }
+        
     	$status = new CargoStatus();
         $status->company_id = Auth::user()->company_id;
     	$status->name = $request->name;
@@ -40,10 +38,7 @@ class CargoStatusController extends Controller
 
     public function update(Request $request)
     {
-        if(!Permission::check('cargo-status-create'))
-        {
-            abort('419');
-        }
+        
     	$status = CargoStatus::find($request->id);
     	$status->name = $request->name;
         $status->type = $request->type;
@@ -55,10 +50,7 @@ class CargoStatusController extends Controller
 
     public function delete(Request $request)
     {
-        if(!Permission::check('cargo-status-delete'))
-        {
-            abort('419');
-        }
+       
     	$status = CargoStatus::find($request->id);
     	$status->name = $request->name;
     	$status->delete();
