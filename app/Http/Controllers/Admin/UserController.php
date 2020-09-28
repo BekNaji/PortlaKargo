@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Company;
 use Illuminate\Validation\Rule;
 use App\Models\Page;
+use Permission;
 
 
 class UserController extends Controller
@@ -19,6 +20,10 @@ class UserController extends Controller
     
     public function index()
     {
+        if(!Permission::check('user-index'))
+        {
+            abort('419');
+        }
         
         if(Auth::user()->role == 'root')
         {
@@ -26,6 +31,7 @@ class UserController extends Controller
             
         }else
         {
+            
             $users = User::where('company_id',Auth::user()->company->id)->get();
         }
         $companies = Company::all();

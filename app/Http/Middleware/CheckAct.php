@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
-use App\Models\Permission;
 
 class CheckAct
 {
@@ -17,10 +16,7 @@ class CheckAct
      */
     public function handle($request, Closure $next)
     {
-        if(!Permission::check('user-index') and Auth::user()->role != 'root')
-        {
-            return abort('419');
-        }
+        
         return $next($request);
     }
 }

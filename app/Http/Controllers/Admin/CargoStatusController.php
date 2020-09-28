@@ -6,14 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CargoStatus;
 use Auth;
-
+use Permission;
 class CargoStatusController extends Controller
 {
     
-    public function __construct()
-    {
-        $this->middleware('checkact');
-    }
+    
     public function index()
     {
          if(!Permission::check('cargo-status-index'))
@@ -58,7 +55,7 @@ class CargoStatusController extends Controller
 
     public function delete(Request $request)
     {
-        if(!Permission::check('cargo-status-create'))
+        if(!Permission::check('cargo-status-delete'))
         {
             abort('419');
         }
