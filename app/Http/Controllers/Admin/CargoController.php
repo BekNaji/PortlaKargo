@@ -190,7 +190,7 @@ class CargoController extends Controller
         $bar = App::make('BarCode');
         $barcode = [
             'text' => $data,
-            'size' => 30,
+            'size' => 40,
             'orientation' => 'horizontal',
             'code_type' => 'code39',
             'print' => true,
