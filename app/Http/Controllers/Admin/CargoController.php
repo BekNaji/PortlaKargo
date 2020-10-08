@@ -192,7 +192,7 @@ class CargoController extends Controller
             'text' => $data,
             'size' => 40,
             'orientation' => 'horizontal',
-            'code_type' => 'code39',
+            'code_type' => 'code128a',
             'print' => true,
             'sizefactor' => 2,
             'filename' => 'image1.jpeg',
