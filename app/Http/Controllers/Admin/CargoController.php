@@ -257,9 +257,9 @@ class CargoController extends Controller
             {
                 $product = new Product();
                 $product->name = $request->product_name[$key];
-                $product->count = $request->product_count[$key];
-                $product->cost = $request->product_price[$key];
-                $product->total = $request->product_total_price[$key];
+                $product->count = $request->product_count[$key] ?? 0;
+                $product->cost = $request->product_price[$key] ?? 0;
+                $product->total = $request->product_total_price[$key] ?? 0;
                 $product->cargo_id = $cargo_id;
                 $product->save();
 
@@ -320,12 +320,12 @@ class CargoController extends Controller
 
                 if($name != '')
                 {
-                    $product->name = $request->product_name[$key];
-                    $product->count = $request->product_count[$key];
-                    $product->cost = $request->product_price[$key];
-                    $product->total = $request->product_total_price[$key];
-                    $total_price += $request->product_total_price[$key];
-                    $product->cargo_id = $cargo_id;
+                    $product->name      = $request->product_name[$key];
+                    $product->count     = $request->product_count[$key] ?? 0;
+                    $product->cost      = $request->product_price[$key] ?? 0;
+                    $product->total     = $request->product_total_price[$key] ?? 0;
+                    $total_price       += $request->product_total_price[$key] ?? 0;
+                    $product->cargo_id  = $cargo_id;
                     $product->save();
                 }else
                 {
@@ -585,7 +585,7 @@ class CargoController extends Controller
         $message .= ' nolu gonderi hk bilgi!'.PHP_EOL;
         $message .= 'Status: '.$status.PHP_EOL;
         $message .= 'Kargo Nerede ?'.PHP_EOL;
-        $message .= 'http://portalkargo.com'.PHP_EOL;
+        $message .= 'https://portalkargo.com'.PHP_EOL;
         $message .= '08504411101'.PHP_EOL;
         
         $sms = new SendSMS();

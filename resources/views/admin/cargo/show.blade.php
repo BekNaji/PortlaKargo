@@ -32,20 +32,20 @@
 					</td>
 					<td>
 						<input style="width:100%;"
-						value="{{ $products[$key]->count ?? ''}}"
+						value="{{ $products[$key]->count ?? 0}}"
 						name="product_count[]" type="number" step="0.1"
 						class="product_count count{{$i}}" data-id="{{$i}}"
 						>
 					</td>
 					<td>
 						<input type="number" step="0.1" style="width:100%;"
-						value="{{ $products[$key]->cost ?? ''}}"
+						value="{{ $products[$key]->cost ?? 0}}"
 						name="product_price[]" type="text"
 						class="product_price price{{$i}}" data-id="{{$i}}"
 						>
 					</td>
 					<td><input type="number" step="0.1" style="width:100%;"
-						value="{{ $products[$key]->total ?? ''}}"
+						value="{{ $products[$key]->total ?? 0}}"
 						name="product_total_price[]" type="text"
 						class="total_price{{$i}}"
 						readonly
