@@ -134,7 +134,7 @@ class HomeController extends Controller
                     }
                     
 
-                    $response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
+                    $response = Http::post('https://beknaji.com/telegrambot/sendMessage.php',
                     [
                     'id' => $receiver[0]->telegram_id,
                     'message' => '<b>Telefon numaraniz kaydedildi!</b>',
@@ -152,7 +152,7 @@ class HomeController extends Controller
                 // $customer->telegram_id = $request->user_id;
                 // $customer->save();
 
-                $response = Http::post('https://beknaji.online/telegrambot/sendMessage.php',
+                $response = Http::post('https://beknaji.com/telegrambot/sendMessage.php',
                 [
                 'id' => $customer[0]->telegram_id,
                 'message' => '<b>Telefon numarniz kaydedildi!</b>',
