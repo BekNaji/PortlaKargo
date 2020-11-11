@@ -209,7 +209,10 @@
 		</script>
 		@yield('js')
 		<script type="text/javascript">
-		$('#dataTable').DataTable();
+		$('#dataTable').DataTable( 
+		{
+        	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    	} );
 		$('#body').hide();
 		$('#body').fadeIn(1000);
 		@if(session('success'))
