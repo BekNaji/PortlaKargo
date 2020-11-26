@@ -55,7 +55,7 @@
 							<input class="cargo" type="checkbox" name="cargo[]" data-id="{{$cargo->id}}">
 							</td>
 							<td>{{$loop->iteration}}</td>
-							<td>{{ $cargo->user->name }}</td>
+							<td>{{ $cargo->user->name ?? ''}}</td>
 							<td>{{$cargo->number ?? ''}}</td>
 							<td>{{$cargo->cargoStatus->name ?? ''}}</td>
 							<td>
@@ -78,6 +78,7 @@
 									<i class="fa fa-print"></i>
 									</span>
 								</a>
+
 								@if(Permission::check('cargo-show'))
 								<a type="submit"
 									href="{{route('cargo.show',encrypt($cargo->id))}}" >

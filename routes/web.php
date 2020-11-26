@@ -49,7 +49,7 @@ Route::middleware('auth')
 
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 Route::middleware(['auth','checkcompany'])
 	   ->prefix('dashboard')
 	   ->namespace('Admin')

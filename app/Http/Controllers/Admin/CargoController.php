@@ -22,6 +22,7 @@ use Permission;
 
 
 
+
 class CargoController extends Controller
 {
     public function __construct(Request $request)
@@ -542,6 +543,7 @@ class CargoController extends Controller
         $message = '';
         $cargo = Cargo::find($id);
 
+        # telegram message content
         $message .= '<b>Şirket adı:</b> '.$cargo->company->name.' '.PHP_EOL;
         $message .= '<b>Kargo Durumu: </b>'.$status.' '.PHP_EOL;
         $message .='<b>Kargo Takip No : </b>'.$cargo->number.' '.PHP_EOL;
@@ -550,26 +552,30 @@ class CargoController extends Controller
         $message .= '<b>Alıcı: </b>'.$cargo->receiver->name ?? '-';
         $message .= PHP_EOL;
         if($cargo->company->telegram_url != '')
-        {
+        {   
+            # define url as database telegram url
             $url = $cargo->company->telegram_url;
 
+            # send message to sender with telegram
             if($cargo->sender->telegram_id != '')
             {
-
                 $response = Http::post($url.'sendMessage.php',
-                [
-                    'id' => $cargo->sender->telegram_id,
-                    'message' => $message,
-                ]);
+                    [
+                        'id' => $cargo->sender->telegram_id,
+                        'message' => $message,
+                    ]);
             }
-
+            # send message to receiver with telegram bot
             if($cargo->receiver->telegram_id != '')
             {
+               
                 $response = Http::post($url.'sendMessage.php',
                 [
                     'id' => $cargo->receiver->telegram_id,
                     'message' => $message,
                 ]);
+                
+                
             }
             
         }
@@ -577,6 +583,7 @@ class CargoController extends Controller
         return ;
     }
 
+    # send message to user with Mobile phone
     public function sendPhone($id,$status)
     {
         $message = 'Sn. Müşterimiz ';
@@ -593,5 +600,7 @@ class CargoController extends Controller
         return $sms->sendSms($message,$cargo->sender->phone);
         
     }
+
+
 
 }

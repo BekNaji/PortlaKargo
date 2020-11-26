@@ -61,43 +61,6 @@
             </div>
         </div>
         @endif
-
-        <br>
-    <div class="card">
-        <div class="card-body">
-            
-            <p><b>Yeni Version 6.0</b></p>
-            <ul>
-                <li>Bir bir müşteriye 4-5 tane veya daha fazla kayıt açılabilir. Bunun için Yenı Kargo kaydı oluşturma sayfasına müşteri biligilerini kaydettikten sonra kaydet butonuna tıklayınca yenı kayıt yenı sayfada açılacak.</li>
-                <li>Baza excel dosyasına İl - İlçe - Sokak - şeklinde yenı stünler eklendi</li>
-
-                <li>Saat konumu İstanbul olarak değiştirildi</li>
-            </ul>
-            <p>Farklı bir Sorun Çıkarsa benimle +905550156185 telefon numarasından ulaşabilirsiniz!</p>
-        </div>
-    </div>
-
     </div>
 </div>
-<script type="text/javascript">
-var ctx = document.getElementById('myChart').getContext('2d');
-var chart = new Chart(ctx, {
-// The type of chart we want to create
-type: 'bar',
-// The data for our dataset
-data: {
-labels: ['Jun','Jul'],
-datasets: [{
-label: 'Aylık kargo',
-data: [4],
-backgroundColor: 'rgba(36, 104, 240, 1)',
-borderColor: 'rgb(255, 99, 132)',
-}],
-},
-// Configuration options go here
-options: {
-responsive: false
-}
-});
-</script>
 @endsection

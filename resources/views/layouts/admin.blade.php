@@ -24,13 +24,20 @@
 
 	</head>
 	<body class="sb-nav-fixed">
+
 		<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+			
 			<a class="navbar-brand" href="{{route('home')}}">
 				{{Auth::user()->company->name ?? ''}}
 			</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button
 			>
 			<!-- Navbar Search-->
 			<form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+			<div style="visibility:hidden;" id="noInternet" class="d-flex align-items-center">
+				<span class="spinner-border ml-auto text-danger" role="status" aria-hidden="true"></span>
+			<strong class="text-light">Internet baglantiniz yok </strong>
+			
+			</div>
 			</form>
 			<!-- Navbar-->
 			<ul class="navbar-nav ml-auto ml-md-0">
@@ -164,6 +171,7 @@
 							Sayfalar</a
 							>
 							@endif
+
 						</div>
 					</div>
 				</nav>
@@ -174,10 +182,13 @@
 						@yield('content')
 					</div>
 				</main>
+
 				<footer class="py-4 bg-light mt-auto">
 					<div class="container-fluid">
+
 						<div class="d-flex align-items-center justify-content-between small">
 							<div class="text-muted">Copyright &copy; Portal Kargo 2020</div>
+	
 						</div>
 					</div>
 				</footer>
@@ -192,8 +203,8 @@
 		toastr.options = {
 		"closeButton": true,
 		"debug": false,
-		"newestOnTop": false,
-		"progressBar": true,
+		"newestOnTop": true,
+		"progressBar": false,
 		"positionClass": "toast-bottom-right",
 		"preventDuplicates": false,
 		"onclick": null,
@@ -209,9 +220,11 @@
 		</script>
 		@yield('js')
 		<script type="text/javascript">
+			$(document).ready( function () {
 		$('#dataTable').DataTable( 
 		{
         	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    	} );
     	} );
 		$('#body').hide();
 		$('#body').fadeIn(1000);
@@ -230,6 +243,15 @@
 			);
 		//toastr.warning("{{session('error')}}");
 		@endif
+		setInterval(function(){
+			if (!navigator.onLine) {
+				$('#noInternet').css('visibility','visible');
+			}
+			else{
+				$('#noInternet').css('visibility','hidden');
+			}
+		},7000);
+		
 		</script>
 	</body>
 </html>

@@ -184,6 +184,7 @@ return [
         // Excell
         Maatwebsite\Excel\ExcelServiceProvider::class,
         
+     
 
     ],
 
@@ -248,9 +249,6 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
         'Permission' => App\Helpers\Permission::class,
-
- 
-
 
 
     ],

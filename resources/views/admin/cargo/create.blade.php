@@ -28,6 +28,7 @@
 						name="product_count[]" 
 						type="number" step="0.1"
 						class="product_count count{{$i}}" data-id="{{$i}}" 
+						min="0"
 
 						>
 					</td>
@@ -36,10 +37,12 @@
 						value="0" 
 						type="number" step="0.1" 
 						style="width:100%;" name="product_price[]" type="text"
-						class="product_price price{{$i}}" data-id="{{$i}}" 
+						class="product_price price{{$i}}" data-id="{{$i}}"
+						min="0" 
 						>
 					</td>
 					<td><input value="0" 
+						min="0"
 					 class="total_price{{$i}}" type="number" step="0.1" style="width:100%;" name="product_total_price[]" type="text" readonly></td>
 				</tr>
 				<?php } ?>

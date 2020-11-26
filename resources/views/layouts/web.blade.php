@@ -61,7 +61,7 @@
                   <li><a href="{{url('/')}}#about-system" class="nav-link">Sistem hakkında</a></li>
                   <li><a href="{{url('/')}}#contact" class="nav-link">İletişim</a></li>
                   <li><a href="{{route('login')}}" class="nav-link">Giriş</a></li>
-                  <li><a href="{{route('register')}}" class="nav-link">Kayit</a></li>
+                  
                 </ul>
               </nav>
 
@@ -97,7 +97,7 @@
                   <li><a href="{{url('/')}}#about-system" >Sistem hakkında</a></li>
                   <li><a href="{{url('/')}}#contact" >İletişim</a></li>
                   <li><a href="{{route('login')}}">Giriş</a></li>
-                  <li><a href="{{route('register')}}">Kayit</a></li>
+                  
                 </ul>
               </div>
 
