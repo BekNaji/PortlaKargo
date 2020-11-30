@@ -17,6 +17,7 @@
 							<td><b>Ad</b></td>
 							<td><b>Tür</b></td>
 							<td><b>SMS</b></td>
+							<td><b>Kayıt Kapatılsın mı?</b></td>
 							<td><b>#</b></td>
 						</tr>
 					</thead>
@@ -33,8 +34,15 @@
 							@else
 							<td><span class="badge badge-danger">SMS gönderilmesin
 							</span>
-						</td>
+							</td>
 							@endif
+							<td>
+								@if($status->public_status == 1)
+								<span class="badge badge-danger">Hayır</span>
+								@else
+								<span class="badge badge-success">Evet</span>
+								@endif
+							</td>
 							<td>
 								<a id="edit" data-id="{{$status->id}}"
 									data-public="{{$status->public_status}}"
