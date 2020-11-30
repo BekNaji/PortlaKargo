@@ -34,6 +34,7 @@
                     <div class="form-group">
                         <label>Bu statuye çekilen tüm kayıtlar kapatılsın mı?</label>
                         <select class="form-control" name="public_status" required>
+                            <option value="" selected>Seç</option>
                             <option  value="0">Evet</option>
                             <option  value="1">Hayır</option>
                         </select>
