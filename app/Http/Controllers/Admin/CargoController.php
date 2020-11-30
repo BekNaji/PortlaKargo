@@ -40,36 +40,45 @@ class CargoController extends Controller
         });
     }
 
+    // page of cargos list 
     public function index()
-    {
-        
+    {   
+        // if user can not show cargo page
         if(!Permission::check('cargo-index'))
         {
             abort('419');
         }
+        // if user role is admin 
     	if(Auth::user()->role == 'admin')
         {
             $cargos  = Cargo::where('company_id',Auth::user()->company_id)
-            ->orderBy('id','DESC')->get();
+            ->orderBy('id','DESC');
         }
+
+        // if user role equal to user. Role User only can see own datas
         if(Auth::user()->role == 'user')
         {
             $cargos  = Cargo::where('company_id',Auth::user()->company_id)
             ->where('user_id','=',Auth::user()->id)
-            ->orderBy('id','DESC')->get();
+            ->orderBy('id','DESC');
         }
 
+        // here some query as you know
+        $cargos = $cargos->where('public_status','=',1)->get();
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
     	return view('admin.cargo.index',compact('cargos','statuses','users'));
     }
 
+    // create cargo page 
     public function create()
-    {
+    {   
+        // if user has not permission create cargo
         if(!Permission::check('cargo-create'))
         {
             abort('419');
         }
+        // get statuses for use cargo crate page
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
         return view('admin.cargo.create',compact('statuses'));
     }
@@ -77,12 +86,18 @@ class CargoController extends Controller
     # show cargo info
     public function show(Request $request)
     {
+        // if user has not permission show cargo return 419 error
         if(!Permission::check('cargo-show'))
         {
             abort('419');
         }
+        // get cargo data according to request id
         $cargo = Cargo::find(decrypt($request->id));
+
+        // get status datas for use show cargo page
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
+
+        // get product datas according cargo id
         $products = Product::where('cargo_id',$cargo->id)->get();
         
         return view('admin.cargo.show',
@@ -92,10 +107,13 @@ class CargoController extends Controller
     # delete cargo
     public function delete(Request $request)
     {
+        // if has not permission delete of user return 419
         if(!Permission::check('cargo-delete'))
         {
             abort('419');
         }
+
+        // get data according to id and delete then return back success message
         $cargo = Cargo::find($request->id);
         $cargo->delete();
         return back()->with(['success'=>'Silindi!']);
@@ -148,19 +166,22 @@ class CargoController extends Controller
         }
         $ids = explode(',', $request->ids);
         
+
         foreach ($ids as $key => $id) 
         {
             $cargo = Cargo::find($id);
+            $status = CargoStatus::find($request->status);
+            $cargo->public_status = $status->public_status;
             if($cargo->status != $request->status)
             {
                 $this->storeLog($cargo->id,$request->status);
                 
-
             } 
             $cargo->status = $request->status;
             $cargo->save();
 
         }
+        
 
 
         return back()->with(['success'=>'Güncellendi']);
@@ -231,11 +252,16 @@ class CargoController extends Controller
         $company->cargo_row = $cargo_row;
         $company->save();
 
-
+         
+        
+        $status = CargoStatus::find($request->status);
         $cargo = new Cargo();
         $cargo->company_id = Auth::user()->company_id;
         $cargo->payment_type = $request->payment_type;
         $cargo->status = $request->status;
+        // important !
+        $cargo->public_status = $status->public_status;
+
         $cargo->total_kg = $request->total_kg;
         $cargo->cargo_price = $request->cargo_price;
         $cargo->sender_id = $sender_id;
@@ -297,16 +323,19 @@ class CargoController extends Controller
             $this->storeLog($cargo->id,$request->status);
 
         }
+        $status = CargoStatus::find($request->status);
+
         $cargo->company_id = Auth::user()->company_id;
         $cargo->payment_type = $request->payment_type;
         $cargo->status = $request->status;
+        $cargo->public_status = $status->public_status;
+
         $cargo->total_kg = $request->total_kg;
         $cargo->cargo_price = $request->cargo_price;
         $cargo->sender_id = $sender_id;
         $cargo->receiver_id = $receiver_id;
         $cargo->save();
 
-        $cargo->save();
         $cargo_id = $cargo->id;
 
         

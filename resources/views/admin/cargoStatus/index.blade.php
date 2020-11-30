@@ -37,6 +37,7 @@
 							@endif
 							<td>
 								<a id="edit" data-id="{{$status->id}}"
+									data-public="{{$status->public_status}}"
 									data-type="{{$status->type}}"
 									data-sms="{{$status->send_phone}}"
 									data-name="{{$status->name}}" href="#edit" class="btn btn-warning"><i class="fa fa-pen"></i>

@@ -19,7 +19,6 @@
                     </div>
                      <div class="form-group">
                         <select class="form-control" name="type" required>
-                            
                             <option id="personal" value="personal">Personal</option>
                             <option id="kurye" value="kurye">Kurye</option>
                         </select>
@@ -30,6 +29,14 @@
                         <select id="send_sms" class="form-control" name="send_phone" required>
                             <option id="yes_send" value="true">Evet</option>
                             <option id="no_send" value="false">Hayır</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Bu statuye çekilen tüm kayıtlar kapatılsın mı?</label>
+                        <select id="public" class="form-control" name="public_status" required>
+                            <option id="yes_close" value="0">Evet</option>
+                            <option id="no_close" value="1">Hayır</option>
                         </select>
                     </div>
                     

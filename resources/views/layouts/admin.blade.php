@@ -13,6 +13,7 @@
 		{{ config('app.name') }}
 		@endif 
 		</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" />
 		<link href="{{ asset('assets') }}/css/styles.css" rel="stylesheet" />
 		<link href="{{ asset('assets') }}/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"  />
 		<link href="{{ asset('assets') }}/css/bootstrap-select.min.css"/>
@@ -21,6 +22,7 @@
 		<link href="{{ asset('assets') }}/css/dataTables.min.css" rel="stylesheet" />
 		<link href="{{ asset('assets') }}/css/toastr.min.css" rel="stylesheet" />
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+		
 
 	</head>
 	<body class="sb-nav-fixed">

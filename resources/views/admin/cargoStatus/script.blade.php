@@ -9,12 +9,14 @@ $(document).ready(function(){
 		$('#name').text(name);
 		$('#deleteModal').modal('show');
 	});
+
 	// edit modal
 	$(document).on('click','#edit',function(){
 		id = $(this).data('id');
 		name = $(this).data('name');
 		type = $(this).data('type');
 		sms = $(this).data('sms');
+		public = $(this).data('public');
 		
 		$('#edit_id').val(id);
 		$('#edit_name').val(name);
@@ -34,6 +36,14 @@ $(document).ready(function(){
 		if(sms == false || sms == 'false')
 		{
 			$("#send_sms option[value=false]").prop('selected',true)
+		}
+		if(public == 1)
+		{
+			$("#public option[value=1]").prop('selected',true)
+		}
+		if(public == 0)
+		{
+			$("#public option[value=0]").prop('selected',true)
 		}
 		$('#editModal').modal('show');
 	});

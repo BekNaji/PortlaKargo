@@ -6,10 +6,7 @@ use Auth;
 
 class Permission
 {
-     
-
-
-     
+    
     static function check($title)
     {
         $page = Page::where('title','=',$title)->get()->first();
