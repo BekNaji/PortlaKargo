@@ -615,14 +615,13 @@ class CargoController extends Controller
     # send message to user with Mobile phone
     public function sendPhone($id,$status)
     {
-        $message = 'Sn. Müşterimiz ';
-        $cargo = Cargo::find($id);
-        $message .= $cargo->number;
-        $message .= ' nolu gonderi hk bilgi!'.PHP_EOL;
+        $message  = '';
+        $cargo    = Cargo::find($id);
+        $message .= 'Kargo KODİ: '.$cargo->number.PHP_EOL;
         $message .= 'Status: '.$status.PHP_EOL;
-        $message .= 'Kargo Nerede ?'.PHP_EOL;
+        $message .= 'Online Tekshirish uchun link '.PHP_EOL;
         $message .= 'https://portalkargo.com'.PHP_EOL;
-        $message .= '08504411101'.PHP_EOL;
+        $message .= 'Operator tel: +908504411101'.PHP_EOL;
         
         $sms = new SendSMS();
         
