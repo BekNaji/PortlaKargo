@@ -478,21 +478,29 @@ class CargoController extends Controller
         {
             // header of  excell datas
             $datas = [
-                [ 'Invoice No','Name','Address','KG','Total KG','Payment','Phone','Other Phone','Sender'],
+                [ 'Invoice No','Name','Address','KG','Cash','Phone','Other Phone','Sender'],
             ];
 
             foreach($cargos as $cargo) 
             {
+                $receiver = explode(' ',$cargo->receiver->name);
+                if(count($receiver) > 1)
+                {
+                    $receiver = $receiver[1];
+                }else{
+                    $receiver = $receiver[0];
+                }
+
+                
                 $data = [
                     $cargo->number ?? '',
-                    $cargo->receiver->name ?? '',
+                    $receiver ?? '',
                     $cargo->receiver->address ?? '',
                     $cargo->total_kg ?? '',
-                    0,
                     '',
                     $cargo->receiver->phone ?? '',
                     $cargo->receiver->other_phone ?? '',
-                    $cargo->sender->name ?? '',
+                    $cargo->sender->phone ?? '',
                 ];
                 
                 array_push($datas,$data);
