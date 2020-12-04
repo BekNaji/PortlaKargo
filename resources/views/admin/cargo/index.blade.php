@@ -30,7 +30,7 @@
 				
 				<hr>
 				@if(Permission::check('cargo-index'))
-				<table id="dataTable" class="display responsive nowrap table-responsive" style="width:100%">
+				<table id="dataTable" class="display responsive table-responsive" style="width:100%">
 					<thead>
 						<tr>
 							<td style="width:50px;"><input 

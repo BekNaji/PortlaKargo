@@ -18,7 +18,7 @@
 				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp;
 			
 				<hr>
-				<table id="dataTable" class="display responsive nowrap" style="width:100% !important" >
+				<table id="dataTable" class="display responsive nowrap" width="100%" >
 					<thead>
 						<tr>
 							<td><b>#</b></td>
