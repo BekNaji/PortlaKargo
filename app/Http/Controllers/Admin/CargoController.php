@@ -491,11 +491,23 @@ class CargoController extends Controller
                     $receiver = $receiver[0];
                 }
 
+                $address = explode(' ',$cargo->receiver->address);
+               
+                if(count($address) >= 2 )
+                {
+                    $address = $address[0].' '.$address[1];
+
+                }else{
+
+                    $address = $address[0];
+                }
+               
+
                 
                 $data = [
                     $cargo->number ?? '',
                     $receiver ?? '',
-                    $cargo->receiver->address ?? '',
+                    $address ?? '',
                     $cargo->total_kg ?? '',
                     '',
                     $cargo->receiver->phone ?? '',
