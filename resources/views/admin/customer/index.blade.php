@@ -17,7 +17,7 @@
 				<button id="sendSms" type="button" class="btn btn-primary">SMS Gönder</button>
 				
 				<hr>
-				<table class="table table-bordered">
+				<table id="dataTable" class="display responsive nowrap" style="width:100%" >
 					<thead>
 						<tr>
 							<td style="width:50px;">
@@ -44,7 +44,10 @@
 							<td><span class="badge badge-danger">Kayitsiz</span></td>	
 							@endif					
 							<td>
-								
+								<a type="submit" 
+								href="{{route('customer.show',encrypt($customer->id))}}" class="btn btn-info">
+								<i class="fa fa-list"></i>
+								</a>
 								<a type="submit" 
 								href="{{route('customer.edit',encrypt($customer->id))}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
 								

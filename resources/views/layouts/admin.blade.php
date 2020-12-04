@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		{{-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> --}}
 		<meta name="description" content="" />
 		<meta name="author" content="" />
 		<title>
@@ -222,11 +222,12 @@
 		</script>
 		@yield('js')
 		<script type="text/javascript">
-			$(document).ready( function () {
-		$('#dataTable').DataTable( 
-		{
-        	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-    	} );
+		$(document).ready( function () {
+			$('#dataTable').DataTable( 
+			{
+				"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+				responsive: true
+			} );
     	} );
 		$('#body').hide();
 		$('#body').fadeIn(1000);

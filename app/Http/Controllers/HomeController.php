@@ -88,6 +88,7 @@ class HomeController extends Controller
         
     }
 
+    // show save Phone Form page
     public function savePhoneForm(Request $request)
     {
 
@@ -102,11 +103,13 @@ class HomeController extends Controller
 
     public function savePhone(Request $request)
     {
+        // this is condition check auth token 
         if($request->auth != md5('19950430'))
         {
             abort('404');
         }
-        // dd($request);
+        
+        // if has request user id will run following code
         if($request->user_id != '')
         {
             $customer = Customer::where('phone','=',$request->phone)
@@ -115,50 +118,59 @@ class HomeController extends Controller
             $receiver = Receiver::where('phone','=',$request->phone)
             ->get();
 
-           
-
-            if($customer->count() == 0)
+            if($customer->count() != 0)
             {
-                
-                if($receiver->count() == 0)
-                {
-                  return redirect()
-                    ->route('save.phone.form',[$request->auth,$request->user_id])
-                    ->with(['warning'=>'Telefon nunamara bulunamadi!']);  
-                }else
-                {   
-                    foreach ($receiver->telegram_id as $value) 
-                    {
-                        $value->telegram_id = $request->user_id;
-                        $value->save();
-                    }
-                    
+                // Here, a user can be a customer of 2 3 companies and each company
+                // It has its own telegram bot. All at once
+                // I used a loop to send sms
 
-                    $response = Http::post('https://beknaji.com/telegrambot/sendMessage.php',
+                foreach ($customer->telegram_id as $value) 
+                {
+                    // get company  
+                    $company = Company::find($value->company_id);
+                    $telegram_url = $company->telegram_url;
+
+                    // save telegram id 
+                    $value->telegram_id = $request->user_id;
+                    $value->save();
+
+                    // send message to telegram bot
+                    $response = Http::post($telegram_url.'sendMessage.php',
                     [
-                    'id' => $receiver[0]->telegram_id,
+                    'id' => $value->telegram_id,
                     'message' => '<b>Telefon numaraniz kaydedildi!</b>',
                     ]);
                 }
                 
-            }else
-            {
-                
-                foreach ($customer as $key => $value) {
+            }
 
+            if($receiver->count() != 0)
+            {
+                // Here, a user can be a customer of 2 3 companies and each company
+                // It has its own telegram bot. All at once
+                // I used a loop to send sms
+
+                foreach ($receiver as $key => $value) {
+
+                    // get company and get telegrambot url
+                    $company = Company::find($value->company_id);
+                    $telegram_url = $company->telegram_url;
+
+                    // save telegram id
                     $value->telegram_id = $request->user_id;
                     $value->save();
-                }
-                // $customer->telegram_id = $request->user_id;
-                // $customer->save();
 
-                $response = Http::post('https://beknaji.com/telegrambot/sendMessage.php',
-                [
-                'id' => $customer[0]->telegram_id,
-                'message' => '<b>Telefon numarniz kaydedildi!</b>',
-                ]);
+                    // send message to telegram bot
+                    $response = Http::post($telegram_url.'sendMessage.php',
+                        [
+                        'id' => $value->telegram_id,
+                        'message' => '<b>Telefon numarniz kaydedildi!</b>',
+                        ]);
+                }
+
+                
             }
-            
+
             return redirect()->route('home')
             ->with(['success'=>'Telefon numara kaydedildi!']);
         }

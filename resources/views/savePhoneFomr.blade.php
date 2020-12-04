@@ -10,7 +10,7 @@
 					<input type="hidden" name="user_id" value="{{$user_id}}"> 
 					<div class="form-group">
 						<label>Telefon ( Örnek Türkiye: 5551234567  - Örnek O'zbekiston: 941234567  )</label>
-						<input class="form-control" type="number" name="phone">
+						<input class="form-control" type="text" name="phone">
 					</div>
 					<button class="btn btn-success">Kaydet</button>
 

@@ -47,6 +47,7 @@
                             
                             <option value="manafes">Manafes</option>
                             <option value="baza">Baza</option>
+                            <option value="delivery">Dastafka</option>
                         </select>
                     </div>
 

@@ -105,10 +105,17 @@ Route::post('customer/delete', 'CustomerController@delete')->name('customer.dele
 Route::post('customer/send/sms', 'CustomerController@sendSms')
 ->name('customer.send.sms');
 
+Route::get('customer/show/{id}', 'CustomerController@show')->name('customer.show');
+Route::get('customer/show/filter/{id}', 'CustomerController@showFilter')->name('customer.show.filter');
+Route::get('customer/cargo/excell/{id}', 'CustomerController@createExcell')->name('customer.cargo.excell');
+
 
 // Receiver Route
 Route::get('receiver/index', 'ReceiverController@index')->name('receiver.index');
 Route::get('receiver/edit/{id}', 'ReceiverController@edit')->name('receiver.edit');
+Route::get('receiver/show/{id}', 'ReceiverController@show')->name('receiver.show');
+Route::get('receiver/show/filter/{id}', 'ReceiverController@showFilter')->name('receiver.show.filter');
+Route::get('receiver/cargo/excell/{id}', 'ReceiverController@createExcell')->name('receiver.cargo.excell');
 Route::post('receiver/update', 'ReceiverController@update')->name('receiver.update');
 Route::post('receiver/store', 'ReceiverController@store')->name('receiver.store');
 Route::post('receiver/delete', 'ReceiverController@delete')->name('receiver.delete');

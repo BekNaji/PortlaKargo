@@ -7,7 +7,7 @@
 		<div class="card">
 			<div class="card-body">
 				
-				<i class="fa fa-list" aria-hidden="true"></i> Kargo Listesi&#160;&#160;&#160;
+				<i class="fa fa-list" aria-hidden="true"></i> <span class="mr-4">Kargo Listesi </span>
 				
 				@if(Permission::check('cargo-create'))
 				<a href="{{route('cargo.create')}}" class="btn btn-success "><i class="fa fa-plus" aria-hidden="true"></i></a>
@@ -30,7 +30,7 @@
 				
 				<hr>
 				@if(Permission::check('cargo-index'))
-				<table id="dataTable" class="table  table-bordered table-responsive-sm">
+				<table id="dataTable" class="display responsive nowrap table-responsive" style="width:100%">
 					<thead>
 						<tr>
 							<td style="width:50px;"><input 

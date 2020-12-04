@@ -18,7 +18,7 @@
 				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp;
 			
 				<hr>
-				<table class="table table-bordered">
+				<table id="dataTable" class="display responsive nowrap" style="width:100% !important" >
 					<thead>
 						<tr>
 							<td><b>#</b></td>
@@ -45,6 +45,10 @@
 							
 							<td>{{$receiver->address}}</td>
 							<td>
+							<a type="submit" 
+								href="{{route('receiver.show',encrypt($receiver->id))}}" class="btn btn-info">
+								<i class="fa fa-list"></i>
+							</a>
 								<a type="submit" 
 								href="{{route('receiver.edit',encrypt($receiver->id))}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
 

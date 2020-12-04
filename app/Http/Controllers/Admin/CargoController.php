@@ -449,7 +449,8 @@ class CargoController extends Controller
         {
             abort('419');
         }
-        $cargos = Cargo::where('company_id',Auth::user()->company_id);
+        $cargos = Cargo::where('company_id',Auth::user()->company_id)->orderBy('sender_id','ASC');
+
         if($request->start !='')
         {
             $from = Carbon::parse($request->start.' 00:00:00')->format('Y-m-d H:i:s');
@@ -472,35 +473,64 @@ class CargoController extends Controller
         }
         $cargos = $cargos->get();
 
+        // make excell delivery
+        if($request->type == 'delivery')
+        {
+            // header of  excell datas
+            $datas = [
+                [ 'Invoice No','Name','Address','KG','Total KG','Payment','Phone','Other Phone','Sender'],
+            ];
 
+            foreach($cargos as $cargo) 
+            {
+                $data = [
+                    $cargo->number ?? '',
+                    $cargo->receiver->name ?? '',
+                    $cargo->receiver->address ?? '',
+                    $cargo->total_kg ?? '',
+                    0,
+                    '',
+                    $cargo->receiver->phone ?? '',
+                    $cargo->receiver->other_phone ?? '',
+                    $cargo->sender->name ?? '',
+                ];
+                
+                array_push($datas,$data);
 
+            }
         
+            // define name to excell file
+            $date = date('d.m.Y');
+            $filename = $date.'-dastafka.xlsx';
+        }
 
+        // make excell manafes
         if($request->type == 'manafes')
         {
-        $datas = [
-                [ 'Invoice No','Name','Passport','Total KG','Total Price'],
-            ];
-        foreach ($cargos as $key => $value) 
-        {
-            
-            $data = [   
-                        $value->number ?? '',
-                        $value->receiver->name ?? '',
-                        $value->receiver->passport ?? '',
-                        $value->total_kg ?? '',
-                        $value->total_price,
-                    ];
+            $datas = [
+                    [ 'Invoice No','Name','Passport','Total KG','Total Price'],
+                ];
+            foreach ($cargos as $key => $value) 
+            {
+                
+                $data = [   
+                            $value->number ?? '',
+                            $value->receiver->name ?? '',
+                            $value->receiver->passport ?? '',
+                            $value->total_kg ?? '',
+                            $value->total_price,
+                        ];
 
-            array_push($datas, $data);
-            
+                array_push($datas, $data);
+                
+            }
+
+        
+            $date = date('d.m.Y');
+            $filename = $date.'-manafes.xlsx';
         }
 
-     
-        $date = date('d.m.Y');
-        $filename = $date.'-manafes.xlsx';
-        }
-
+        // make excell baza
         if($request->type == 'baza')
         {
             
