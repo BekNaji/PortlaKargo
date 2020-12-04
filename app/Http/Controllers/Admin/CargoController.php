@@ -502,7 +502,7 @@ class CargoController extends Controller
                     $address = $address[0];
                 }
                
-
+                $phone2 = $other_phone ?? '';
                 
                 $data = [
                     $cargo->number ?? '',
@@ -511,7 +511,7 @@ class CargoController extends Controller
                     $cargo->total_kg ?? '',
                     '',
                     $cargo->receiver->phone ?? '',
-                    $cargo->receiver->other_phone ?? '',
+                    $phone2,
                     $cargo->sender->phone ?? '',
                 ];
                 
