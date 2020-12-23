@@ -509,7 +509,7 @@ class CargoController extends Controller
                     $receiver ?? '',
                     $address ?? '',
                     $cargo->total_kg ?? '',
-                    '',
+                    $cargo->cargo_price ?? '0',
                     $cargo->receiver->phone ?? '',
                     $phone2,
                     $cargo->sender->phone ?? '',
