@@ -18,6 +18,7 @@ use Illuminate\Support\Carbon;
 use Excel;
 use Illuminate\Support\Facades\Http;
 use App\Helpers\SendSMS;
+use App\Helpers\SendSMSUz;
 use Permission;
 
 
@@ -201,6 +202,7 @@ class CargoController extends Controller
         if($status->send_phone == 'true')
         {
             $this->sendPhone($id,$status->name);
+            $this->sendPhoneUz($id,$status->name);
         }
 
     }
@@ -679,6 +681,27 @@ class CargoController extends Controller
         
     }
 
+    # send message to user with Mobile phone
+    public function sendPhoneUz($id,$status)
+    {
+        $message  = '';
+        $cargo    = Cargo::find($id);
+        $message .= 'Kargo KODİ: '.$cargo->number.PHP_EOL;
+        $message .= 'Status: '.$status.PHP_EOL;
+        $message .= 'Online Tekshirish uchun link '.PHP_EOL;
+        $message .= 'https://portalkargo.com'.PHP_EOL;
+        $message .= 'Operator tel: +908504411101'.PHP_EOL;
+        
+        $sms = new SendSMS();
+        $tel = $cargo->receiver->phone;
+        if(strlen($tel) != 12)
+        {
+            $tel = '998'.str_replace([' ',',','  '],'',$cargo->receiver->phone);
+        }
+        
+        return $sms->sendSmsUz($message,$tel);
+        
+    }
 
 
 }

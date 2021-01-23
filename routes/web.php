@@ -10,10 +10,10 @@ Route::get('locale/{locale}', function ($locale){
 
 
 	
-Route::redirect('/', '/home');
+Route::redirect('/home', '/');
 Route::redirect('/admin', '/dashboard/index');
 Route::redirect('dashboard', '/dashboard/index');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/search', 'HomeController@search')->name('search');
 Route::get('/about', 'HomeController@about')->name('about');
 Route::get('/contact', 'HomeController@contact')->name('contact');
@@ -72,6 +72,7 @@ Route::post('telegram/send/multiple/message/', 'TelegramController@sendMultipleM
 
 Route::get('sms/index','SmsController@index')->name('sms.index');
 Route::post('sms/update','SmsController@update')->name('sms.update');
+Route::get('sms/test','SmsController@test')->name('sms.test');
 
 
 // profile

@@ -2,11 +2,11 @@
 @section('title','SMS ayarlari')
 @section('content')
 <div class="row">
-	<div class="col-md-8 offset-md-2">
+	<div class="col-md-6">
 		<br>
 		<div class="card">
 			<div class="card-body">
-				<h4>SMS ayarlari</h4><hr>
+				<h4>Turkiye SMS ayarlari</h4><hr>
 				@if($balance->status->code == 200)
 				<div class=" text-success p-3 border border-success rounded">
 				<b>Toplam SMS Adetı : {{$balance->response->balance ?? 'NON'}}</b> <br>
@@ -33,7 +33,35 @@
 						<label>API</label>
 						<input value="{{$company->api_key}}" type="text" name="api_key" class="form-control" required="">
 					</div>
-					<button class="btn btn-success" type="submit">Güncelle</button>
+					<button value="tr" name="countryId" class="btn btn-success" type="submit">Güncelle</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<br>
+		<div class="card">
+			<div class="card-body">
+				<h4>O'zbekistan SMS ayarlari</h4><hr>
+			
+				<form action="{{route('sms.update')}}" method="POST">
+					@csrf
+					
+					<div class="form-group">
+						<label>Başlık</label>
+						<input value="{{$company->sms_titleUZ}}" type="text" name="sms_titleUZ" class="form-control">
+					</div>
+					<div class="form-group">
+						<label>API Email UZ</label>
+						<input value="{{$company->api_emailUZ}}" type="text" name="api_emailUZ" class="form-control" required="">
+					</div>
+					<div class="form-group">
+						<label>API <a href="https://my.eskiz.uz/sms/settings" target="_blank" >bu linkten  api keyi alabilir siniz!</a></label>
+						<input value="{{$company->api_keyUZ}}" type="text" name="api_keyUZ" class="form-control" required="">
+					</div>
+
+					<button value="uz" name="countryId" class="btn btn-success" type="submit">Güncelle</button>
 				</form>
 			</div>
 		</div>
