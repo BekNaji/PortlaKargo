@@ -92,7 +92,7 @@ class CargoController extends Controller
             {
                 if($status->id == $cargo->status)
                 {
-                    $arCargo['status'] = $user->name;
+                    $arCargo['status'] = $status->name;
                 }
             }
             foreach($senders as $sender)
@@ -197,11 +197,56 @@ class CargoController extends Controller
 
         $cargos = $cargos->orderBy('id','DESC')->get();
 
-        
-      
+        $users = User::where('company_id','=',Auth::user()->company_id)->get();
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
+    
+        $senders = Customer::where('company_id','=',Auth::user()->company_id)->get();
+        $receivers = Receiver::where('company_id','=',Auth::user()->company_id)->get();
+      
+        foreach($cargos as $cargo)
+        {
+            $arCargo['id']              = $cargo->id;
+            $arCargo['number']          = $cargo->number;
+            $arCargo['payment_type']    = $cargo->payment_type;
+            $arCargo['total_kg']        = $cargo->total_kg;
+            $arCargo['cargo_price']     = $cargo->cargo_price;
+            $arCargo['created_at']      = $cargo->created_at;
+           
+            foreach($users as $user)
+            {
+                if($user->id == $cargo->user_id)
+                {
+                    $arCargo['user'] = $user->name;
+                }   
+            }
+          
+            foreach($statuses as $status)
+            {
+                if($status->id == $cargo->status)
+                {
+                    $arCargo['status'] = $status->name;
+                }
+            }
+            foreach($senders as $sender)
+            {
+                if($sender->id == $cargo->sender_id)
+                {
+                    $arCargo['sender'] = $sender->name ;
+                }
+            }
+            foreach( $receivers as $receiver)
+            {
+                if($receiver->id == $cargo->receiver_id)
+                {
+                    $arCargo['receiver'] = $sender->name ;
+                }
+            }
+           
+            $data['cargos'][] = $arCargo;
+            
+        }
         
-        return view('admin.cargo.index',compact('cargos','statuses','users'));
+        return view('admin.cargo.index',compact('cargos','statuses','users','data'));
     }
 
     # change status
