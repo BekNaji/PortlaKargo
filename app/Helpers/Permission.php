@@ -1,31 +1,20 @@
 <?php 
 
 namespace App\Helpers;
-use App\Models\Page;
-use Auth;
+
+use Illuminate\Support\Facades\Config;
 
 class Permission
 {
     
     static function check($title)
     {
-        $page = Page::where('title','=',$title)->get()->first();
-        if($page)
+        $permissions = Config::get('permissions');
+        if(isset($permissions[$title]) && $permissions[$title] != 'Y')
         {
-            $permissions = Auth::user()->permissions;
-
-            $permissions = explode(',', $permissions);
-
-            foreach ($permissions as $permission) 
-            {
-                if($page->row == $permission)
-                {
-                    return true;
-                }
-            }
+            return false;
         }
-
-        return false;
+        return true;
 
 
     }

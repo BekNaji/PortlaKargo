@@ -6,7 +6,9 @@
 		<br>
 		<div class="card">
 			<div class="card-body">
+				@php
 				
+				@endphp
 				<i class="fa fa-list" aria-hidden="true"></i> <span class="mr-4">Kargo Listesi </span>
 				
 				@if(Permission::check('cargo-create'))
@@ -49,31 +51,32 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($cargos as $cargo)
+						@isset($data)
+						@foreach($data['cargos'] as $cargo)
 						<tr>
 							<td>
-							<input class="cargo" type="checkbox" name="cargo[]" data-id="{{$cargo->id}}">
+							<input class="cargo" type="checkbox" name="cargo[]" data-id="{{$cargo['id']}}">
 							</td>
 							<td>{{$loop->iteration}}</td>
-							<td>{{ $cargo->user->name ?? ''}}</td>
-							<td>{{$cargo->number ?? ''}}</td>
-							<td>{{$cargo->cargoStatus->name ?? ''}}</td>
+							<td>{{ $cargo['user'] ?? ''}}</td>
+							<td>{{$cargo['number'] ?? ''}}</td>
+							<td>{{$cargo['status'] ?? ''}}</td>
 							<td>
-								@if($cargo->payment_type == 1)
+								@if($cargo['payment_type'] == 1)
 								Göderici Öder
-								@elseif($cargo->payment_type ==2)
+								@elseif($cargo['payment_type'] ==2)
 								Alıcı Öder
 								@endif
 							</td>
-							<td>{{$cargo->sender->name ?? ''}} {{$cargo->sender->surname ?? ''}}</td>
-							<td>{{$cargo->receiver->name ?? ''}} {{$cargo->receiver->surname ?? ''}}</td>
-							<td>{{$cargo->total_kg ?? ''}}KG</td>
-							<td>{{$cargo->cargo_price ?? '$0.0'}}</td>
-							<td>{{$cargo->created_at->toDateString()}}</td>
+							<td>{{$cargo['sender'] ?? ''}} {{$cargo->sender->surname ?? ''}}</td>
+							<td>{{$cargo['receiver'] ?? ''}} {{$cargo->receiver->surname ?? ''}}</td>
+							<td>{{$cargo['total_kg'] ?? ''}}KG</td>
+							<td>{{$cargo['cargo_price'] ?? '$0.0'}}</td>
+							<td>{{$cargo['created_at']->toDateString()}}</td>
 							<td>
 
 								<a type="submit" target="_blank" 
-									href="{{route('cargo.print',encrypt($cargo->id))}}" >
+									href="{{route('cargo.print',encrypt($cargo['id']))}}" >
 									<span class="badge badge-info">
 									<i class="fa fa-print"></i>
 									</span>
@@ -81,7 +84,7 @@
 
 								@if(Permission::check('cargo-show'))
 								<a type="submit"
-									href="{{route('cargo.show',encrypt($cargo->id))}}" >
+									href="{{route('cargo.show',encrypt($cargo['id']))}}" >
 									<span class="badge badge-warning">
 									<i class="fa fa-edit"></i>
 									</span>
@@ -89,8 +92,8 @@
 								@endif
 
 								@if(Permission::check('cargo-delete'))
-								<a id="delete" data-id="{{$cargo->id}}"
-									data-name="{{$cargo->number}}"
+								<a id="delete" data-id="{{$cargo['id']}}"
+									data-name="{{$cargo['number']}}"
 								href="#delete">
 								<span class="badge badge-danger">
 								<i class="fa fa-trash-alt "></i>
@@ -102,6 +105,7 @@
 							</td>
 						</tr>
 						@endforeach
+						@endisset
 					</tbody>
 				</table>
 				@else

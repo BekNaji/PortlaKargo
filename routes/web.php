@@ -8,7 +8,6 @@ Route::get('locale/{locale}', function ($locale){
 
 
 
-
 	
 Route::redirect('/home', '/');
 Route::redirect('/admin', '/dashboard/index');
@@ -33,7 +32,7 @@ Route::any('/telegram', 'TelegrambotController@index')->name('telegram.index');
 
 
 
-Route::middleware('auth')
+Route::middleware(['auth'])
 	   ->prefix('dashboard')
 	   ->namespace('Admin')
 	   ->group(function(){
@@ -50,10 +49,11 @@ Route::middleware('auth')
 });
 
 Auth::routes(['register' => false]);
-Route::middleware(['auth','checkcompany'])
+Route::middleware(['auth','checkcompany','checkact'])
 	   ->prefix('dashboard')
 	   ->namespace('Admin')
 	   ->group(function(){
+
 
 Route::get('delivery/index','DeliveryController@index')->name('delivery.index');
 Route::get('delivery/edit','DeliveryController@edit')->name('delivery.edit');

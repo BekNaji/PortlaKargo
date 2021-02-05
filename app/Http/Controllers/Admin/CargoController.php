@@ -19,15 +19,17 @@ use Excel;
 use Illuminate\Support\Facades\Http;
 use App\Helpers\SendSMS;
 use App\Helpers\SendSMSUz;
-use Permission;
+
 
 
 
 
 class CargoController extends Controller
 {
+  
     public function __construct(Request $request)
     {
+        
         $this->middleware(function ($request, $next) 
         {
             if(Auth::user()->company->cargo_letter == '')
@@ -36,7 +38,8 @@ class CargoController extends Controller
                 ->route('settings.index')
                 ->with(['message'=>'Lütfen Önce Kargo numara ilk harfını Belirleyiniz!']);
             }
-
+            
+         
             return $next($request);
         });
     }
@@ -44,18 +47,13 @@ class CargoController extends Controller
     // page of cargos list 
     public function index()
     {   
-        // if user can not show cargo page
-        if(!Permission::check('cargo-index'))
-        {
-            abort('419');
-        }
+        
         // if user role is admin 
     	if(Auth::user()->role == 'admin')
         {
             $cargos  = Cargo::where('company_id',Auth::user()->company_id)
             ->orderBy('id','DESC');
         }
-
         // if user role equal to user. Role User only can see own datas
         if(Auth::user()->role == 'user')
         {
@@ -63,12 +61,60 @@ class CargoController extends Controller
             ->where('user_id','=',Auth::user()->id)
             ->orderBy('id','DESC');
         }
-
+        
         // here some query as you know
         $cargos = $cargos->where('public_status','=',1)->get();
+        
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
-    	return view('admin.cargo.index',compact('cargos','statuses','users'));
+    
+        $senders = Customer::where('company_id','=',Auth::user()->company_id)->get();
+        $receivers = Receiver::where('company_id','=',Auth::user()->company_id)->get();
+       
+        foreach($cargos as $cargo)
+        {
+            $arCargo['id']              = $cargo->id;
+            $arCargo['number']          = $cargo->number;
+            $arCargo['payment_type']    = $cargo->payment_type;
+            $arCargo['total_kg']        = $cargo->total_kg;
+            $arCargo['cargo_price']     = $cargo->cargo_price;
+            $arCargo['created_at']      = $cargo->created_at;
+           
+            foreach($users as $user)
+            {
+                if($user->id == $cargo->user_id)
+                {
+                    $arCargo['user'] = $user->name;
+                }   
+            }
+          
+            foreach($statuses as $status)
+            {
+                if($status->id == $cargo->status)
+                {
+                    $arCargo['status'] = $user->name;
+                }
+            }
+            foreach($senders as $sender)
+            {
+                if($sender->id == $cargo->sender_id)
+                {
+                    $arCargo['sender'] = $sender->name ;
+                }
+            }
+            foreach( $receivers as $receiver)
+            {
+                if($receiver->id == $cargo->receiver_id)
+                {
+                    $arCargo['receiver'] = $sender->name ;
+                }
+            }
+           
+            $data['cargos'][] = $arCargo;
+            
+        }
+        
+    	return view('admin.cargo.index',compact('cargos','statuses','users','data'));
     }
 
     // create cargo page 
