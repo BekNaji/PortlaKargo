@@ -18,9 +18,9 @@
 		<div class="card">
 			<div class="card-body">
 				<i class="fa fa-users" aria-hidden="true"></i> Kullanıcı Listesi &#160;&#160;&#160;
-				@if(!Permission::check('user-create'))
+				
 				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp;
-				@endif
+				
 				
 
 				<hr>
