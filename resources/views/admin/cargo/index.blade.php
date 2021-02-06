@@ -40,7 +40,7 @@
 						<option value="300"	{{$data['limit'] ==   300 ? 'selected':''}}>300</option>
 						<option value="400"	{{$data['limit'] ==   400 ? 'selected':''}}>400</option>
 						<option value="500"	{{$data['limit'] ==   500 ? 'selected':''}}>500</option>
-						<option value=""	{{$data['limit'] ==   '' ? 'selected':''}}>Hepsi</option>
+						<option value="all"	{{$data['limit'] ==   'all' ? 'selected':''}}>Hepsi</option>
 					</select>
 				</div>
 			</div>

@@ -61,13 +61,23 @@ class CargoController extends Controller
             ->where('user_id','=',Auth::user()->id)
             ->orderBy('id','DESC');
         }
-        $data['limit'] = 50;
+        $data['limit'] = 2;
         if($request->limit != '')
         {
             $data['limit'] = $request->limit;
+            if($request->limit != 'all')
+            {
+                $cargos = $cargos->where('public_status','=',1)->limit($data['limit'])->get();
+            }else
+            {
+                $cargos = $cargos->where('public_status','=',1)->get();
+            }  
+        }else{
+            $cargos = $cargos->where('public_status','=',1)->limit($data['limit'])->get();
         }
+        
         // here some query as you know
-        $cargos = $cargos->where('public_status','=',1)->limit($data['limit'])->get();
+        
         
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
