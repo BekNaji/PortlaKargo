@@ -228,6 +228,7 @@
 				"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
 				responsive: true
 			} );
+			
     	} );
 		$('#body').hide();
 		$('#body').fadeIn(1000);
