@@ -34,7 +34,6 @@
 				</div>
 				<div class="col-md-3">
 					<select class="form-control" name="limit" id="limit">
-						<option value="50" {{$data['limit'] ==   50 ? 'selected':''}}>50</option>
 						<option value="100" {{$data['limit'] ==   100 ? 'selected':''}}>100</option>
 						<option value="200" {{$data['limit'] ==   200 ? 'selected':''}}>200</option>
 						<option value="300"	{{$data['limit'] ==   300 ? 'selected':''}}>300</option>

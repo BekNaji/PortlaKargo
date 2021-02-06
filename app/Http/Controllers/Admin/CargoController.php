@@ -61,7 +61,7 @@ class CargoController extends Controller
             ->where('user_id','=',Auth::user()->id)
             ->orderBy('id','DESC');
         }
-        $data['limit'] = 2;
+        $data['limit'] = 100;
         if($request->limit != '')
         {
             $data['limit'] = $request->limit;
