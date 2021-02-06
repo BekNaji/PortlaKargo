@@ -128,7 +128,7 @@ class CargoController extends Controller
             
         }
         $data['cargo_count'] = count($data['cargos']);
-        $data['pagination'] = '';
+       
         
     	return view('admin.cargo.index',compact('cargos','statuses','users','data'));
     }
@@ -267,7 +267,7 @@ class CargoController extends Controller
             $data['cargos'][] = $arCargo;
             
         }
-        $data['limit'] = '';
+        $data['limit'] = 'all';
         $data['cargo_count'] = count($data['cargos']);
     
         return view('admin.cargo.index',compact('cargos','statuses','users','data'));
