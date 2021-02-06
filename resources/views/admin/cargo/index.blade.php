@@ -6,9 +6,8 @@
 		<br>
 		<div class="card">
 			<div class="card-body">
-				@php
-				
-				@endphp
+				<div class="row">
+				<div class="col-md-9">
 				<i class="fa fa-list" aria-hidden="true"></i> <span class="mr-4">Kargo Listesi </span>
 				
 				@if(Permission::check('cargo-create'))
@@ -29,7 +28,22 @@
 				@if(Permission::check('create-excel'))
 				<button id="manafes" type="button" class="btn btn-info">Excel Hazırla</button>
 				@endif
-				
+					<div class="float-right">
+						<p>Kargo Adeti: <b> {{$data['cargo_count']}} </b> </p>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<select class="form-control" name="limit" id="limit">
+						<option value="50" {{$data['limit'] ==   50 ? 'selected':''}}>50</option>
+						<option value="100" {{$data['limit'] ==   100 ? 'selected':''}}>100</option>
+						<option value="200" {{$data['limit'] ==   200 ? 'selected':''}}>200</option>
+						<option value="300"	{{$data['limit'] ==   300 ? 'selected':''}}>300</option>
+						<option value="400"	{{$data['limit'] ==   400 ? 'selected':''}}>400</option>
+						<option value="500"	{{$data['limit'] ==   500 ? 'selected':''}}>500</option>
+						<option value="all"	{{$data['limit'] ==   '' ? 'selected':''}}>Hepsi</option>
+					</select>
+				</div>
+			</div>
 				<hr>
 				@if(Permission::check('cargo-index'))
 				<table id="dataTable" class="display responsive table-responsive" style="width:100%">

@@ -1,6 +1,12 @@
 @section('js')
 <script type="text/javascript">
+	
 $(document).ready(function(){
+	$(document).on('change','#limit',function(){
+		let id = $(this).val();
+		
+		window.location.replace("{{URL::to('/dashboard/cargo/index?limit=')}}"+id+"");
+	});
 	// show delete modal
 	$(document).on('click','#delete',function(){
 		id = $(this).data('id');

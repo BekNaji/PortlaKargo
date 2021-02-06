@@ -45,7 +45,7 @@ class CargoController extends Controller
     }
 
     // page of cargos list 
-    public function index()
+    public function index(Request $request)
     {   
         
         // if user role is admin 
@@ -61,9 +61,13 @@ class CargoController extends Controller
             ->where('user_id','=',Auth::user()->id)
             ->orderBy('id','DESC');
         }
-        
+        $data['limit'] = 50;
+        if($request->limit != '')
+        {
+            $data['limit'] = $request->limit;
+        }
         // here some query as you know
-        $cargos = $cargos->where('public_status','=',1)->get();
+        $cargos = $cargos->where('public_status','=',1)->limit($data['limit'])->get();
         
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
@@ -113,6 +117,8 @@ class CargoController extends Controller
             $data['cargos'][] = $arCargo;
             
         }
+        $data['cargo_count'] = count($data['cargos']);
+        $data['pagination'] = '';
         
     	return view('admin.cargo.index',compact('cargos','statuses','users','data'));
     }
@@ -170,39 +176,45 @@ class CargoController extends Controller
     public function filter(Request $request)
     {
         
-        
         $cargos = Cargo::where('company_id',Auth::user()->company_id);
+        
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
+        $data = array();
         if($request->start !='')
         {
             $from = Carbon::parse($request->start.' 00:00:00')->format('Y-m-d H:i:s');
-            $cargos->where('created_at','>=',$from)->get();
+            $cargos->where('created_at','>=',$from)->get();;
         }
+        
         if($request->end !='')
         {
             $to   = Carbon::parse($request->end.' 23:59:59')->format('Y-m-d H:i:s');
-            $cargos->where('created_at','<=',$to)->get();
-
+            $cargos->where('created_at','<=',$to)->get();;
+            
         }
         
         if($request->status != 'all')
         {
-            $cargos->where('status','=',$request->status);
+            $cargos->where('status','=',$request->status)->get();;
+           
         }
-
+        
         if($request->user != 'all')
         {
-            $cargos->where('user_id','=',$request->user);
+            $cargos->where('user_id','=',$request->user)->get();    
         }
-
+       
+        
         $cargos = $cargos->orderBy('id','DESC')->get();
-
+        
+    
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
     
         $senders = Customer::where('company_id','=',Auth::user()->company_id)->get();
         $receivers = Receiver::where('company_id','=',Auth::user()->company_id)->get();
-      
+        
+        
         foreach($cargos as $cargo)
         {
             $arCargo['id']              = $cargo->id;
@@ -245,7 +257,9 @@ class CargoController extends Controller
             $data['cargos'][] = $arCargo;
             
         }
-        
+        $data['limit'] = '';
+        $data['cargo_count'] = count($data['cargos']);
+    
         return view('admin.cargo.index',compact('cargos','statuses','users','data'));
     }
 
