@@ -175,6 +175,7 @@ class CargoController extends Controller
     # make filter
     public function filter(Request $request)
     {
+        $data['cargos'] = array();
         
         $cargos = Cargo::where('company_id',Auth::user()->company_id);
         
