@@ -175,12 +175,11 @@ class CargoController extends Controller
     # make filter
     public function filter(Request $request)
     {
-        $data['cargos'] = array();
-        
         $cargos = Cargo::where('company_id',Auth::user()->company_id);
         
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
-        $data = array();
+        $data = [];
+        $data['cargos'] =[];
         if($request->start !='')
         {
             $from = Carbon::parse($request->start.' 00:00:00')->format('Y-m-d H:i:s');
