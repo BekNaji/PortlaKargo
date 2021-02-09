@@ -260,7 +260,7 @@ class CargoController extends Controller
             {
                 if($receiver->id == $cargo->receiver_id)
                 {
-                    $arCargo['receiver'] = $sender->name ;
+                    $arCargo['receiver'] = $receiver->name ;
                 }
             }
            
