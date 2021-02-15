@@ -120,7 +120,8 @@ Route::get('receiver/cargo/excell/{id}', 'ReceiverController@createExcell')->nam
 Route::post('receiver/update', 'ReceiverController@update')->name('receiver.update');
 Route::post('receiver/store', 'ReceiverController@store')->name('receiver.store');
 Route::post('receiver/delete', 'ReceiverController@delete')->name('receiver.delete');
-
+Route::post('receiver/send/sms', 'ReceiverController@sendSms')
+->name('receiver.send.sms');
 
 // Product Route
 Route::post('product/edit', 'ProductController@edit')->name('product.edit');
@@ -149,7 +150,6 @@ Route::post('cargo/changeStatus', 'CargoController@changeStatus')
 ->name('cargo.change.status');
 
 Route::get('cargo/manafes', 'CargoController@manafesExcel')->name('cargo.manafes');
-
 
 // Cargo Status route
 Route::get('status/cargo/index', 'CargoStatusController@index')

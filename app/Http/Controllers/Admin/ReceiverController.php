@@ -9,6 +9,7 @@ use App\Models\Cargo;
 use Auth;
 use App\Models\CargoStatus;
 use Excel;
+use App\Helpers\SendSMS;
 
 
 class ReceiverController extends Controller
@@ -171,6 +172,38 @@ class ReceiverController extends Controller
     	$receiver = Receiver::find($request->id); 
         $receiver->delete();
         return back()->with(['success'=>'Silindi!']);
+    }
+
+    public function sendSms(Request $request)
+    {
+        
+        $ids = explode(',', $request->ids);
+        
+        foreach ($ids as $key => $id) 
+        {
+            $receiver = Receiver::find($id);
+
+            if($receiver->phone !='')
+            {
+                $sms = new SendSMS();
+
+                $tel = $receiver->phone;
+
+                if(strlen($tel) != 12)
+                {
+                    $tel = '998'.str_replace([' ',',','  '],'',$receiver->phone);
+                }
+                
+                $data[] = array(
+                    "tel" => $tel,
+                    "status" => $sms->sendSmsUz($request->sms,$tel)
+                );  
+            } 
+
+        }
+       
+        
+        return back()->with(['success'=>'SMS gönderildi!','message' => $data]);
     }
 
 }

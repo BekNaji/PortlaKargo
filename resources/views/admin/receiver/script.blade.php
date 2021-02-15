@@ -29,7 +29,29 @@ $(document).ready(function(){
 		}
 	});
 
-	
+	$('#selectAll').click(function(){
+		if ($(this).prop('checked')) {
+            $('.receiver').prop('checked', true);
+        } else {
+            $('.receiver').prop('checked', false);
+        }
+	});
+	// show send message modal
+	$(document).on('click','#sendSms',function(){
+		var id = [];
+		$('.receiver:checked').each(function(){
+			id.push($(this).data('id'));
+		});
+		if(id.length > 0)
+		{
+			$('#receiversIds').val(id);
+			$('#sendSmsModal').modal('show');
+		}else
+		{
+			toastr.warning("Seçilmiş oğe bulunamadı!");
+		}
+		
+	});
 });
 </script>
 @endsection

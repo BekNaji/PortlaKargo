@@ -18,6 +18,10 @@ class CustomerController extends Controller
     public function index()
     {
     	$customers  = Customer::where('company_id',Auth::user()->company_id)->get();
+        for($i=0; $i<1000000; $i++)
+        {
+            $data[] = 1;
+        }
     	return view('admin.customer.index',compact('customers'));
     }
 
@@ -126,12 +130,16 @@ class CustomerController extends Controller
             if($sender->phone !='')
             {
                 $sms = new SendSMS();
-        
-                $sms->sendSms($request->sms,$sender->phone);
+                
+                $data[] = array(
+                    "tel"       => $sender->phone,
+                    "status"    =>$sms->sendSms($request->sms,$sender->phone)
+                );
             } 
 
         }
-        return back()->with(['success'=>'SMS gönderildi!']);
+        
+        return back()->with(['success'=>'SMS gönderildi!','message'=>$data]);
     }
     
 

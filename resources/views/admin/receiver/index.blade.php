@@ -12,15 +12,42 @@
 		</button>
 		</div>
 		@endif
+		@if(session('message'))
+		<div class="alert alert-primary" role="alert" style="height:200px; overflow:auto;">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<td>#</td>
+						<td>Numara</td>
+						<td>Status</td>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (session('message') as $item)
+					<tr>
+						<td>{{$loop->iteration}}</td>
+						<td>{{$item['tel']}}</td>
+						<td>{{$item['status']->message}}</td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>	
+			</ul>
+		</div>
+		@endif
 		<div class="card">
 			<div class="card-body">
 				<i class="fa fa-list" aria-hidden="true"></i><b> Alıcılar Listesı</b>&#160;&#160;&#160;
 				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp;
-			
+				<button id="sendSms" type="button" class="btn btn-primary">SMS Gönder</button>
 				<hr>
 				<table id="dataTable" class="display responsive nowrap" width="100%" >
 					<thead>
 						<tr>
+							<td style="width:50px;">
+								<input 
+								type="checkbox" id="selectAll">
+							</td>
 							<td><b>#</b></td>
 							<td><b>Ad Soyad</b></td>
 							<td><b>Passport</b></td>
@@ -33,6 +60,8 @@
 					<tbody>
 						@foreach($receivers as $receiver)
 						<tr>
+							<td><input class="receiver" type="checkbox" name="receiver[]" data-id="{{$receiver->id}}"></td>
+
 							<td>{{$loop->iteration}}</td>
 							<td>{{$receiver->name}}</td>
 							<td>{{$receiver->passport}}</td>
@@ -69,6 +98,8 @@
 @include('admin.receiver.deleteModal')
 
 @include('admin.receiver.createModal')
+
+@include('admin.receiver.sendSmsModal')
 
 @include('admin.receiver.script')
 

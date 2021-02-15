@@ -2,9 +2,33 @@
 @section('title','Gödericiler listesi')
 @section('content')
 <div class="row">
-
+	
 	<div class="col-md-12">
 		<br>
+		@if(session('message'))
+				<div class="alert alert-primary" role="alert" style="height:200px; overflow:auto;">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<td>#</td>
+								<td>Numara</td>
+								<td>Status</td>
+							</tr>
+						</thead>
+						<tbody>
+						@foreach (session('message') as $item)
+							<tr>
+								<td>{{$loop->iteration}}</td>
+								<td>{{$item['tel']}}</td>
+								<td>{{$item['status']->status->description}}</td>
+							</tr>
+						@endforeach
+						</tbody>
+					</table>	
+					</ul>
+				</div>
+				@endif
+		
 		<div class="card">
 			<div class="card-body">
 
@@ -12,10 +36,7 @@
 				
 				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp; 
 				
-
-				
-				<button id="sendSms" type="button" class="btn btn-primary">SMS Gönder</button>
-				
+				<button id="sendSms" type="button" class="btn btn-primary">SMS Gönder</button>		
 				<hr>
 				<table id="dataTable" class="display responsive nowrap" style="width:100%" >
 					<thead>
