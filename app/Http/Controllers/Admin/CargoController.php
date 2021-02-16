@@ -79,7 +79,7 @@ class CargoController extends Controller
         
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
 
-        $statuses = User::where('company_id','=',Auth::user()->company_id)->get();
+        $statuses = CargoStatus::where('company_id','=',Auth::user()->company_id)->get();
 
         $senders = Customer::where('company_id','=',Auth::user()->company_id)->get();
         $receivers = Receiver::where('company_id','=',Auth::user()->company_id)->get();
