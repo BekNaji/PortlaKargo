@@ -1,5 +1,6 @@
 @section('js')
 <script type="text/javascript">
+$(document).ready(function(){
 	$(document).on('change','#limit',function(){
 		let id = $(this).val();
 		
@@ -61,7 +62,7 @@
 		{
 			toastr.warning("Seçilmiş oğe bulunamadı!");
 		}
-		
+		 
 	});
 
 	$(document).on('keyup','#sender_passport',function(){
