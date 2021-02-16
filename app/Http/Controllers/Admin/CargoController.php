@@ -76,31 +76,10 @@ class CargoController extends Controller
         }else{
             $cargos = $cargos->where('public_status','=',1)->limit($data['limit'])->get();
         }
+        
+        $users = User::where('company_id','=',Auth::user()->company_id)->get();
 
-        if (Cache::has('users'))
-        {
-            $users = Cache::get('users');
-        } else
-        {
-            $expiresAt = Carbon::now()->addMinutes(30);
-
-            $users = User::where('company_id','=',Auth::user()->company_id)->get();
-
-            Cache::put('users', $users, $expiresAt);
-        }
-
-        if (Cache::has('statuses'))
-        {
-            $statuses = Cache::get('statuses');
-        } else
-        {
-            $expiresAt = Carbon::now()->addMinutes(30);
-
-            $statuses = User::where('company_id','=',Auth::user()->company_id)->get();
-
-            Cache::put('statuses', $users, $expiresAt);
-        }
-
+        $statuses = User::where('company_id','=',Auth::user()->company_id)->get();
 
         $senders = Customer::where('company_id','=',Auth::user()->company_id)->get();
         $receivers = Receiver::where('company_id','=',Auth::user()->company_id)->get();
