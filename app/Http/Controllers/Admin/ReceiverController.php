@@ -201,9 +201,10 @@ class ReceiverController extends Controller
 
         }
         $sms = new SendSMS();
-        $data["message"] = $sms->sendMultipleSmsUZ($data);
+        
+        $data["messages"] = $sms->sendMultipleSmsUZ($data);
     
-        return back()->with(['success'=>'SMS gönderildi!','message' => $data["message"]]);
+        return back()->with(['success'=>'SMS gönderildi!','message' => $data["messages"]]);
     }
 
 }
