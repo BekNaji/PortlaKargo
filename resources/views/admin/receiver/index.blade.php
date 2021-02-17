@@ -13,26 +13,10 @@
 		</div>
 		@endif
 		@if(session('message'))
-		<div class="alert alert-primary" role="alert" style="height:200px; overflow:auto;">
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<td>#</td>
-						<td>Numara</td>
-						<td>Status</td>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (session('message') as $item)
-					<tr>
-						<td>{{$loop->iteration}}</td>
-						<td>{{$item['tel']}}</td>
-						<td>{{$item['status']->message}}</td>
-					</tr>
-					@endforeach
-				</tbody>
-			</table>	
-			</ul>
+		<div class="alert alert-primary" role="alert" >
+			@php
+				print_r(session('message')->message)
+			@endphp
 		</div>
 		@endif
 		<div class="card">

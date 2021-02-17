@@ -185,25 +185,25 @@ class ReceiverController extends Controller
 
             if($receiver->phone !='')
             {
-                $sms = new SendSMS();
-
+                
                 $tel = $receiver->phone;
 
                 if(strlen($tel) != 12)
                 {
-                    $tel = '998'.str_replace([' ',',','  '],'',$receiver->phone);
+                    $tel = '998'.str_replace([' ',',','  '],'',$receiver->phone); 
                 }
+                $data["messages"][] = array(
+                    "to" => $tel,
+                    "text"=>$request->sms
+                );
                 
-                $data[] = array(
-                    "tel" => $tel,
-                    "status" => $sms->sendSmsUz($request->sms,$tel)
-                );  
             } 
 
         }
-       
-        
-        return back()->with(['success'=>'SMS gönderildi!','message' => $data]);
+        $sms = new SendSMS();
+        $data["message"] = $sms->sendMultipleSmsUZ($data);
+    
+        return back()->with(['success'=>'SMS gönderildi!','message' => $data["message"]]);
     }
 
 }
