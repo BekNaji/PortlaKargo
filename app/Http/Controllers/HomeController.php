@@ -75,7 +75,7 @@ class HomeController extends Controller
 
     public function saveEmail(Request $request)
     {
-
+         return back()->with(['success'=>'Email Kaydedildi!']);
         if($request->email != '')
         {
             $follower = new Follower();
