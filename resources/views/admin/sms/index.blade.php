@@ -7,7 +7,7 @@
 		<div class="card">
 			<div class="card-body">
 				<h4>Turkiye SMS ayarlari</h4><hr>
-				@if($balance->status->code == 200)
+				@if(isset($balance->status->code) && $balance->status->code == 200)
 				<div class=" text-success p-3 border border-success rounded">
 				<b>Toplam SMS Adetı : {{$balance->response->balance ?? 'NON'}}</b> <br>
 				<b>Başlıklar</b>
@@ -43,7 +43,7 @@
 		<br>
 		<div class="card">
 			<div class="card-body">
-				<h4>O'zbekistan SMS ayarlari</h4><hr>
+				<h4>O'zbekistan SMS ayarlari - Limit: {{$balanceUZ ?? 'Belirsiz!'}}</h4><hr>
 			
 				<form action="{{route('sms.update')}}" method="POST">
 					@csrf
