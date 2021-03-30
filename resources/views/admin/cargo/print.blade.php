@@ -139,7 +139,7 @@
 							<td class="text-center" style="padding:5px;" colspan="2"><b>Cargo Info</b></td>
 						</tr>
 						<tr>
-							<td colspan="2" class="text-center"><h1>{{$cargo->number ?? ''}}</h1></td>
+							<td colspan="2" class="text-center"><h1 style="font-size:65px;">{{$cargo->number ?? ''}}</h1></td>
 						</tr>
 						<tr>
 							<td><b>Cargo Kg</b></td>
@@ -194,7 +194,7 @@
 						<?php $key++; } ?>
 						<tr>
 							<td style="padding-left: 15px;padding-right: 15px;" colspan="5" rowspan="2">
-								<p>Decelaration Statment. I hereby certify that the information in this invoice is true and correct and the contents and value of this shipment is a stated above</p>
+								<h1>{{$cargo->receiver->address}}</h1>
 							</td>
 							<td style="padding-left: 15px;padding-right: 15px;" >
 								<center><h6>TOTAL WEIGHT </h6></center></td>
