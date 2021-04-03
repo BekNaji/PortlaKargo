@@ -7,7 +7,7 @@
 		<div class="card">
 			<div class="card-body">
 				<h4>Turkiye SMS ayarlari</h4><hr>
-				@if(isset($sms_title) && $sms_title['succuss'])
+				@if(isset($sms_title['success']) && $sms_title['succuss'])
 				<div class=" text-success p-3 border border-success rounded">
 				<b>Toplam SMS Adetı : </b> {{$balance['credit']}} <br>
 				<b>Başlık: </b> {{$sms_title['title'] ?? 'NONE'}}
