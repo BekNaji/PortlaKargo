@@ -61,7 +61,7 @@ class SendSMS
         curl_close($ch);
         if($result != 87)
         {
-            return ['succuss' => true,'title'=>explode(' ',$result)[1]];
+            return ['success' => true,'title'=>explode(' ',$result)[1]];
         }
         return ['success'=> false];
 
