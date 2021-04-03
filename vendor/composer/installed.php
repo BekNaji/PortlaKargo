@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'edb220703aa46ea957780ac3ef65c42de3bcc2d9',
+    'reference' => 'a5adcba0a30245d4d645284b05477dacdb9788f7',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -189,30 +189,30 @@
     ),
     'guzzlehttp/guzzle' => 
     array (
-      'pretty_version' => '6.5.5',
-      'version' => '6.5.5.0',
+      'pretty_version' => '7.0.0',
+      'version' => '7.0.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '9d4290de1cfd701f38099ef7e183b64b4b7b0c5e',
+      'reference' => '414c24961042f6616fb43e23fa69a785f9fc053e',
     ),
     'guzzlehttp/promises' => 
     array (
-      'pretty_version' => 'v1.3.1',
-      'version' => '1.3.1.0',
+      'pretty_version' => '1.4.1',
+      'version' => '1.4.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'a59da6cf61d80060647ff4d3eb2c03a2bc694646',
+      'reference' => '8e7d04f1f6450fef59366c399cfad4b9383aa30d',
     ),
     'guzzlehttp/psr7' => 
     array (
-      'pretty_version' => '1.6.1',
-      'version' => '1.6.1.0',
+      'pretty_version' => '1.8.1',
+      'version' => '1.8.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '239400de7a173fe9901b9ac7c06497751f00727a',
+      'reference' => '35ea11d335fd638b5882ff1725228b3d35496ab1',
     ),
     'hamcrest/hamcrest-php' => 
     array (
@@ -426,15 +426,6 @@
         0 => 'v7.19.1',
       ),
     ),
-    'irazasyed/telegram-bot-sdk' => 
-    array (
-      'pretty_version' => 'v3.1.0',
-      'version' => '3.1.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'cc0af4e0ee41be5a0e732572e2de86abbe43128d',
-    ),
     'kodova/hamcrest-php' => 
     array (
       'replaced' => 
@@ -458,7 +449,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'edb220703aa46ea957780ac3ef65c42de3bcc2d9',
+      'reference' => 'a5adcba0a30245d4d645284b05477dacdb9788f7',
     ),
     'laravel/tinker' => 
     array (
@@ -486,15 +477,6 @@
       array (
       ),
       'reference' => '6d74caf6abeed5fd85d6ec20da23d7269cd0b46f',
-    ),
-    'league/event' => 
-    array (
-      'pretty_version' => '2.2.0',
-      'version' => '2.2.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'd2cc124cf9a3fab2bb4ff963307f60361ce4d119',
     ),
     'league/flysystem' => 
     array (
@@ -819,6 +801,13 @@
       array (
       ),
       'reference' => '2dfb5f6c5eff0e91e20e913f8c5452ed95b86621',
+    ),
+    'psr/http-client-implementation' => 
+    array (
+      'provided' => 
+      array (
+        0 => '1.0',
+      ),
     ),
     'psr/http-factory' => 
     array (

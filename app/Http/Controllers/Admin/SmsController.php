@@ -27,7 +27,7 @@ class SmsController extends Controller
 		$balance = $sms->getBalance();
 		
 		$sms_title = $sms->getTitle();
-	
+
 		$balanceUZ = $sms->getBalanceUZ();
 		if(isset($balanceUZ->data->balance) && !empty($balanceUZ->data->balance))
 		{

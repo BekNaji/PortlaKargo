@@ -7,15 +7,10 @@
 		<div class="card">
 			<div class="card-body">
 				<h4>Turkiye SMS ayarlari</h4><hr>
-				@if(isset($balance->status->code) && $balance->status->code == 200)
+				@if(isset($sms_title) && $sms_title['succuss'])
 				<div class=" text-success p-3 border border-success rounded">
-				<b>Toplam SMS Adetı : {{$balance->response->balance ?? 'NON'}}</b> <br>
-				<b>Başlıklar</b>
-				<ul>
-					@foreach($sms_title->response->originators as $title)
-					<li>{{$title}}</li>
-					@endforeach
-				</ul> 
+				<b>Toplam SMS Adetı : </b> {{$balance['credit']}} <br>
+				<b>Başlık: </b> {{$sms_title['title'] ?? 'NONE'}}
 				</div>
 				@else
 				<p class=" text-danger p-3 border border-danger rounded">API key hatalı lütfen API keyı kontrol ediniz!</p>

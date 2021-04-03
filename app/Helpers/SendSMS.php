@@ -5,7 +5,9 @@
 namespace App\Helpers;
 use Auth;
 use App\Models\Company;
-use Log;
+use Log; 
+use Illuminate\Support\Facades\Http;
+use SimpleXMLElement;
 
 class SendSMS
 {
@@ -16,77 +18,100 @@ class SendSMS
 
 	public function __construct()
     {
+        
         self::$company = Company::find(Auth::user()->company_id);
-    
+        //dd(self::$company);
         self::$api_key = self::$company->api_key;
         self::$api_keyUZ = self::$company->api_keyUZ;
         self::$api_tokenUZ = self::$company->api_tokenUZ;
     }
     static function getBalance()
     {
-        $url = "http://api.v2.masgsm.com.tr/v2/get/balance";
-        
-        $response = self::MASGSM($url);
+        $url = "http://178.157.12.155:8080/api/credit/v1?";
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url.'username='.self::$company->sms_title.'&password='.self::$company->api_key);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close($ch);
     
-        $result = json_decode($response);
-        return $result;
+        if($result != 87)
+        {
+            return ['succuss' => true,'credit'=>explode(' ',$result)[1]];
+        }
+        return ['success'=> false] ;
     }
 
     public function getTitle()
     {
-        $url = "http://api.v2.masgsm.com.tr/v2/get/originators";
-        $response = self::MASGSM($url);
-        $result = json_decode($response);
-        return $result;
-    }
+        $url = "http://178.157.12.155:8080/api/originator/v1?";
+        $ch = curl_init();
 
-    public static function LogIt($result,$comment)
-    {
-        $html = '/--------------'.$comment.'-----------------/'.PHP_EOL;
-        $html .= $result.PHP_EOL;
-        $html .= date('d-m-Y h-i-s A').PHP_EOL;
-        Log::info($html);
-    }
+        curl_setopt($ch, CURLOPT_URL, $url.'username='.self::$company->sms_title.'&password='.self::$company->api_key);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close($ch);
+        if($result != 87)
+        {
+            return ['succuss' => true,'title'=>explode(' ',$result)[1]];
+        }
+        return ['success'=> false];
+
+    }
     public function sendSms($sms,$tel)
     {
-      
-        $url = "http://api.v2.masgsm.com.tr/v2/sms/basic";
-        $body = 
-            [
-                "originator"=>self::$company->sms_title,
-                "message"=>$sms,
-                "to"=>[$tel],
-                "encoding"=>"default"
-            ];
-        
-        $response = self::MASGSM($url,$body);
-        self::LogIt($response,$tel);
-        $result = json_decode($response);
+        $xml = '
+        <sms>
+        <username>'.self::$company->sms_title.'</username>
+        <password>'.self::$company->api_key.'</password>
+        <header>ZOLOTOY</header>
+        <validity>2880</validity>
+            <messages>
+                <mb><no>'.$tel.'</no><msg>'.$sms.'</msg></mb>
+            </messages>
+        </sms>';
 
-        return $result;
+        $url = "http://178.157.12.155:8080/api/smspost/v1";
+    
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS =>$xml,
+            CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/xml'
+            ),
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
     }
 
-
-
-    static function MASGSM($Url, $body = null)
+    public static function array_to_xml(array $arr, SimpleXMLElement $xml)
     {
-        $API_KEY = self::$api_key;
+        foreach ($arr as $k => $v) {
+            is_array($v)
+                ? self::array_to_xml($v, $xml->addChild($k))
+                : $xml->addChild($k, $v);
+        }
+        return $xml;
+    }
 
-        $ch   = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $Url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json',"Authorization: Key {$API_KEY}"));
-        if($body):
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
-        endif;
-        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-        $result = curl_exec($ch);
-        curl_close($ch);
-        return $result;
-    }   
-
+    
 /* ------------------------------ UZ SMS ------------------------- */
     public function sendSmsUz($sms,$tel)
     {
@@ -98,7 +123,7 @@ class SendSMS
         );
         
         $response = self::ESKIZ($url,$body);
-        self::LogIt($response,$tel);
+
         $result = json_decode($response);
         return $result;
     }

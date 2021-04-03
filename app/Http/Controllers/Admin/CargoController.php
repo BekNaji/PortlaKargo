@@ -311,8 +311,7 @@ class CargoController extends Controller
         $cargoLog->cargo_status_id = $status;
         $cargoLog->save();
         $status = CargoStatus::find($status);
-        $this->sendMessage($id,$status->name);
-
+        
         if($status->send_phone == 'true')
         {
             $this->sendPhone($id,$status->name);
@@ -732,51 +731,6 @@ class CargoController extends Controller
         return Excel::download(new App\Exports\CargoExcel($datas), $filename);
     }
 
-    # send message to user with telegram bot
-    public function sendMessage($id,$status)
-    {
-        $message = '';
-        $cargo = Cargo::find($id);
-
-        # telegram message content
-        $message .= '<b>Şirket adı:</b> '.$cargo->company->name.' '.PHP_EOL;
-        $message .= '<b>Kargo Durumu: </b>'.$status.' '.PHP_EOL;
-        $message .='<b>Kargo Takip No : </b>'.$cargo->number.' '.PHP_EOL;
-        $message .= '<b>Gönderici: </b>'.$cargo->sender->name ?? '-';
-        $message .= PHP_EOL;
-        $message .= '<b>Alıcı: </b>'.$cargo->receiver->name ?? '-';
-        $message .= PHP_EOL;
-        if($cargo->company->telegram_url != '')
-        {
-            # define url as database telegram url
-            $url = $cargo->company->telegram_url;
-
-            # send message to sender with telegram
-            if($cargo->sender->telegram_id != '')
-            {
-                $response = Http::post($url.'sendMessage.php',
-                    [
-                        'id' => $cargo->sender->telegram_id,
-                        'message' => $message,
-                    ]);
-            }
-            # send message to receiver with telegram bot
-            if($cargo->receiver->telegram_id != '')
-            {
-
-                $response = Http::post($url.'sendMessage.php',
-                [
-                    'id' => $cargo->receiver->telegram_id,
-                    'message' => $message,
-                ]);
-
-
-            }
-
-        }
-
-        return ;
-    }
 
     # send message to user with Mobile phone
     public function sendPhone($id,$status)

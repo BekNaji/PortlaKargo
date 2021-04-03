@@ -178,9 +178,6 @@ return [
         // Pela barcode 
         peal\barcodegenerator\BarcodeServiceProvider::class,
 
-        //Telegram
-        Telegram\Bot\Laravel\TelegramServiceProvider::class,
-
         // Excell
         Maatwebsite\Excel\ExcelServiceProvider::class,
         
