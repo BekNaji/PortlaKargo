@@ -23,7 +23,8 @@
 		<link href="{{ asset('assets') }}/css/toastr.min.css" rel="stylesheet" />
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 		
-		@livewireStyles
+		{{-- @livewireStyles --}}
+		<livewire:styles />
 	</head>
 	<body class="sb-nav-fixed">
 
@@ -196,6 +197,8 @@
 				</footer>
 			</div>
 		</div>
+		<livewire:scripts />
+		{{-- @livewireScripts --}}
 		<script src="{{ asset('assets') }}/js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
 		<script src="{{ asset('assets') }}/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 		<script src="{{ asset('assets') }}/js/scripts.js" crossorigin="anonymous"></script>
@@ -258,6 +261,6 @@
 		
 		</script>
 
-		@livewireScripts
+		
 	</body>
 </html>
