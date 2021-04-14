@@ -4,6 +4,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<br>
+		@livewire('search-cargo')
 		<div class="card">
 			<div class="card-body">
 				<div class="row">
@@ -29,23 +30,15 @@
 				<button id="manafes" type="button" class="btn btn-info">Excel Hazırla</button>
 				@endif
 					<div class="float-right">
-						<p>Kargo Adeti: <b> {{$data['cargo_count']}} </b> </p>
+						<p>Kargo Adeti: <b>{{$cargoCount ?? 0}} </b> </p>
 					</div>
-				</div>
-				<div class="col-md-3">
-					<select class="form-control" name="limit" id="limit">
-						<option value="100" {{$data['limit'] ==   100 ? 'selected':''}}>100</option>
-						<option value="200" {{$data['limit'] ==   200 ? 'selected':''}}>200</option>
-						<option value="300"	{{$data['limit'] ==   300 ? 'selected':''}}>300</option>
-						<option value="400"	{{$data['limit'] ==   400 ? 'selected':''}}>400</option>
-						<option value="500"	{{$data['limit'] ==   500 ? 'selected':''}}>500</option>
-						<option value="all"	{{$data['limit'] ==   'all' ? 'selected':''}}>Hepsi</option>
-					</select>
 				</div>
 			</div>
 				<hr>
+				
 				@if(Permission::check('cargo-index'))
-				<table id="dataTable" class="display responsive table-responsive" style="width:100%">
+				<div class="table table-responsive">
+				<table class="table" style="width:100%">
 					<thead>
 						<tr>
 							<td style="width:50px;"><input 
@@ -64,32 +57,31 @@
 						</tr>
 					</thead>
 					<tbody>
-						@isset($data)
-						@foreach($data['cargos'] as $cargo)
+						@foreach($cargos as $cargo)
 						<tr>
 							<td>
-							<input class="cargo" type="checkbox" name="cargo[]" data-id="{{$cargo['id']}}">
+							<input class="cargo" type="checkbox" name="cargo[]" data-id="{{$cargo->id}}">
 							</td>
-							<td>{{$loop->iteration}}</td>
-							<td>{{ $cargo['user'] ?? ''}}</td>
-							<td>{{$cargo['number'] ?? ''}}</td>
-							<td>{{$cargo['status'] ?? ''}}</td>
+							<td>{{ ($cargos ->currentpage()-1) * $cargos ->perpage() + $loop->index + 1 }}</td>
+							<td>{{ $cargo->user->name ?? ''}}</td>
+							<td>{{$cargo->number ?? ''}}</td>
+							<td>{{$cargo->cargoStatus->name ?? ''}}</td>
 							<td>
-								@if($cargo['payment_type'] == 1)
+								@if($cargo->payment_type== 1)
 								Göderici Öder
-								@elseif($cargo['payment_type'] ==2)
+								@elseif($cargo->payment_type==2)
 								Alıcı Öder
 								@endif
 							</td>
-							<td>{{$cargo['sender'] ?? ''}} {{$cargo->sender->surname ?? ''}}</td>
-							<td>{{$cargo['receiver'] ?? ''}} {{$cargo->receiver->surname ?? ''}}</td>
-							<td>{{$cargo['total_kg'] ?? ''}}KG</td>
-							<td>{{$cargo['cargo_price'] ?? '$0.0'}}</td>
-							<td>{{$cargo['created_at']->toDateString()}}</td>
+							<td>{{$cargo->sender->name ?? ''}} {{$cargo->sender->surname ?? ''}}</td>
+							<td>{{$cargo->receiver->name ?? ''}} {{$cargo->receiver->surname ?? ''}}</td>
+							<td>{{$cargo->total_kg?? ''}}KG</td>
+							<td>{{$cargo->cargo_price?? '$0.0'}}</td>
+							<td>{{date('d-m-Y',strtotime($cargo->created_at))}}</td>
 							<td>
 
 								<a type="submit" target="_blank" 
-									href="{{route('cargo.print',encrypt($cargo['id']))}}" >
+									href="{{route('cargo.print',encrypt($cargo->id)) }}" >
 									<span class="badge badge-info">
 									<i class="fa fa-print"></i>
 									</span>
@@ -97,7 +89,7 @@
 
 								@if(Permission::check('cargo-show'))
 								<a type="submit"
-									href="{{route('cargo.show',encrypt($cargo['id']))}}" >
+									href="{{route('cargo.show',encrypt($cargo->id))}}" >
 									<span class="badge badge-warning">
 									<i class="fa fa-edit"></i>
 									</span>
@@ -105,25 +97,25 @@
 								@endif
 
 								@if(Permission::check('cargo-delete'))
-								<a id="delete" data-id="{{$cargo['id']}}"
-									data-name="{{$cargo['number']}}"
-								href="#delete">
+								<a id="delete" data-id="{{$cargo->id}}"
+									data-name="{{$cargo->number}}"
+									href="#delete">
 								<span class="badge badge-danger">
 								<i class="fa fa-trash-alt "></i>
 								</span>
 								</a>
 								@endif
-								
-								
 							</td>
 						</tr>
 						@endforeach
-						@endisset
 					</tbody>
 				</table>
+				</div>
+				{{$cargos->links()}}
 				@else
 				<center><h4>Kargo listesini görmeye Yetkiniz yok!</h4></center>
 				@endif
+				
 			</div>
 		</div>
 	</div>

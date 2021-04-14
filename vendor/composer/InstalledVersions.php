@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'a5adcba0a30245d4d645284b05477dacdb9788f7',
+    'reference' => '09daab42a298dfedab6e4dab85c50d1b513848ed',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -473,7 +473,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'a5adcba0a30245d4d645284b05477dacdb9788f7',
+      'reference' => '09daab42a298dfedab6e4dab85c50d1b513848ed',
     ),
     'laravel/tinker' => 
     array (
@@ -510,6 +510,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '7106f78428a344bc4f643c233a94e48795f10967',
+    ),
+    'livewire/livewire' => 
+    array (
+      'pretty_version' => 'v2.4.2',
+      'version' => '2.4.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2495387841a3eb03ac62b2c984ccd2574303285b',
     ),
     'maatwebsite/excel' => 
     array (
