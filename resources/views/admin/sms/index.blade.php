@@ -21,7 +21,7 @@
 				<form action="{{route('sms.update')}}" method="POST">
 					@csrf
 					<div class="form-group">
-						<label>Login</label>
+						<label>Başlık</label>
 						<input value="{{$company->sms_title}}" type="text" name="sms_title" class="form-control">
 					</div>
 					<div class="form-group">
