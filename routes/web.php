@@ -185,4 +185,7 @@ Route::post('page/store', 'PageController@store')->name('page.store');
 Route::post('page/delete', 'PageController@delete')->name('page.delete');
 
 
+Route::get('clear','ClearController@index')->name('clear');
+
+
 });
