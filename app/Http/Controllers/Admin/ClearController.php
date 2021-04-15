@@ -11,9 +11,11 @@ class ClearController extends Controller
     public function index()
     {
         $exitCode = Artisan::call('cache:clear');
+        $exitCode = Artisan::call('optimize');
+        $exitCode = Artisan::call('route:cache');
         $exitCode = Artisan::call('route:clear');
         $exitCode = Artisan::call('view:clear');
         $exitCode = Artisan::call('config:cache');
-        return '<h1>Cache Cleared</h1>';
+        return back();
     }
 }

@@ -1,4 +1,4 @@
-<?php
+<?php /*
 
 namespace App\Http\Controllers\Admin;
 
@@ -772,4 +772,4 @@ class CargoController extends Controller
     }
 
 
-}
+} */

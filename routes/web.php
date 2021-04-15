@@ -1,7 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
-	
 Route::redirect('/home', '/');
 Route::redirect('/admin', '/dashboard/index');
 Route::redirect('dashboard', '/dashboard/index');
@@ -65,7 +64,7 @@ Route::post('telegram/send/multiple/message/', 'TelegramController@sendMultipleM
 
 Route::get('sms/index','SmsController@index')->name('sms.index');
 Route::post('sms/update','SmsController@update')->name('sms.update');
-Route::get('sms/test','SmsController@test')->name('sms.test');
+
 
 
 // profile

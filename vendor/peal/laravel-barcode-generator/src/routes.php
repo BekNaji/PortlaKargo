@@ -6,7 +6,7 @@
 use peal\barcodegenerator\Facades\BarCode;
 use peal\barcodegenerator\Server\BarCodeServer;
 use Illuminate\Support\Facades\File;
-Route::get("/testbarcode",function(){
+/*Route::get("/testbarcode",function(){
     
     
     try {
@@ -58,4 +58,4 @@ Route::get("/testbarcode",function(){
     } catch(Exception $e) {
         return $e->getMessage();
     }
-});
+}); */

@@ -2,6 +2,7 @@
 
 namespace Maatwebsite\Excel;
 
+use Closure;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromArray;
@@ -12,6 +13,7 @@ use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\OnEachRow;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToArray;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -282,22 +284,26 @@ class Sheet
         }
 
         if ($import instanceof OnEachRow) {
-            $headingRow = HeadingRowExtractor::extract($this->worksheet, $import);
-            $endColumn  = $import instanceof WithColumnLimit ? $import->endColumn() : null;
+            $headingRow          = HeadingRowExtractor::extract($this->worksheet, $import);
+            $endColumn           = $import instanceof WithColumnLimit ? $import->endColumn() : null;
+            $preparationCallback = $this->getPreparationCallback($import);
 
             foreach ($this->worksheet->getRowIterator()->resetStart($startRow ?? 1) as $row) {
                 $sheetRow = new Row($row, $headingRow);
 
-                if ($import instanceof WithValidation) {
-                    $toValidate = [$sheetRow->getIndex() => $sheetRow->toArray(null, $import instanceof WithCalculatedFormulas, $endColumn)];
+                if (!$import instanceof SkipsEmptyRows || ($import instanceof SkipsEmptyRows && !$sheetRow->isEmpty())) {
+                    if ($import instanceof WithValidation) {
+                        $sheetRow->setPreparationCallback($preparationCallback);
+                        $toValidate = [$sheetRow->getIndex() => $sheetRow->toArray(null, $import instanceof WithCalculatedFormulas, $endColumn)];
 
-                    try {
-                        app(RowValidator::class)->validate($toValidate, $import);
+                        try {
+                            app(RowValidator::class)->validate($toValidate, $import);
+                            $import->onRow($sheetRow);
+                        } catch (RowSkippedException $e) {
+                        }
+                    } else {
                         $import->onRow($sheetRow);
-                    } catch (RowSkippedException $e) {
                     }
-                } else {
-                    $import->onRow($sheetRow);
                 }
 
                 if ($import instanceof WithProgressBar) {
@@ -333,11 +339,21 @@ class Sheet
         $endColumn  = $import instanceof WithColumnLimit ? $import->endColumn() : null;
 
         $rows = [];
-        foreach ($this->worksheet->getRowIterator($startRow, $endRow) as $row) {
-            $row = (new Row($row, $headingRow))->toArray($nullValue, $calculateFormulas, $formatData, $endColumn);
+        foreach ($this->worksheet->getRowIterator($startRow, $endRow) as $index => $row) {
+            $row = new Row($row, $headingRow);
+
+            if ($import instanceof SkipsEmptyRows && $row->isEmpty()) {
+                continue;
+            }
+
+            $row = $row->toArray($nullValue, $calculateFormulas, $formatData, $endColumn);
 
             if ($import instanceof WithMapping) {
                 $row = $import->map($row);
+            }
+
+            if ($import instanceof WithValidation && method_exists($import, 'prepareForValidation')) {
+                $row = $import->prepareForValidation($row, $index);
             }
 
             $rows[] = $row;
@@ -407,6 +423,8 @@ class Sheet
         }
 
         $this->raise(new AfterSheet($this, $this->exportable));
+
+        $this->clearListeners();
     }
 
     /**
@@ -499,7 +517,7 @@ class Sheet
             $dimension = $this->worksheet->getColumnDimension($col);
 
             // Only auto-size columns that have not have an explicit width.
-            if ($dimension->getWidth() === -1) {
+            if ($dimension->getWidth() == -1) {
                 $dimension->setAutoSize(true);
             }
         }
@@ -579,6 +597,10 @@ class Sheet
      */
     public function appendRows($rows, $sheetExport)
     {
+        if (method_exists($sheetExport, 'prepareRows')) {
+            $rows = $sheetExport->prepareRows($rows);
+        }
+
         $rows = (new Collection($rows))->flatMap(function ($row) use ($sheetExport) {
             if ($sheetExport instanceof WithMapping) {
                 $row = $sheetExport->map($row);
@@ -609,7 +631,7 @@ class Sheet
     {
         // When dealing with eloquent models, we'll skip the relations
         // as we won't be able to display them anyway.
-        if (method_exists($row, 'attributesToArray')) {
+        if (is_object($row) && method_exists($row, 'attributesToArray')) {
             return $row->attributesToArray();
         }
 
@@ -690,7 +712,11 @@ class Sheet
      */
     private function hasStrictNullComparison($sheetExport): bool
     {
-        return $sheetExport instanceof WithStrictNullComparison;
+        if ($sheetExport instanceof WithStrictNullComparison) {
+            return true;
+        }
+
+        return config('excel.exports.strict_null_comparison', false);
     }
 
     /**
@@ -705,5 +731,20 @@ class Sheet
         }
 
         return $this->chunkSize;
+    }
+
+    /**
+     * @param object|WithValidation $import
+     * @return Closure|null
+     */
+    private function getPreparationCallback($import)
+    {
+        if (!$import instanceof WithValidation || !method_exists($import, 'prepareForValidation')) {
+            return null;
+        }
+
+        return function (array $data, int $index) use ($import) {
+            return $import->prepareForValidation($data, $index);
+        };
     }
 }
