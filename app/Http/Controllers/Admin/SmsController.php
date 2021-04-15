@@ -25,8 +25,9 @@ class SmsController extends Controller
 		$company = Company::find(Auth::user()->company_id);
 		$sms = new SendSMS();
 		$balance = $sms->getBalance();
-		$sms_title = $sms->getTitle();
 		
+		$sms_title = $sms->getTitle();
+
 		$balanceUZ = $sms->getBalanceUZ();
 		if(isset($balanceUZ->data->balance) && !empty($balanceUZ->data->balance))
 		{
