@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'a6e2f38285382fff7dd2acebf9a888a9e470c2f6',
+    'reference' => '6e558476a345dd5fc5204eeee2931352a7006e25',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -449,7 +449,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'a6e2f38285382fff7dd2acebf9a888a9e470c2f6',
+      'reference' => '6e558476a345dd5fc5204eeee2931352a7006e25',
     ),
     'laravel/tinker' => 
     array (
@@ -534,12 +534,12 @@
     ),
     'markbaker/matrix' => 
     array (
-      'pretty_version' => '2.1.2',
-      'version' => '2.1.2.0',
+      'pretty_version' => '2.0.0',
+      'version' => '2.0.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '361c0f545c3172ee26c3d596a0aa03f0cef65e6a',
+      'reference' => '9567d9c4c519fbe40de01dbd1e4469dbbb66f46a',
     ),
     'maximebf/debugbar' => 
     array (

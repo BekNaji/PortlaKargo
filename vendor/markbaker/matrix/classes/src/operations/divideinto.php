@@ -25,8 +25,7 @@ function divideinto(...$matrixValues): Matrix
         throw new Exception('Division operation requires at least 2 arguments');
     }
 
-    $matrix = array_pop($matrixValues);
-    $matrixValues = array_reverse($matrixValues);
+    $matrix = array_shift($matrixValues);
 
     if (is_array($matrix)) {
         $matrix = new Matrix($matrix);
