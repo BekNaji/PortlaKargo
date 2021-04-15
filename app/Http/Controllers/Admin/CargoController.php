@@ -33,7 +33,7 @@ class CargoController extends Controller
 
         $this->middleware(function ($request, $next)
         {
-            if(auth()->user()->company->cargo_letter == '')
+            if(Auth::user()->company->cargo_letter == '')
             {
                 return redirect()
                 ->route('settings.index')
@@ -50,22 +50,86 @@ class CargoController extends Controller
     {
 
         // if user role is admin
-    	if(auth()->user()->role == 'admin')
+    	if(Auth::user()->role == 'admin')
         {
-            $cargos  = Cargo::where('company_id',auth()->user()->company_id)->orderBy('id','DESC');
-        }
-        // if user role equal to user. Role User only can see own datas
-        if(auth()->user()->role == 'user')
-        {
-            $cargos  = Cargo::where('company_id',auth()->user()->company_id)
-            ->where('user_id','=',auth()->user()->id)
+            $cargos  = Cargo::where('company_id',Auth::user()->company_id)
             ->orderBy('id','DESC');
         }
-        $cargoCount = $cargos->count();
-        $cargos = $cargos->where('public_status','=',1)->with('sender')->with('user')->with('cargoStatus')->paginate(10);
-        $users = User::where('company_id','=',auth()->user()->company_id)->get();
-        $statuses = CargoStatus::where('company_id','=',auth()->user()->company_id)->get();
-    	return view('admin.cargo.index',compact('cargos','statuses','users','cargoCount'));
+        // if user role equal to user. Role User only can see own datas
+        if(Auth::user()->role == 'user')
+        {
+            $cargos  = Cargo::where('company_id',Auth::user()->company_id)
+            ->where('user_id','=',Auth::user()->id)
+            ->orderBy('id','DESC');
+        }
+        $data['limit'] = 100;
+        if($request->limit != '')
+        {
+            $data['limit'] = $request->limit;
+            if($request->limit != 'all')
+            {
+                $cargos = $cargos->where('public_status','=',1)->limit($data['limit'])->get();
+            }else
+            {
+                $cargos = $cargos->where('public_status','=',1)->get();
+            }
+        }else{
+            $cargos = $cargos->where('public_status','=',1)->limit($data['limit'])->get();
+        }
+        
+        $users = User::where('company_id','=',Auth::user()->company_id)->get();
+
+        $statuses = CargoStatus::where('company_id','=',Auth::user()->company_id)->get();
+
+        $senders = Customer::where('company_id','=',Auth::user()->company_id)->get();
+        $receivers = Receiver::where('company_id','=',Auth::user()->company_id)->get();
+
+        foreach($cargos as $cargo)
+        {
+            $arCargo['id']              = $cargo->id;
+            $arCargo['number']          = $cargo->number;
+            $arCargo['payment_type']    = $cargo->payment_type;
+            $arCargo['total_kg']        = $cargo->total_kg;
+            $arCargo['cargo_price']     = $cargo->cargo_price;
+            $arCargo['created_at']      = $cargo->created_at;
+
+            foreach($users as $user)
+            {
+                if($user->id == $cargo->user_id)
+                {
+                    $arCargo['user'] = $user->name;
+                }
+            }
+
+            foreach($statuses as $status)
+            {
+                if($status->id == $cargo->status)
+                {
+                    $arCargo['status'] = $status->name;
+                }
+            }
+            foreach($senders as $sender)
+            {
+                if($sender->id == $cargo->sender_id)
+                {
+                    $arCargo['sender'] = $sender->name ;
+                }
+            }
+            foreach( $receivers as $receiver)
+            {
+                if($receiver->id == $cargo->receiver_id)
+                {
+                    $arCargo['receiver'] = $receiver->name ;
+                }
+            }
+
+            $data['cargos'][] = $arCargo;
+
+        }
+        $data['cargo_count'] = count($data['cargos']);
+
+
+    	return view('admin.cargo.index',compact('cargos','statuses','users','data'));
     }
     
     // create cargo page
@@ -77,7 +141,7 @@ class CargoController extends Controller
             abort('419');
         }
         // get statuses for use cargo crate page
-        $statuses = CargoStatus::where('company_id',auth()->user()->company_id)->get();
+        $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
         return view('admin.cargo.create',compact('statuses'));
     }
 
@@ -93,7 +157,7 @@ class CargoController extends Controller
         $cargo = Cargo::find(decrypt($request->id));
 
         // get status datas for use show cargo page
-        $statuses = CargoStatus::where('company_id',auth()->user()->company_id)->get();
+        $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
 
         // get product datas according cargo id
         $products = Product::where('cargo_id',$cargo->id)->get();
@@ -120,9 +184,9 @@ class CargoController extends Controller
     # make filter
     public function filter(Request $request)
     {
-        $cargos = Cargo::where('company_id',auth()->user()->company_id);
+        $cargos = Cargo::where('company_id',Auth::user()->company_id);
 
-        $users = User::where('company_id','=',auth()->user()->company_id)->get();
+        $users = User::where('company_id','=',Auth::user()->company_id)->get();
         $data = [];
         $data['cargos'] =[];
         if($request->start !='')
@@ -149,14 +213,63 @@ class CargoController extends Controller
             $cargos->where('user_id','=',$request->user)->get();
         }
 
-        $cargoCount = $cargos->count();
-        $cargos = $cargos->orderBy('id','DESC')->with('sender')->with('receiver')->with('cargoStatus')->paginate(10);
 
-        $users = User::where('company_id','=',auth()->user()->company_id)->get();
-        $statuses = CargoStatus::where('company_id',auth()->user()->company_id)->get();
+        $cargos = $cargos->orderBy('id','DESC')->get();
 
-        
-        return view('admin.cargo.index',compact('cargos','statuses','users','cargoCount'));
+
+        $users = User::where('company_id','=',Auth::user()->company_id)->get();
+        $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
+
+        $senders = Customer::where('company_id','=',Auth::user()->company_id)->get();
+        $receivers = Receiver::where('company_id','=',Auth::user()->company_id)->get();
+
+
+        foreach($cargos as $cargo)
+        {
+            $arCargo['id']              = $cargo->id;
+            $arCargo['number']          = $cargo->number;
+            $arCargo['payment_type']    = $cargo->payment_type;
+            $arCargo['total_kg']        = $cargo->total_kg;
+            $arCargo['cargo_price']     = $cargo->cargo_price;
+            $arCargo['created_at']      = $cargo->created_at;
+
+            foreach($users as $user)
+            {
+                if($user->id == $cargo->user_id)
+                {
+                    $arCargo['user'] = $user->name;
+                }
+            }
+
+            foreach($statuses as $status)
+            {
+                if($status->id == $cargo->status)
+                {
+                    $arCargo['status'] = $status->name;
+                }
+            }
+            foreach($senders as $sender)
+            {
+                if($sender->id == $cargo->sender_id)
+                {
+                    $arCargo['sender'] = $sender->name ;
+                }
+            }
+            foreach( $receivers as $receiver)
+            {
+                if($receiver->id == $cargo->receiver_id)
+                {
+                    $arCargo['receiver'] = $receiver->name ;
+                }
+            }
+
+            $data['cargos'][] = $arCargo;
+
+        }
+        $data['limit'] = 'all';
+        $data['cargo_count'] = count($data['cargos']);
+
+        return view('admin.cargo.index',compact('cargos','statuses','users','data'));
     }
 
     # change status
@@ -248,7 +361,7 @@ class CargoController extends Controller
 
         $receiver_id = $this->storeReceiver($request);
 
-        $company = Company::find(auth()->user()->company_id);
+        $company = Company::find(Auth::user()->company_id);
         $cargo_row = $company->cargo_row + 1;
 
         $company->cargo_row = $cargo_row;
@@ -258,7 +371,7 @@ class CargoController extends Controller
 
         $status = CargoStatus::find($request->status);
         $cargo = new Cargo();
-        $cargo->company_id = auth()->user()->company_id;
+        $cargo->company_id = Auth::user()->company_id;
         $cargo->payment_type = $request->payment_type;
         $cargo->status = $request->status;
         // important !
@@ -268,9 +381,9 @@ class CargoController extends Controller
         $cargo->cargo_price = $request->cargo_price;
         $cargo->sender_id = $sender_id;
         $cargo->receiver_id = $receiver_id;
-        $cargo->user_id = auth()->user()->id;
+        $cargo->user_id = Auth::user()->id;
 
-        $cargo->number = auth()->user()
+        $cargo->number = Auth::user()
         ->company->cargo_letter.sprintf("%05s",$company->cargo_row);
         $cargo->save();
         $cargo_id = $cargo->id;
@@ -327,7 +440,7 @@ class CargoController extends Controller
         }
         $status = CargoStatus::find($request->status);
 
-        $cargo->company_id = auth()->user()->company_id;
+        $cargo->company_id = Auth::user()->company_id;
         $cargo->payment_type = $request->payment_type;
         $cargo->status = $request->status;
         $cargo->public_status = $status->public_status;
@@ -397,8 +510,8 @@ class CargoController extends Controller
         $cargo = Cargo::find(decrypt($request->id));
         $barcode = $this->getBarcode($cargo->number);
         $products = Product::where('cargo_id',$cargo->id)->get();
-        $company = Company::find(auth()->user()->company_id);
-        $statuses = CargoStatus::where('company_id',auth()->user()->company_id)->get();
+        $company = Company::find(Auth::user()->company_id);
+        $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
 
         return view('admin.cargo.print',compact('cargo','products','barcode','company','statuses'));
     }
@@ -407,7 +520,7 @@ class CargoController extends Controller
     public function storeCustomer($request)
     {
         $sender = Customer::where('phone','=',$request->sender_phone)
-        ->where('company_id','=',auth()->user()->company_id)
+        ->where('company_id','=',Auth::user()->company_id)
         ->get()->first();
 
         if(!$sender)
@@ -417,7 +530,7 @@ class CargoController extends Controller
 
         $sender->name = strtoupper($request->sender_name);
         $sender->phone = $request->sender_phone;
-        $sender->company_id = auth()->user()->company_id;
+        $sender->company_id = Auth::user()->company_id;
         $sender->save();
 
         return $sender->id;
@@ -428,7 +541,7 @@ class CargoController extends Controller
     public function storeReceiver($request)
     {
         $receiver = Receiver::where('phone','=',$request->receiver_phone)
-        ->where('company_id','=',auth()->user()->company_id)
+        ->where('company_id','=',Auth::user()->company_id)
         ->get()->first();
         if(!$receiver)
         {
@@ -439,7 +552,7 @@ class CargoController extends Controller
         $receiver->phone = $request->receiver_phone;
         $receiver->other_phone = $request->receiver_other_phone;
         $receiver->address = strtoupper($request->receiver_address);
-        $receiver->company_id = auth()->user()->company_id;
+        $receiver->company_id = Auth::user()->company_id;
         $receiver->save();
         return  $receiver->id;
     }
@@ -451,7 +564,7 @@ class CargoController extends Controller
         {
             abort('419');
         }
-        $cargos = Cargo::where('company_id',auth()->user()->company_id)->orderBy('sender_id','ASC');
+        $cargos = Cargo::where('company_id',Auth::user()->company_id)->orderBy('sender_id','ASC');
 
         if($request->start !='')
         {

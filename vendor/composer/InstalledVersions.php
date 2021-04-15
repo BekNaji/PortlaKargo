@@ -30,7 +30,11 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
+<<<<<<< HEAD
     'reference' => '5d1e1b96013ffa297613de3615928bfe4fdc1f26',
+=======
+    'reference' => 'a5adcba0a30245d4d645284b05477dacdb9788f7',
+>>>>>>> parent of 476086dc... Pagination added to cargo list
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -473,7 +477,11 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
+<<<<<<< HEAD
       'reference' => '5d1e1b96013ffa297613de3615928bfe4fdc1f26',
+=======
+      'reference' => 'a5adcba0a30245d4d645284b05477dacdb9788f7',
+>>>>>>> parent of 476086dc... Pagination added to cargo list
     ),
     'laravel/tinker' => 
     array (
@@ -519,15 +527,6 @@ private static $installed = array (
       array (
       ),
       'reference' => '3b9dff8aaf7323590c1d2e443db701eb1f9aa0d3',
-    ),
-    'livewire/livewire' => 
-    array (
-      'pretty_version' => 'v2.4.2',
-      'version' => '2.4.2.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '2495387841a3eb03ac62b2c984ccd2574303285b',
     ),
     'maatwebsite/excel' => 
     array (
