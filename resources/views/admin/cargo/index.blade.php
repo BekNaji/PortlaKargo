@@ -4,14 +4,9 @@
 <div class="row">
 	<div class="col-md-12">
 		<br>
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 		{{-- @livewire('search-cargo') --}}
-		<livewire:search-cargo />
-=======
->>>>>>> parent of 476086dc... Pagination added to cargo list
-=======
->>>>>>> parent of 476086dc... Pagination added to cargo list
+
 		<div class="card">
 			<div class="card-body">
 				<div class="row">

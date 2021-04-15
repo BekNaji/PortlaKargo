@@ -6,15 +6,7 @@
     'aliases' => 
     array (
     ),
-<<<<<<< HEAD
-<<<<<<< HEAD
-    'reference' => '5d1e1b96013ffa297613de3615928bfe4fdc1f26',
-=======
-    'reference' => 'a5adcba0a30245d4d645284b05477dacdb9788f7',
->>>>>>> parent of 476086dc... Pagination added to cargo list
-=======
-    'reference' => 'a5adcba0a30245d4d645284b05477dacdb9788f7',
->>>>>>> parent of 476086dc... Pagination added to cargo list
+    'reference' => 'a6e2f38285382fff7dd2acebf9a888a9e470c2f6',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -457,15 +449,7 @@
       'aliases' => 
       array (
       ),
-<<<<<<< HEAD
-<<<<<<< HEAD
-      'reference' => '5d1e1b96013ffa297613de3615928bfe4fdc1f26',
-=======
-      'reference' => 'a5adcba0a30245d4d645284b05477dacdb9788f7',
->>>>>>> parent of 476086dc... Pagination added to cargo list
-=======
-      'reference' => 'a5adcba0a30245d4d645284b05477dacdb9788f7',
->>>>>>> parent of 476086dc... Pagination added to cargo list
+      'reference' => 'a6e2f38285382fff7dd2acebf9a888a9e470c2f6',
     ),
     'laravel/tinker' => 
     array (
@@ -503,7 +487,6 @@
       ),
       'reference' => '9be3b16c877d477357c015cec057548cf9b2a14a',
     ),
-<<<<<<< HEAD
     'league/mime-type-detection' => 
     array (
       'pretty_version' => '1.7.0',
@@ -513,8 +496,15 @@
       ),
       'reference' => '3b9dff8aaf7323590c1d2e443db701eb1f9aa0d3',
     ),
-=======
->>>>>>> parent of 476086dc... Pagination added to cargo list
+    'livewire/livewire' => 
+    array (
+      'pretty_version' => 'v2.4.2',
+      'version' => '2.4.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2495387841a3eb03ac62b2c984ccd2574303285b',
+    ),
     'maatwebsite/excel' => 
     array (
       'pretty_version' => '3.1.30',
