@@ -24,8 +24,12 @@
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 		{{-- @livewireStyles --}}
 		<livewire:styles />
+=======
+
+>>>>>>> parent of 476086dc... Pagination added to cargo list
 =======
 
 >>>>>>> parent of 476086dc... Pagination added to cargo list
@@ -265,8 +269,11 @@
 		
 		</script>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		
+=======
+>>>>>>> parent of 476086dc... Pagination added to cargo list
 =======
 >>>>>>> parent of 476086dc... Pagination added to cargo list
 	</body>

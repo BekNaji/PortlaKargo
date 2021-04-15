@@ -1999,6 +1999,7 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "name": "league/mime-type-detection",
             "version": "1.7.0",
             "version_normalized": "1.7.0.0",
@@ -2133,6 +2134,8 @@
             "install-path": "../livewire/livewire"
         },
         {
+=======
+>>>>>>> parent of 476086dc... Pagination added to cargo list
 =======
 >>>>>>> parent of 476086dc... Pagination added to cargo list
             "name": "maatwebsite/excel",

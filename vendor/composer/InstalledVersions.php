@@ -31,7 +31,11 @@ private static $installed = array (
     array (
     ),
 <<<<<<< HEAD
+<<<<<<< HEAD
     'reference' => '5d1e1b96013ffa297613de3615928bfe4fdc1f26',
+=======
+    'reference' => 'a5adcba0a30245d4d645284b05477dacdb9788f7',
+>>>>>>> parent of 476086dc... Pagination added to cargo list
 =======
     'reference' => 'a5adcba0a30245d4d645284b05477dacdb9788f7',
 >>>>>>> parent of 476086dc... Pagination added to cargo list
@@ -478,7 +482,11 @@ private static $installed = array (
       array (
       ),
 <<<<<<< HEAD
+<<<<<<< HEAD
       'reference' => '5d1e1b96013ffa297613de3615928bfe4fdc1f26',
+=======
+      'reference' => 'a5adcba0a30245d4d645284b05477dacdb9788f7',
+>>>>>>> parent of 476086dc... Pagination added to cargo list
 =======
       'reference' => 'a5adcba0a30245d4d645284b05477dacdb9788f7',
 >>>>>>> parent of 476086dc... Pagination added to cargo list
@@ -519,6 +527,7 @@ private static $installed = array (
       ),
       'reference' => '9be3b16c877d477357c015cec057548cf9b2a14a',
     ),
+<<<<<<< HEAD
     'league/mime-type-detection' => 
     array (
       'pretty_version' => '1.7.0',
@@ -528,6 +537,8 @@ private static $installed = array (
       ),
       'reference' => '3b9dff8aaf7323590c1d2e443db701eb1f9aa0d3',
     ),
+=======
+>>>>>>> parent of 476086dc... Pagination added to cargo list
     'maatwebsite/excel' => 
     array (
       'pretty_version' => '3.1.30',

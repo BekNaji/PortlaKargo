@@ -22,7 +22,10 @@ class ComposerStaticInitdc32a7bf2314d71649cf235efc945cca
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 476086dc... Pagination added to cargo list
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
 >>>>>>> parent of 476086dc... Pagination added to cargo list
@@ -197,8 +200,11 @@ class ComposerStaticInitdc32a7bf2314d71649cf235efc945cca
         'L' => 
         array (
 <<<<<<< HEAD
+<<<<<<< HEAD
             'Livewire\\' => 9,
             'League\\MimeTypeDetection\\' => 25,
+=======
+>>>>>>> parent of 476086dc... Pagination added to cargo list
 =======
 >>>>>>> parent of 476086dc... Pagination added to cargo list
             'League\\Flysystem\\' => 17,
@@ -485,6 +491,7 @@ class ComposerStaticInitdc32a7bf2314d71649cf235efc945cca
             0 => __DIR__ . '/..' . '/maatwebsite/excel/src',
         ),
 <<<<<<< HEAD
+<<<<<<< HEAD
         'Livewire\\' => 
         array (
             0 => __DIR__ . '/..' . '/livewire/livewire/src',
@@ -493,6 +500,8 @@ class ComposerStaticInitdc32a7bf2314d71649cf235efc945cca
         array (
             0 => __DIR__ . '/..' . '/league/mime-type-detection/src',
         ),
+=======
+>>>>>>> parent of 476086dc... Pagination added to cargo list
 =======
 >>>>>>> parent of 476086dc... Pagination added to cargo list
         'League\\Flysystem\\' => 
@@ -3326,6 +3335,7 @@ class ComposerStaticInitdc32a7bf2314d71649cf235efc945cca
         'League\\Flysystem\\Util\\MimeType' => __DIR__ . '/..' . '/league/flysystem/src/Util/MimeType.php',
         'League\\Flysystem\\Util\\StreamHasher' => __DIR__ . '/..' . '/league/flysystem/src/Util/StreamHasher.php',
 <<<<<<< HEAD
+<<<<<<< HEAD
         'League\\MimeTypeDetection\\EmptyExtensionToMimeTypeMap' => __DIR__ . '/..' . '/league/mime-type-detection/src/EmptyExtensionToMimeTypeMap.php',
         'League\\MimeTypeDetection\\ExtensionMimeTypeDetector' => __DIR__ . '/..' . '/league/mime-type-detection/src/ExtensionMimeTypeDetector.php',
         'League\\MimeTypeDetection\\ExtensionToMimeTypeMap' => __DIR__ . '/..' . '/league/mime-type-detection/src/ExtensionToMimeTypeMap.php',
@@ -3438,6 +3448,8 @@ class ComposerStaticInitdc32a7bf2314d71649cf235efc945cca
         'Livewire\\WireDirective' => __DIR__ . '/..' . '/livewire/livewire/src/WireDirective.php',
         'Livewire\\WithFileUploads' => __DIR__ . '/..' . '/livewire/livewire/src/WithFileUploads.php',
         'Livewire\\WithPagination' => __DIR__ . '/..' . '/livewire/livewire/src/WithPagination.php',
+=======
+>>>>>>> parent of 476086dc... Pagination added to cargo list
 =======
 >>>>>>> parent of 476086dc... Pagination added to cargo list
         'Maatwebsite\\Excel\\Cache\\BatchCache' => __DIR__ . '/..' . '/maatwebsite/excel/src/Cache/BatchCache.php',

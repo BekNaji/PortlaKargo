@@ -1450,6 +1450,7 @@
             "time": "2020-08-23T07:39:11+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "league/mime-type-detection",
             "version": "1.7.0",
             "source": {
@@ -1506,6 +1507,8 @@
             "time": "2021-01-18T20:58:21+00:00"
         },
         {
+=======
+>>>>>>> parent of 476086dc... Pagination added to cargo list
             "name": "maatwebsite/excel",
             "version": "3.1.30",
             "source": {
