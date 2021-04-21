@@ -65,8 +65,8 @@ class CargoController extends Controller
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
 
         $statuses = CargoStatus::where('company_id','=',Auth::user()->company_id)->get();
-
-    	return view('admin.cargo.index',compact('cargos','statuses','users'));
+        $paginate = true;
+    	return view('admin.cargo.index',compact('cargos','statuses','users','paginate'));
     }
     
     // create cargo page
@@ -122,7 +122,7 @@ class CargoController extends Controller
     public function filter(Request $request)
     {
         $cargos = Cargo::where('company_id',Auth::user()->company_id);
-
+        $req = $request;
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
         $data = [];
         $data['cargos'] =[];
@@ -147,10 +147,11 @@ class CargoController extends Controller
         {
             $cargos->where('user_id','=',$request->user)->get();
         }
-        $cargos = $cargos->orderBy('id','DESC')->with('user')->with('receiver')->with('sender')->with('cargoStatus')->paginate();
+        $cargos = $cargos->orderBy('id','DESC')->with('user')->with('receiver')->with('sender')->with('cargoStatus')->get();
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
-        return view('admin.cargo.index',compact('cargos','statuses','users'));
+        $paginate = false;
+        return view('admin.cargo.index',compact('cargos','statuses','users','paginate'));
     }
 
     # change status

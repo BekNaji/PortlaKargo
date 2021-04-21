@@ -35,7 +35,7 @@
 				<hr>
 				@if(Permission::check('cargo-index'))
 				<div id="search_result">
-				<table  class="table" style="width:100%">
+				<table id="{{ !$paginate ? 'dataTable':'' }}" class="table" style="width:100%">
 					<thead>
 						<tr>
 							<td style="width:50px;"><input type="checkbox" id="selectAll"></td>
@@ -99,7 +99,9 @@
 						@endif
 					</tbody>
 				</table>
+				@if($paginate)
 				{{$cargos->links()}}
+				@endif
 				</div>
 				@else
 				<center><h4>Kargo listesini görmeye Yetkiniz yok!</h4></center>
