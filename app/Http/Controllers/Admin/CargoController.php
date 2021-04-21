@@ -147,7 +147,7 @@ class CargoController extends Controller
         {
             $cargos->where('user_id','=',$request->user)->get();
         }
-        $cargos = $cargos->orderBy('id','DESC')->with('user')->with('receiver')->with('sender')->with('cargoStatus')->paginate(10);
+        $cargos = $cargos->orderBy('id','DESC')->with('user')->with('receiver')->with('sender')->with('cargoStatus')->paginate();
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
         return view('admin.cargo.index',compact('cargos','statuses','users'));
