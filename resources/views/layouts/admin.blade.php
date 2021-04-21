@@ -22,17 +22,6 @@
 		<link href="{{ asset('assets') }}/css/dataTables.min.css" rel="stylesheet" />
 		<link href="{{ asset('assets') }}/css/toastr.min.css" rel="stylesheet" />
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-		
-<<<<<<< HEAD
-<<<<<<< HEAD
-		{{-- @livewireStyles --}}
-		<livewire:styles />
-=======
-
->>>>>>> parent of 476086dc... Pagination added to cargo list
-=======
-
->>>>>>> parent of 476086dc... Pagination added to cargo list
 	</head>
 	<body class="sb-nav-fixed">
 
@@ -205,8 +194,6 @@
 				</footer>
 			</div>
 		</div>
-		<livewire:scripts />
-		{{-- @livewireScripts --}}
 		<script src="{{ asset('assets') }}/js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
 		<script src="{{ asset('assets') }}/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 		<script src="{{ asset('assets') }}/js/scripts.js" crossorigin="anonymous"></script>
@@ -268,13 +255,5 @@
 		},7000);
 		
 		</script>
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-		
-=======
->>>>>>> parent of 476086dc... Pagination added to cargo list
-=======
->>>>>>> parent of 476086dc... Pagination added to cargo list
 	</body>
 </html>

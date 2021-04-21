@@ -21,9 +21,7 @@ use App\Helpers\SendSMS;
 use App\Helpers\SendSMSUz;
 use Permission;
 use Cache;
-
-
-
+use Illuminate\Support\Facades\DB;
 
 class CargoController extends Controller
 {
@@ -62,74 +60,13 @@ class CargoController extends Controller
             ->where('user_id','=',Auth::user()->id)
             ->orderBy('id','DESC');
         }
-        $data['limit'] = 100;
-        if($request->limit != '')
-        {
-            $data['limit'] = $request->limit;
-            if($request->limit != 'all')
-            {
-                $cargos = $cargos->where('public_status','=',1)->limit($data['limit'])->get();
-            }else
-            {
-                $cargos = $cargos->where('public_status','=',1)->get();
-            }
-        }else{
-            $cargos = $cargos->where('public_status','=',1)->limit($data['limit'])->get();
-        }
+        $cargos = $cargos->where('public_status','=',1)->with('user')->with('sender')->with('receiver')->with('cargoStatus')->paginate(10);
         
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
 
         $statuses = CargoStatus::where('company_id','=',Auth::user()->company_id)->get();
 
-        $senders = Customer::where('company_id','=',Auth::user()->company_id)->get();
-        $receivers = Receiver::where('company_id','=',Auth::user()->company_id)->get();
-
-        foreach($cargos as $cargo)
-        {
-            $arCargo['id']              = $cargo->id;
-            $arCargo['number']          = $cargo->number;
-            $arCargo['payment_type']    = $cargo->payment_type;
-            $arCargo['total_kg']        = $cargo->total_kg;
-            $arCargo['cargo_price']     = $cargo->cargo_price;
-            $arCargo['created_at']      = $cargo->created_at;
-
-            foreach($users as $user)
-            {
-                if($user->id == $cargo->user_id)
-                {
-                    $arCargo['user'] = $user->name;
-                }
-            }
-
-            foreach($statuses as $status)
-            {
-                if($status->id == $cargo->status)
-                {
-                    $arCargo['status'] = $status->name;
-                }
-            }
-            foreach($senders as $sender)
-            {
-                if($sender->id == $cargo->sender_id)
-                {
-                    $arCargo['sender'] = $sender->name ;
-                }
-            }
-            foreach( $receivers as $receiver)
-            {
-                if($receiver->id == $cargo->receiver_id)
-                {
-                    $arCargo['receiver'] = $receiver->name ;
-                }
-            }
-
-            $data['cargos'][] = $arCargo;
-
-        }
-        $data['cargo_count'] = count($data['cargos']);
-
-
-    	return view('admin.cargo.index',compact('cargos','statuses','users','data'));
+    	return view('admin.cargo.index',compact('cargos','statuses','users'));
     }
     
     // create cargo page
@@ -198,78 +135,22 @@ class CargoController extends Controller
         if($request->end !='')
         {
             $to   = Carbon::parse($request->end.' 23:59:59')->format('Y-m-d H:i:s');
-            $cargos->where('created_at','<=',$to)->get();;
-
+            $cargos->where('created_at','<=',$to)->get();
         }
 
         if($request->status != 'all')
         {
             $cargos->where('status','=',$request->status)->get();;
-
         }
 
         if($request->user != 'all')
         {
             $cargos->where('user_id','=',$request->user)->get();
         }
-
-
-        $cargos = $cargos->orderBy('id','DESC')->get();
-
-
+        $cargos = $cargos->orderBy('id','DESC')->with('user')->with('receiver')->with('sender')->with('cargoStatus')->paginate(10);
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
-
-        $senders = Customer::where('company_id','=',Auth::user()->company_id)->get();
-        $receivers = Receiver::where('company_id','=',Auth::user()->company_id)->get();
-
-
-        foreach($cargos as $cargo)
-        {
-            $arCargo['id']              = $cargo->id;
-            $arCargo['number']          = $cargo->number;
-            $arCargo['payment_type']    = $cargo->payment_type;
-            $arCargo['total_kg']        = $cargo->total_kg;
-            $arCargo['cargo_price']     = $cargo->cargo_price;
-            $arCargo['created_at']      = $cargo->created_at;
-
-            foreach($users as $user)
-            {
-                if($user->id == $cargo->user_id)
-                {
-                    $arCargo['user'] = $user->name;
-                }
-            }
-
-            foreach($statuses as $status)
-            {
-                if($status->id == $cargo->status)
-                {
-                    $arCargo['status'] = $status->name;
-                }
-            }
-            foreach($senders as $sender)
-            {
-                if($sender->id == $cargo->sender_id)
-                {
-                    $arCargo['sender'] = $sender->name ;
-                }
-            }
-            foreach( $receivers as $receiver)
-            {
-                if($receiver->id == $cargo->receiver_id)
-                {
-                    $arCargo['receiver'] = $receiver->name ;
-                }
-            }
-
-            $data['cargos'][] = $arCargo;
-
-        }
-        $data['limit'] = 'all';
-        $data['cargo_count'] = count($data['cargos']);
-
-        return view('admin.cargo.index',compact('cargos','statuses','users','data'));
+        return view('admin.cargo.index',compact('cargos','statuses','users'));
     }
 
     # change status
@@ -731,7 +612,18 @@ class CargoController extends Controller
         return Excel::download(new App\Exports\CargoExcel($datas), $filename);
     }
 
+    public function search(Request $request)
+    {
+        $key = $request->key;
+        if($key == ''){ return json_encode(['cargo'=>'']); }
 
+        $cargos = Cargo::orWhereHas('sender',function($query) use ($key){
+            $query->where('name','like','%'.$key.'%');
+        })->orWhereHas('receiver',function($query) use ($key){
+            $query->where('name','like','%'.$key.'%');
+        })->orWhere('number','like','%'.$key.'%')->with('user')->with('sender')->with('receiver')->with('cargoStatus')->get();
+        return json_encode(['cargo'=>$cargos]);
+    }
     # send message to user with Mobile phone
     public function sendPhone($id,$status)
     {

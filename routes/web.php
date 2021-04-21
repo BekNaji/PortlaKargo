@@ -123,6 +123,7 @@ Route::post('product/delete', 'ProductController@delete')->name('product.delete'
 
 
 // Cargo route
+Route::get('cargo/search','CargoController@search')->name('cargo.search');
 Route::post('cargo/store/all', 
 	'CargoController@storeAll')->name('cargo.store.all');
 

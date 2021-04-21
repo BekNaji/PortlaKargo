@@ -8,6 +8,11 @@ use Carbon\Carbon;
 class Cargo extends Model
 {
     protected $table = 'cargos';
+    
+
+    public function dateFormat( $value ) {
+        return (new Carbon($value))->format('d/m/y');
+      }
 
     public function cargoStatus()
     {
