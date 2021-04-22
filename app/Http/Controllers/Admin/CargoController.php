@@ -623,7 +623,9 @@ class CargoController extends Controller
         })->orWhereHas('receiver',function($query) use ($key){
             $query->where('name','like','%'.$key.'%');
         })->orWhere('number','like','%'.$key.'%')->with('user')->with('sender')->with('receiver')->with('cargoStatus')->get();
-        return json_encode(['cargo'=>$cargos]);
+        
+        $html = View::make('admin.cargo.search_result', compact('cargos'))->render();
+        return Response::json(['html' => $html]);
     }
     # send message to user with Mobile phone
     public function sendPhone($id,$status)
