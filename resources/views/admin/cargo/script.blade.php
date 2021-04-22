@@ -44,9 +44,9 @@
             }
             function getPayType(v){ return v == 1 ? 'Gönderici' : 'Alıcı';}
             var old_html = $('#search_result').html();
-
+            
             $('#search').keyup(function(){
-                //var val = $(this).val();
+                var val = $(this).val();
                 $.ajax({
                     url:"{{route('cargo.search')}}",
                     type:'GET',
