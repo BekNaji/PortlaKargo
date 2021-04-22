@@ -23,6 +23,7 @@ use Permission;
 use Cache;
 use Illuminate\Support\Facades\DB;
 use View;
+use Response;
 class CargoController extends Controller
 {
 
