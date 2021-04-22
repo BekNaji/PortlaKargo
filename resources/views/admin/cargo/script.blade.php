@@ -20,7 +20,7 @@
 
                 $.each(datas,function(index,data){
                     <?php $id = '<script>document.writeln(data.id)</script>'; ?>
-                    html +='<tr>'+
+                        html +='<tr>'+
                         '<td><input class="cargo" type="checkbox" name="cargo[]" data-id="'+data.id+'"></td>'+
                         '<td>'+ index +'</td>'+
                         '<td>'+ data.user.name+'</td>'+
@@ -58,19 +58,9 @@
                         {
                             return $('#search_result').html(old_html);
                         }
-                        if(datas.cargo != ''){
-                            $('#search_result').html('');
-                            $('#search_result').html(makeTable(datas['cargo']));
-                            return true;
-                        }else{
-                            return $('#search_result').html('<center>No data</center>');
-                        }
-
-
-
-
-
-
+                        $('#search_result').html('');
+                        $('#search_result').html(datas.html);
+                        return true;
                     }
                 })
             });
