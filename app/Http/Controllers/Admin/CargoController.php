@@ -147,7 +147,7 @@ class CargoController extends Controller
         }
         $cargos = $cargos->orderBy('id','DESC');
         $count = $cargos->count();
-        $cargos = $cargos->with('user')->with('receiver')->with('sender')->with('cargoStatus')->paginate(5);
+        $cargos = $cargos->with('user')->with('receiver')->with('sender')->with('cargoStatus')->paginate(15);
         $cargos->appends(['start' => $request->start,'end'=>$request->end,'status'=>$request->status,'user'=>$request->user]);
         
         return view('admin.cargo.index',compact('cargos','statuses','users','count'));
