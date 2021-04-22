@@ -46,7 +46,7 @@
             var old_html = $('#search_result').html();
 
             $('#search').keyup(function(){
-                var val = $(this).val();
+                //var val = $(this).val();
                 $.ajax({
                     url:"{{route('cargo.search')}}",
                     type:'GET',
@@ -54,13 +54,13 @@
                     success:function(res)
                     {
                         console.log(res);
-                        var datas = JSON.parse(res);
+                        //var datas = JSON.parse(res);
                         if(val == '')
                         {
                             return $('#search_result').html(old_html);
                         }
                         $('#search_result').html('');
-                        $('#search_result').html(datas.html);
+                        $('#search_result').html(res.html);
                         return true;
                     }
                 })
