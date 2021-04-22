@@ -22,7 +22,7 @@ use App\Helpers\SendSMSUz;
 use Permission;
 use Cache;
 use Illuminate\Support\Facades\DB;
-
+use View;
 class CargoController extends Controller
 {
 
