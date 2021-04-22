@@ -2,49 +2,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            function makeTable(datas){
-                var html = '';
-                html +='<table class="table"><thead><tr>'+
-                    '<td><input type="checkbox" id="selectAll"></td>'+
-                    '<td><b>#</b></td>'+
-                    '<td><b>Kullanıcı</b></td>'+
-                    '<td><b>Takip No</b></td>'+
-                    '<td><b>Durum</b></td>'+
-                    '<td><b>Ödeme</b></td>'+
-                    '<td><b>Göderici</b></td>'+
-                    '<td><b>Alıcı</b></td>'+
-                    '<td><b>Toplam Kg</b></td>'+
-                    '<td><b>Kargo Ücreti</b></td>'+
-                    '<td><b>Oluşturma Tarih</b></td>'+
-                    '<td><b>#</b></td></tr></thead><tbody>';
-
-                $.each(datas,function(index,data){
-                    <?php $id = '<script>document.writeln(data.id)</script>'; ?>
-                        html +='<tr>'+
-                        '<td><input class="cargo" type="checkbox" name="cargo[]" data-id="'+data.id+'"></td>'+
-                        '<td>'+ index +'</td>'+
-                        '<td>'+ data.user.name+'</td>'+
-                        '<td>'+ data.number +'</td>'+
-                        '<td>'+ data.cargo_status.name+'</td>'+
-                        '<td>'+ getPayType(data.payment_type) +'</td>'+
-                        '<td>'+ data.sender.name +'</td>'+
-                        '<td>'+ data.receiver.name +'</td>'+
-                        '<td>'+ data.total_kg +'</td>'+
-                        '<td>'+ data.cargo_price +'</td>'+
-                        '<td>'+ dayjs(data.created_at).format("DD-MM-YYYY H:mm") +'</td>'+
-                        '<td>'+
-                        '<a target="_blank" href="{{route("cargo.print",encrypt($id))}}" ><span class="badge badge-info"><i class="fa fa-print"></i></span></a>'+
-                        '<a target="_blank" href="{{route("cargo.show",encrypt($id))}}" ><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>'+
-                        '<a href="#" id="delete" data-id="'+data.id+'" data-name="'+data.number+'" ><span class="badge badge-danger"><i class="fa fa-trash-alt"></i></span></a>'+
-                        '</td></tr>';
-
-                });
-                html +='</tbody></table>';
-                return html;
-            }
-            function getPayType(v){ return v == 1 ? 'Gönderici' : 'Alıcı';}
             var old_html = $('#search_result').html();
-            
+            var old_count = $('#cargo_count').text();
             $('#search').keyup(function(){
                 var val = $(this).val();
                 $.ajax({
@@ -53,13 +12,11 @@
                     data:{key: val},
                     success:function(res)
                     {
-                        console.log(res);
-                        //var datas = JSON.parse(res);
-                        if(val == '')
-                        {
+                        if(val == ''){
+                            $('#cargo_count').text(old_count);
                             return $('#search_result').html(old_html);
                         }
-                        $('#search_result').html('');
+                        $('#cargo_count').text(res.count);
                         $('#search_result').html(res.html);
                         return true;
                     }

@@ -38,8 +38,6 @@ class CargoController extends Controller
                 ->route('settings.index')
                 ->with(['message'=>'Lütfen Önce Kargo numara ilk harfını Belirleyiniz!']);
             }
-
-
             return $next($request);
         });
     }
@@ -61,13 +59,14 @@ class CargoController extends Controller
             ->where('user_id','=',Auth::user()->id)
             ->orderBy('id','DESC');
         }
-        $cargos = $cargos->where('public_status','=',1)->with('user')->with('sender')->with('receiver')->with('cargoStatus')->paginate(10);
+        $cargos = $cargos->where('public_status','=',1);
+        $count = $cargos->count();
+        $cargos = $cargos->with('user')->with('sender')->with('receiver')->with('cargoStatus')->paginate(10);
         
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
 
         $statuses = CargoStatus::where('company_id','=',Auth::user()->company_id)->get();
-        $paginate = true;
-    	return view('admin.cargo.index',compact('cargos','statuses','users','paginate'));
+    	return view('admin.cargo.index',compact('cargos','statuses','users','count'));
     }
     
     // create cargo page
@@ -122,11 +121,9 @@ class CargoController extends Controller
     # make filter
     public function filter(Request $request)
     {
-        $cargos = Cargo::where('company_id',Auth::user()->company_id);
-        $req = $request;
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
-        $data = [];
-        $data['cargos'] =[];
+        $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
+        $cargos = Cargo::where('company_id',Auth::user()->company_id);
         if($request->start !='')
         {
             $from = Carbon::parse($request->start.' 00:00:00')->format('Y-m-d H:i:s');
@@ -148,11 +145,12 @@ class CargoController extends Controller
         {
             $cargos->where('user_id','=',$request->user)->get();
         }
-        $cargos = $cargos->orderBy('id','DESC')->with('user')->with('receiver')->with('sender')->with('cargoStatus')->get();
-        $users = User::where('company_id','=',Auth::user()->company_id)->get();
-        $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
-        $paginate = false;
-        return view('admin.cargo.index',compact('cargos','statuses','users','paginate'));
+        $cargos = $cargos->orderBy('id','DESC');
+        $count = $cargos->count();
+        $cargos = $cargos->with('user')->with('receiver')->with('sender')->with('cargoStatus')->paginate(5);
+        $cargos->appends(['start' => $request->start,'end'=>$request->end,'status'=>$request->status,'user'=>$request->user]);
+        
+        return view('admin.cargo.index',compact('cargos','statuses','users','count'));
     }
 
     # change status
@@ -179,9 +177,6 @@ class CargoController extends Controller
             $cargo->save();
 
         }
-
-
-
         return back()->with(['success'=>'Güncellendi']);
     }
 
@@ -249,9 +244,6 @@ class CargoController extends Controller
 
         $company->cargo_row = $cargo_row;
         $company->save();
-
-
-
         $status = CargoStatus::find($request->status);
         $cargo = new Cargo();
         $cargo->company_id = Auth::user()->company_id;
@@ -335,7 +327,6 @@ class CargoController extends Controller
         $cargo->save();
 
         $cargo_id = $cargo->id;
-
 
         $total_price = '0';
 
@@ -624,9 +615,9 @@ class CargoController extends Controller
         })->orWhereHas('receiver',function($query) use ($key){
             $query->where('name','like','%'.$key.'%');
         })->orWhere('number','like','%'.$key.'%')->with('user')->with('sender')->with('receiver')->with('cargoStatus')->get();
-        
+        $count = $cargos->count();
         $html = View::make('admin.cargo.search_result', compact('cargos'))->render();
-        return Response::json(['html' => $html]);
+        return Response::json(['html' => $html,'count'=>$count]);
     }
     # send message to user with Mobile phone
     public function sendPhone($id,$status)

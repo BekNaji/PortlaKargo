@@ -31,11 +31,14 @@
 				<button id="manafes" type="button" class="btn btn-info">Excel Hazırla</button>
 				@endif
 				</div>
+				<div class="col-md-3">
+					Kargo Adeti: <span id="cargo_count"> {{$count ?? ''}}</span>
+				</div>
 			</div>
 				<hr>
 				@if(Permission::check('cargo-index'))
 				<div id="search_result">
-				<table id="{{ !$paginate ? 'dataTable':'' }}" class="table" style="width:100%">
+				<table class="table" style="width:100%">
 					<thead>
 						<tr>
 							<td style="width:50px;"><input type="checkbox" id="selectAll"></td>
@@ -57,7 +60,7 @@
 						@foreach($cargos as $cargo)
 						<tr>
 							<td><input class="cargo" type="checkbox" name="cargo[]" data-id="{{$cargo->id}}"></td>
-							<td>{{$loop->iteration}}</td>
+							<td>{{($cargos ->currentpage()-1) * $cargos ->perpage() + $loop->index + 1}}</td>
 							<td>{{ $cargo->user->name ?? ''}}</td>
 							<td>{{$cargo->number ?? ''}}</td>
 							<td>{{$cargo->cargoStatus->name ?? ''}}</td>
@@ -99,9 +102,7 @@
 						@endif
 					</tbody>
 				</table>
-				@if($paginate)
 				{{$cargos->links()}}
-				@endif
 				</div>
 				@else
 				<center><h4>Kargo listesini görmeye Yetkiniz yok!</h4></center>
