@@ -53,6 +53,7 @@
                     data:{key: val},
                     success:function(res)
                     {
+                        console.log(res);
                         var datas = JSON.parse(res);
                         if(val == '')
                         {
