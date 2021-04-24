@@ -20,7 +20,6 @@ class SendSMS
     {
         
         self::$company = Company::find(Auth::user()->company_id);
-        //dd(self::$company);
         self::$api_key = self::$company->api_key;
         self::$api_keyUZ = self::$company->api_keyUZ;
         self::$api_tokenUZ = self::$company->api_tokenUZ;
@@ -41,7 +40,7 @@ class SendSMS
     
         if($result != 87)
         {
-            return ['succuss' => true,'credit'=>explode(' ',$result)[1]];
+            return ['success' => true,'credit'=>explode(' ',$result)[1]];
         }
         return ['success'=> false] ;
     }
@@ -61,7 +60,7 @@ class SendSMS
         curl_close($ch);
         if($result != 87)
         {
-            return ['succuss' => true,'title'=>explode(' ',$result)[1]];
+            return ['success' => true,'title'=>explode(' ',$result)[1]];
         }
         return ['success'=> false];
 
@@ -98,6 +97,7 @@ class SendSMS
             ),
         ));
         $response = curl_exec($curl);
+		
         curl_close($curl);
     }
 
