@@ -64,8 +64,7 @@ class UserController extends Controller
     
         if($request->file('image') != '')
         {
-            $upload = new Upload;
-            $user->image = $upload->uploadImage($request->file('image'),'profile/');
+            $user->image = Upload::uploadImage($request->file('image'),'profile/');
         }
 
         $user->save();
@@ -84,7 +83,6 @@ class UserController extends Controller
     // update function
     public function update(Request $request)
     {
-        // dd($request->id);
         $user = User::find($request->id);
         
         $validator = $request->
@@ -115,8 +113,7 @@ class UserController extends Controller
             {
                 unlink($user->image);
             }
-            $upload = new Upload;
-            $user->image = $upload->uploadImage($request->file('image'),'profile/');
+            $user->image = Upload::uploadImage($request->file('image'),'profile/');
         }
 
         $user->save();
@@ -168,6 +165,7 @@ class UserController extends Controller
 
     public function permissionUpdate(Request $request)
     {
+    
         $user = User::find($request->user_id);
 
         $user->permissions = $request->ids;

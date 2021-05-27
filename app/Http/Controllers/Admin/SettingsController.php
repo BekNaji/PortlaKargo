@@ -47,10 +47,17 @@ class SettingsController extends Controller
         $company->other_address = $request->other_address;
         $company->bot_info = $request->bot_info;
         $company->cargo_row = $request->cargo_row;
-         if($request->logo != '')
+        $options['socials'] = [
+            'instagram' => $request->instagram,
+            'facebook' => $request->facebook,
+            'telegram' => $request->telegram, 
+            'youtube' => $request->youtube, 
+            'twitter' => $request->twitter, 
+            'whatsapp' => $request->whatsapp];
+        $company->options = json_encode($options);
+        if($request->logo != '')
         {
-            $upload = new Upload();
-            $company->logo  = $upload->uploadImage($request->logo,'logo/');
+            $company->logo  = Upload::uploadImage($request->logo,'logo/');
         }
         $company->save();
 

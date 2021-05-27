@@ -45,14 +45,13 @@ class ProfileController extends Controller
     	$user = User::find($request->user_id);
         $user->name = $request->name;
         $user->email = $request->email;
-        $upload = new  Upload();
         if($request->password != '')
         {
             $user->password = encrypt($request->password);        
         }
         if($request->file('image') != '')
         {
-            $user->image = $upload->uploadImage($request->file('image'),'profile/');
+            $user->image = Upload::uploadImage($request->file('image'),'profile/');
         }
         $user->save();
 

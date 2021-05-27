@@ -36,13 +36,13 @@
 							<td>{{$page->name ?? ''}}</td>
 							<td>
 								<input 
-								class="form-control page_id" 
+								class="form-check-input form-check-primary page_id" 
 								data-id="{{$page->row}}" 
 								value="" type="checkbox" 
 								name="page_id[]"
-					@if(in_array($page->row, $user_permissions))
-					checked="true" 
-					@endif
+								@if(in_array($page->row, $user_permissions))
+								checked="true" 
+								@endif
 								>
 
 							</td>

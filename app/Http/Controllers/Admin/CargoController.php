@@ -24,25 +24,16 @@ use Cache;
 use Illuminate\Support\Facades\DB;
 use View;
 use Response;
+use App\Models\City;
+
 class CargoController extends Controller
 {
-
-    public function __construct(Request $request)
-    {
-
-        $this->middleware(function ($request, $next)
-        {
-            if(Auth::user()->company->cargo_letter == '')
-            {
-                return redirect()
-                ->route('settings.index')
-                ->with(['message'=>'Lütfen Önce Kargo numara ilk harfını Belirleyiniz!']);
-            }
-            return $next($request);
-        });
-    }
   
-    
+    /*
+    * List of cargos
+    * @param $request array
+    * @return response
+    */
     public function index(Request $request)
     {
 
@@ -69,7 +60,10 @@ class CargoController extends Controller
     	return view('admin.cargo.index',compact('cargos','statuses','users','count'));
     }
     
-    // create cargo page
+    /*
+    * Cargo create page
+    * @return response
+    */
     public function create()
     {
         // if user has not permission create cargo
@@ -77,12 +71,18 @@ class CargoController extends Controller
         {
             abort('419');
         }
+
+        $cities = City::all();
         // get statuses for use cargo crate page
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
-        return view('admin.cargo.create',compact('statuses'));
+        return view('admin.cargo.create',compact('statuses','cities'));
     }
 
-    # show cargo info
+    /*
+    * Cargo show and Edit page
+    * @param $request array
+    * @return response
+    */
     public function show(Request $request)
     {
         // if user has not permission show cargo return 419 error
@@ -93,37 +93,50 @@ class CargoController extends Controller
         // get cargo data according to request id
         $cargo = Cargo::find(decrypt($request->id));
 
+        // get cities
+        $cities = City::all();
+
         // get status datas for use show cargo page
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
 
         // get product datas according cargo id
         $products = Product::where('cargo_id',$cargo->id)->get();
 
-        return view('admin.cargo.show',
-               compact('cargo','products','statuses'));
+        return view('admin.cargo.show',compact('cargo','products','statuses','cities'));
     }
 
-    # delete cargo
+    /*
+    * Delete Carog
+    * @param $request array
+    * @return redirect
+    */
     public function delete(Request $request)
     {
-        // if has not permission delete of user return 419
-        if(!Permission::check('cargo-delete'))
-        {
-            abort('419');
-        }
-
         // get data according to id and delete then return back success message
         $cargo = Cargo::find($request->id);
         $cargo->delete();
         return back()->with(['success'=>'Silindi!']);
     }
 
-    # make filter
+    /*
+    * Filter Cargo
+    * @param $request array
+    * @return response
+    */
     public function filter(Request $request)
     {
         $users = User::where('company_id','=',Auth::user()->company_id)->get();
         $statuses = CargoStatus::where('company_id',Auth::user()->company_id)->get();
         $cargos = Cargo::where('company_id',Auth::user()->company_id);
+
+        if($request->type != '')
+        {
+            $cargos->where('type','=',$request->type)->get();
+        }
+        if($request->baza != '')
+        {
+            $cargos->where('baza','=',$request->baza)->get();
+        }
         if($request->start !='')
         {
             $from = Carbon::parse($request->start.' 00:00:00')->format('Y-m-d H:i:s');
@@ -153,7 +166,11 @@ class CargoController extends Controller
         return view('admin.cargo.index',compact('cargos','statuses','users','count'));
     }
 
-    # change status
+    /*
+    * Change status
+    * @param $request array
+    * @return redirect
+    */
     public function changeStatus(Request $request)
     {
         if(!Permission::check('cargo-status-change'))
@@ -180,10 +197,14 @@ class CargoController extends Controller
         return back()->with(['success'=>'Güncellendi']);
     }
 
-    # store log
+    /*
+    * Make log
+    * @param $id integer
+    * @param $status string
+    * @return boolean
+    */
     public function storeLog($id,$status)
     {
-
         $cargoLog = new CargoLog();
         $cargoLog->cargo_id = $id;
         $cargoLog->cargo_status_id = $status;
@@ -192,13 +213,17 @@ class CargoController extends Controller
         
         if($status->send_phone == 'true')
         {
-            $this->sendPhone($id,$status->name);
-            $this->sendPhoneUz($id,$status->name);
+            $this->sendPhone($id,$status->name,$status->sms_message);
+            $this->sendPhoneUz($id,$status->name,$status->sms_message);
         }
 
     }
 
-    # make barcode
+    /*
+    * Make Barcode
+    * @param $data string
+    * @return string
+    */
     public function getBarcode($data)
     {
         //Generate into customize folder under public
@@ -228,50 +253,68 @@ class CargoController extends Controller
 
     }
 
-    # store cargo
+    /*
+    * Save Cargo
+    * @param $request array
+    * @return redirect
+    */
     public function storeAll(Request $request)
     {
         if(!Permission::check('cargo-create'))
         {
             abort('419');
         }
+        # save sender 
         $sender_id = $this->storeCustomer($request);
 
+        # save receiver
         $receiver_id = $this->storeReceiver($request);
 
+        # get company of user
         $company = Company::find(Auth::user()->company_id);
+        # increase cargo row
         $cargo_row = $company->cargo_row + 1;
-
+        # set increased cargo
         $company->cargo_row = $cargo_row;
+        # save
         $company->save();
+
+        # get cargo status
         $status = CargoStatus::find($request->status);
+
+        # create new cargo
         $cargo = new Cargo();
         $cargo->company_id = Auth::user()->company_id;
         $cargo->payment_type = $request->payment_type;
         $cargo->status = $request->status;
-        // important !
+        $cargo->type = $request->type;
+        $cargo->baza  = $request->baza;
         $cargo->public_status = $status->public_status;
-
         $cargo->total_kg = $request->total_kg;
         $cargo->cargo_price = $request->cargo_price;
+        $cargo->sender_price_tr = $request->sender_price_tr;
+        $cargo->sender_price_usd = $request->sender_price_usd;
+        $cargo->receiver_price_uz = $request->receiver_price_uz;
+        $cargo->receiver_price_usd = $request->receiver_price_usd;
         $cargo->sender_id = $sender_id;
         $cargo->receiver_id = $receiver_id;
         $cargo->user_id = Auth::user()->id;
 
-        $cargo->number = Auth::user()
-        ->company->cargo_letter.sprintf("%05s",$company->cargo_row);
+        $cargo->number = Auth::user()->company->cargo_letter.sprintf("%05s",$company->cargo_row);
         $cargo->save();
         $cargo_id = $cargo->id;
 
-
         $total_price = 0;
 
+        # log cargo record
         $this->storeLog($cargo->id,$cargo->status);
 
+        # here we are saving products of cargo
         foreach ($request->product_name as $key=> $name)
         {
             if($name != '')
             {
+                # create new product
                 $product = new Product();
                 $product->name = $request->product_name[$key];
                 $product->count = $request->product_count[$key] ?? 0;
@@ -280,63 +323,68 @@ class CargoController extends Controller
                 $product->cargo_id = $cargo_id;
                 $product->save();
 
+                # define total price
                 $total_price += $request->product_total_price[$key];
             }
         }
-
+        # here we are setting total price of cargo
         $cargo = Cargo::find($cargo_id);
         $cargo->total_price = $total_price;
         $cargo->save();
 
-
-
-        return redirect()
-        ->route('cargo.show',encrypt($cargo->id))
-        ->with(['success'=>'Kaydedildi!']);
+        return redirect()->route('cargo.show',encrypt($cargo->id))->with(['success'=>'Kaydedildi!']);
     }
 
-    # update cargo
+    /*
+    * Update Cargo
+    * @param $request array
+    * @return redirect
+    */
     public function updateAll(Request $request)
     {
-        if(!Permission::check('cargo-create'))
-        {
-            abort('419');
-        }
+        
+        # update or save sender
         $sender_id = $this->storeCustomer($request);
 
+        # update or save receiver
         $receiver_id = $this->storeReceiver($request);
 
+        # get cargo by id
         $cargo = Cargo::find($request->cargo_id);
 
+        # make log if status is different 
         if($cargo->status != $request->status)
         {
+            # make log
             $this->storeLog($cargo->id,$request->status);
-
         }
+        # get status by id
         $status = CargoStatus::find($request->status);
-
         $cargo->company_id = Auth::user()->company_id;
         $cargo->payment_type = $request->payment_type;
         $cargo->status = $request->status;
         $cargo->public_status = $status->public_status;
-
         $cargo->total_kg = $request->total_kg;
         $cargo->cargo_price = $request->cargo_price;
+        $cargo->sender_price_tr = $request->sender_price_tr;
+        $cargo->sender_price_usd = $request->sender_price_usd;
+        $cargo->receiver_price_uz = $request->receiver_price_uz;
+        $cargo->receiver_price_usd = $request->receiver_price_usd;
         $cargo->sender_id = $sender_id;
         $cargo->receiver_id = $receiver_id;
+        $cargo->baza = $request->baza;
         $cargo->save();
-
         $cargo_id = $cargo->id;
 
         $total_price = '0';
 
+        # here we are getting update product of cargo
         foreach ($request->product_name as $key=> $name)
         {
-
             if($request->product_id[$key] != '')
             {
+                # get product by id
                 $product = Product::find($request->product_id[$key]);
-
                 if($name != '')
                 {
                     $product->name      = $request->product_name[$key];
@@ -370,14 +418,14 @@ class CargoController extends Controller
         $cargo->total_price = $total_price;
         $cargo->save();
 
-
-
-        return redirect()
-        ->route('cargo.show',encrypt($cargo->id))
-        ->with(['success'=>'Güncellendi!']);
+        return redirect()->route('cargo.show',encrypt($cargo->id))->with(['success'=>'Güncellendi!']);
     }
 
-    # print cargo
+    /*
+    * Print cargo
+    * @param $request array
+    * @return response
+    */
     public function print(Request $request)
     {
 
@@ -390,78 +438,92 @@ class CargoController extends Controller
         return view('admin.cargo.print',compact('cargo','products','barcode','company','statuses'));
     }
 
-    # store and update Sender
+    /*
+    * Update Sender
+    * @param $request array
+    * @return string
+    */
     public function storeCustomer($request)
     {
+        # get sender by phone
         $sender = Customer::where('phone','=',$request->sender_phone)
         ->where('company_id','=',Auth::user()->company_id)
         ->get()->first();
 
-        if(!$sender)
-        {
-            $sender = new Customer();
-        }
+        # create new customer if has not 
+        if(!$sender){ $sender = new Customer();}
 
         $sender->name = strtoupper($request->sender_name);
+        $sender->phone_code = $request->sender_phone_code;
         $sender->phone = $request->sender_phone;
         $sender->company_id = Auth::user()->company_id;
         $sender->save();
 
         return $sender->id;
-
     }
 
-    # store and update Receiver
+    /*
+    * CRETE OR Update Receiver
+    * @param $request array
+    * @return string
+    */
     public function storeReceiver($request)
     {
+        # get receiver by phone number
         $receiver = Receiver::where('phone','=',$request->receiver_phone)
         ->where('company_id','=',Auth::user()->company_id)
         ->get()->first();
-        if(!$receiver)
-        {
-            $receiver = new Receiver();
-        }
+
+        # create new recevier if has not
+        if(!$receiver){ $receiver = new Receiver(); }
+
         $receiver->name = strtoupper($request->receiver_name);
         $receiver->passport = strtoupper($request->receiver_passport);
+        $receiver->phone_code = $request->receiver_phone_code;
         $receiver->phone = $request->receiver_phone;
         $receiver->other_phone = $request->receiver_other_phone;
+        $receiver->city  = $request->city;
         $receiver->address = strtoupper($request->receiver_address);
         $receiver->company_id = Auth::user()->company_id;
         $receiver->save();
         return  $receiver->id;
     }
 
-    # make excel
+    /*
+    * Make excel
+    * @param $request array
+    * @return Excel file
+    */
     public function manafesExcel(Request $request)
     {
-        if(!Permission::check('create-excel'))
-        {
-            abort('419');
-        }
-        $cargos = Cargo::where('company_id',Auth::user()->company_id)->orderBy('sender_id','ASC');
+        $cargos = Cargo::where('company_id',Auth::user()->company_id);
 
         if($request->start !='')
         {
             $from = Carbon::parse($request->start.' 00:00:00')->format('Y-m-d H:i:s');
             $cargos->where('created_at','>=',$from)->get();
         }
+
         if($request->end !='')
         {
             $to   = Carbon::parse($request->end.' 23:59:59')->format('Y-m-d H:i:s');
             $cargos->where('created_at','<=',$to)->get();
-
         }
 
-        if($request->status != 'all')
+        if($request->status != '')
         {
             $cargos->where('status','=',$request->status);
         }
-        if($request->user != 'all')
+        if($request->category != '')
+        {
+            $cargos->where('type','=',$request->category)->get();
+        }
+        if($request->user != '')
         {
             $cargos->where('user_id','=',$request->user);
         }
-        $cargos = $cargos->get();
 
+        $cargos = $cargos->orderBy('id','ASC')->get();
         // make excell delivery
         if($request->type == 'delivery')
         {
@@ -521,13 +583,36 @@ class CargoController extends Controller
                 ];
             foreach ($cargos as $key => $value)
             {
-
                 $data = [
                             $value->number ?? '',
                             $value->receiver->name ?? '',
                             $value->receiver->passport ?? '',
                             $value->total_kg ?? '',
                             $value->total_price,
+                        ];
+                array_push($datas, $data);
+            }
+            $date = date('d.m.Y');
+            $filename = $date.'-manafes.xlsx';
+        }
+
+        // make excell manafes
+        if($request->type == 'kargo')
+        {
+            $datas = [
+                    [ 'KOD','Yuboruvchi','Tel','Oluvchi','Tel','Kilo','Turkiya Tulov','UZB Tulov'],
+                ];
+            foreach ($cargos as $key => $value)
+            {
+                $data = [
+                            $value->number ?? '',
+                            $value->sender->name,
+                            $value->sender->phone,
+                            $value->receiver->name ?? '',
+                            $value->receiver->phone ?? '',
+                            $value->total_kg ?? '',
+                            $value->sender_price_tr.' TL - '.$value->sender_price_usd.' USD',
+                            $value->receiver_price_uz.' SUM - '.$value->receiver_price_usd.' USD',
                         ];
 
                 array_push($datas, $data);
@@ -536,7 +621,7 @@ class CargoController extends Controller
 
 
             $date = date('d.m.Y');
-            $filename = $date.'-manafes.xlsx';
+            $filename = $date.'-harajatlar.xlsx';
         }
 
         // make excell baza
@@ -605,6 +690,11 @@ class CargoController extends Controller
         return Excel::download(new App\Exports\CargoExcel($datas), $filename);
     }
 
+    /*
+    * Search Cargo
+    * @param $request array
+    * @return json
+    */
     public function search(Request $request)
     {
         $key = $request->key;
@@ -614,48 +704,60 @@ class CargoController extends Controller
             $query->where('name','like','%'.$key.'%');
         })->orWhereHas('receiver',function($query) use ($key){
             $query->where('name','like','%'.$key.'%');
-        })->orWhere('number','like','%'.$key.'%')->with('user')->with('sender')->with('receiver')->with('cargoStatus')->get();
+        })->orWhere('number','like','%'.$key.'%')->with('user')->with('sender')->with('receiver')->with('cargoStatus')->paginate(10);
         $count = $cargos->count();
         $html = View::make('admin.cargo.search_result', compact('cargos'))->render();
         return Response::json(['html' => $html,'count'=>$count]);
     }
-    # send message to user with Mobile phone
-    public function sendPhone($id,$status)
+
+    /*
+    * Send message to turkish mobile phone
+    * @param $id integer
+    * @param $status string
+    * @param $sms_message string
+    * @return boolean
+    */
+    public function sendPhone($id,$status,$sms_message)
     {
         $message  = '';
         $cargo    = Cargo::find($id);
         $message .= 'Kargo KODİ: '.$cargo->number.PHP_EOL;
         $message .= 'Status: '.$status.PHP_EOL;
+        $message .=  $sms_message.PHP_EOL;
         $message .= 'Online Tekshirish uchun link '.PHP_EOL;
         $message .= 'https://portalkargo.com'.PHP_EOL;
         $message .= 'Operator tel: +908504411101'.PHP_EOL;
-
         $sms = new SendSMS();
-
-        return $sms->sendSms($message,$cargo->sender->phone);
+        $code = $cargo->sender->phone_code ? $cargo->sender->phone_code : '';
+        return $sms->sendSms($message,trim($code.$cargo->sender->phone));
 
     }
 
-    # send message to user with Mobile phone
-    public function sendPhoneUz($id,$status)
+    /*
+    * Send message to uzbek mobile phone
+    * @param $id integer
+    * @param $status string
+    * @param $sms_message string
+    * @return boolean
+    */
+    public function sendPhoneUz($id,$status,$sms_message='')
     {
         $message  = '';
         $cargo    = Cargo::find($id);
         $message .= 'Kargo KODİ: '.$cargo->number.PHP_EOL;
         $message .= 'Status: '.$status.PHP_EOL;
+        $message .=  $sms_message.PHP_EOL;
         $message .= 'Online Tekshirish uchun link '.PHP_EOL;
         $message .= 'https://portalkargo.com'.PHP_EOL;
         $message .= 'Operator tel: +908504411101'.PHP_EOL;
-
         $sms = new SendSMS();
+        $code = $cargo->receiver->phone_code ? $cargo->receiver->phone_code : '998';
         $tel = $cargo->receiver->phone;
         if(strlen($tel) != 12)
         {
-            $tel = '998'.str_replace([' ',',','  '],'',$cargo->receiver->phone);
+            $tel = $code.str_replace([' ',',','  '],'',$cargo->receiver->phone);
         }
-
-        return $sms->sendSmsUz($message,$tel);
-
+        return $sms->sendSmsUz($message,trim($tel));
     }
 
 

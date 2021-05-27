@@ -3,10 +3,10 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <!-- Modal Header -->
-            <div class="modal-header bg-dark text-white">
+            <div class="modal-header ">
                 <h4 class="modal-title">SMS gönder!</h4>
 
-                <button type="button" data-dismiss="modal" class="close text-white">&times;</button>
+                <button type="button" data-bs-dismiss="modal" class="close text-white">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">

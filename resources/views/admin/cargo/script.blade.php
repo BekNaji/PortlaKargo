@@ -23,37 +23,6 @@
                 })
             });
 
-
-            $(document).on('change','#limit',function(){
-                let id = $(this).val();
-
-                window.location.replace("{{URL::to('/dashboard/cargo/index?limit=')}}"+id+"");
-            });
-            // show delete modal
-            $(document).on('click','#delete',function(){
-                id = $(this).data('id');
-                name = $(this).data('name');
-                $('#id').val(id);
-                $('#name').text(name);
-                $('#deleteModal').modal('show');
-            });
-
-            // show create modal
-            $(document).on('click','#create',function(){
-                $('#createModal').modal('show');
-            });
-
-
-            // show filter modal
-            $(document).on('click','#filter',function(){
-                $('#filterModal').modal('show');
-            });
-
-            // show manafes modal
-            $(document).on('click','#manafes',function(){
-                $('#excelModal').modal('show');
-            });
-
             // show send message modal
             $(document).on('click','#sendMessageTelegram',function(){
                 var id = [];
@@ -66,7 +35,10 @@
                     $('#sendMessageTelegramModal').modal('show');
                 }else
                 {
-                    toastr.warning("Seçilmiş oğe bulunamadı!");
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Seçilmiş oğe bulunamadı!"
+                    });
                 }
 
             });
@@ -83,7 +55,10 @@
                     $('#changeStatusModal').modal('show');
                 }else
                 {
-                    toastr.warning("Seçilmiş oğe bulunamadı!");
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Seçilmiş oğe bulunamadı!"
+                    });
                 }
 
             });

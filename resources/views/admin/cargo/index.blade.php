@@ -5,21 +5,31 @@
 	<div class="col-md-12">
 		<br>
 
-		<input placeholder="Gönderici / Alıcı / Kargo Numarası" type="text" id="search" class="form-control mb-4">
+		<input placeholder="Gönderici | Alıcı | Kargo Numarası" type="text" id="search" class="form-control mb-4">
 		<div class="card">
 			<div class="card-body">
 				<div class="row">
 				<div class="col-md-9">
 				<i class="fa fa-list" aria-hidden="true"></i> <span class="mr-4">Kargo Listesi </span>
-				
+				 
 				@if(Permission::check('cargo-create'))
-				<a href="{{route('cargo.create')}}" class="btn btn-success "><i class="fa fa-plus" aria-hidden="true"></i></a>
+				<a href="{{route('cargo.create')}}" class="btn btn-success ">
+					<svg class="bi" width="1em" height="1em" fill="currentColor">
+						<use
+							xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#plus-square-fill" />
+					</svg>
+				</a>
 				&nbsp;
 				@endif
 
 
 				@if(Permission::check('cargo-status-change'))
-				<button id="filter" type="button" class="btn btn-info"><i class="fa fa-filter" aria-hidden="true"></i></button>
+				<button id="filter" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#filterModal">
+					<svg class="bi" width="1em" height="1em" fill="currentColor">
+						<use
+							xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#filter-circle-fill" />
+					</svg>
+				</button>
 				<button id="change" type="button" class="btn btn-warning">Status Değiştir</button>
 				@endif
 
@@ -28,7 +38,7 @@
 				@endif
 
 				@if(Permission::check('create-excel'))
-				<button id="manafes" type="button" class="btn btn-info">Excel Hazırla</button>
+				<button id="manafes" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#excelModal">Excel Hazırla</button>
 				@endif
 				</div>
 				<div class="col-md-3">
@@ -37,12 +47,14 @@
 			</div>
 				<hr>
 				@if(Permission::check('cargo-index'))
-				<div id="search_result">
+				<div id="search_result" class="table-responsive">
 				<table class="table" style="width:100%">
 					<thead>
 						<tr>
 							<td style="width:50px;"><input type="checkbox" id="selectAll"></td>
 							<td><b>#</b></td>
+							<td><b>Baza</b></td>
+							<td><b>Kategori</b></td>
 							<td><b>Kullanıcı</b></td>
 							<td><b>Takip No</b></td>
 							<td><b>Durum</b></td>
@@ -61,6 +73,16 @@
 						<tr>
 							<td><input class="cargo" type="checkbox" name="cargo[]" data-id="{{$cargo->id}}"></td>
 							<td>{{($cargos ->currentpage()-1) * $cargos ->perpage() + $loop->index + 1}}</td>
+							<td>
+								@if ($cargo->baza == 1)
+								<span class="badge bg-success">Baza-1</span>
+								@elseif($cargo->baza == 2)
+								<span class="badge bg-info">Baza-2</span>
+								@else
+								<span class="badge bg-warning">Belirsiz</span>
+								@endif
+							</td>
+							<td>{{ $cargo->type ?? '' }}</td>
 							<td>{{ $cargo->user->name ?? ''}}</td>
 							<td>{{$cargo->number ?? ''}}</td>
 							<td>{{$cargo->cargoStatus->name ?? ''}}</td>
@@ -73,28 +95,37 @@
 							<td>
 								<a type="submit" target="_blank" 
 									href="{{route('cargo.print',encrypt($cargo->id))}}" >
-									<span class="badge badge-info">
-									<i class="fa fa-print"></i>
+									<span class="badge bg-info">
+										<svg class="bi" width="1em" height="1em" fill="currentColor">
+											<use
+												xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#printer-fill" />
+										</svg>
 									</span>
 								</a>
 
 								@if(Permission::check('cargo-show'))
 								<a type="submit"
 									href="{{route('cargo.show',encrypt($cargo->id))}}" >
-									<span class="badge badge-warning">
-									<i class="fa fa-edit"></i>
+									<span class="badge bg-warning">
+										<svg class="bi" width="1em" height="1em" fill="currentColor">
+											<use
+												xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#pencil-square" />
+										</svg>
 									</span>
 								</a>
 								@endif
 
 								@if(Permission::check('cargo-delete'))
-								<a id="delete" data-id="{{$cargo->id}}"
-									data-name="{{$cargo->number}}"
-								href="#delete">
-								<span class="badge badge-danger">
-								<i class="fa fa-trash-alt "></i>
-								</span>
-								</a>
+								<form action="{{route('cargo.delete')}}" method="POST">
+									@csrf
+									<input type="hidden" name="id" value="{{$cargo->id}}">
+									<button class="btn badge bg-danger" type="submit" onclick="return confirm('Eminmisin ?')">
+										<svg class="bi" width="1em" height="1em" fill="currentColor">
+											<use
+												xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash-fill" />
+										</svg>
+									</button>
+								</form>
 								@endif
 							</td>
 						</tr>
@@ -111,8 +142,6 @@
 		</div>
 	</div>
 </div>
-@include('admin.cargo.deleteModal')
-@include('admin.cargo.createModal')
 @include('admin.cargo.filterModal')
 @include('admin.cargo.excelModal')
 @include('admin.cargo.changeStatusModal')

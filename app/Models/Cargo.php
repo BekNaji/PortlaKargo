@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Models\City;
 
 class Cargo extends Model
 {
@@ -41,6 +42,11 @@ class Cargo extends Model
     public function user()
     {
         return $this->belongsTo('App\User','user_id','id');
+    }
+
+    public function cities()
+    {
+        return City::all();
     }
 
     

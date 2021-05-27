@@ -38,7 +38,7 @@
 		<br>
 		<div class="card">
 			<div class="card-body">
-				<h4>O'zbekistan SMS ayarlari - Limit: {{$balanceUZ ?? 'Belirsiz!'}}</h4><hr>
+				<h4>O'zbekistan SMS ayarlari - Limit: {{isset($balanceUZ) ? $balanceUZ : ''}}</h4><hr>
 			
 				<form action="{{route('sms.update')}}" method="POST">
 					@csrf

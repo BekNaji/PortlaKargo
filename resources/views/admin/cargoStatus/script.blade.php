@@ -12,14 +12,17 @@ $(document).ready(function(){
 
 	// edit modal
 	$(document).on('click','#edit',function(){
-		id = $(this).data('id');
-		name = $(this).data('name');
-		type = $(this).data('type');
-		sms = $(this).data('sms');
-		public = $(this).data('public');
+		var id = $(this).data('id');
+		var name = $(this).data('name');
+		var type = $(this).data('type');
+		var sms = $(this).data('sms');
+		var public = $(this).data('public');
+		var sms_message = $(this).data('sms_message');
+		
 		
 		$('#edit_id').val(id);
 		$('#edit_name').val(name);
+		$('#sms_message').val(sms_message);
 		//alert(sms);
 		if(type == 'personal')
 		{

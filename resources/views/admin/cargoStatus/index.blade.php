@@ -7,7 +7,12 @@
 		<div class="card">
 			<div class="card-body">
 				<i class="fa fa-hashtag" aria-hidden="true"></i> Kargo Status Ayarları &#160;&#160;&#160;
-				<button id="create" class="btn btn-success "><i class="fa fa-plus" aria-hidden="true"></i></button> &nbsp;
+				<button id="create" class="btn btn-success ">
+					<svg class="bi" width="1em" height="1em" fill="currentColor">
+						<use
+							xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#plus-square-fill" />
+					</svg>	
+				</button> &nbsp;
 				
 				<hr>
 				<table class="table table-bordered">
@@ -17,6 +22,7 @@
 							<td><b>Ad</b></td>
 							<td><b>Tür</b></td>
 							<td><b>SMS</b></td>
+							<td><b>SMS Mesaj</b></td>
 							<td><b>Kayıt Kapatılsın mı?</b></td>
 							<td><b>#</b></td>
 						</tr>
@@ -29,29 +35,41 @@
 							<td>{{$status->type}}</td>
 							@if($status->send_phone == 'true')
 							<td>
-								<span class="badge badge-success">SMS gönderilsin</span>
+								<span class="badge bg-success">SMS gönderilsin</span>
 							</td>
 							@else
-							<td><span class="badge badge-danger">SMS gönderilmesin
+							<td><span class="badge bg-danger">SMS gönderilmesin
 							</span>
 							</td>
 							@endif
 							<td>
+								{{$status->sms_message ?? '' }}
+							</td>
+							<td>
 								@if($status->public_status == 1)
-								<span class="badge badge-danger">Hayır</span>
+								<span class="badge bg-danger">Hayır</span>
 								@else
-								<span class="badge badge-success">Evet</span>
+								<span class="badge bg-success">Evet</span>
 								@endif
 							</td>
 							<td>
 								<a id="edit" data-id="{{$status->id}}"
+									data-sms_message="{{$status->sms_message ?? '' }}"
 									data-public="{{$status->public_status}}"
 									data-type="{{$status->type}}"
 									data-sms="{{$status->send_phone}}"
-									data-name="{{$status->name}}" href="#edit" class="btn btn-warning"><i class="fa fa-pen"></i>
+									data-name="{{$status->name}}" href="#edit" class="btn btn-warning">
+									<svg class="bi" width="1em" height="1em" fill="currentColor">
+										<use
+											xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#pencil-square" />
+									</svg>
 								</a>
 								<a id="delete" data-id="{{$status->id}}"
-									data-name="{{$status->name}}" href="#delete" class="btn btn-danger"><i class="fa fa-trash-alt"></i>
+									data-name="{{$status->name}}" href="#delete" class="btn btn-danger">
+									<svg class="bi" width="1em" height="1em" fill="currentColor">
+										<use
+											xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash-fill" />
+									</svg>
 								</a>
 								
 							</td>

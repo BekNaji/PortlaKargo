@@ -247,7 +247,6 @@ return [
 
         'Permission' => App\Helpers\Permission::class,
 
-
     ],
 
 

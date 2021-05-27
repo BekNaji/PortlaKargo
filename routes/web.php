@@ -62,10 +62,16 @@ Route::get('telegram/send/message/{id}', 'TelegramController@sendMessage')
 Route::post('telegram/send/multiple/message/', 'TelegramController@sendMultipleMessage')
 ->name('telegram.send.multiple.message');
 
-Route::get('sms/index','SmsController@index')->name('sms.index');
-Route::post('sms/update','SmsController@update')->name('sms.update');
+Route::get('settings/sms/index','SmsController@index')->name('sms.index');
+Route::post('settings/sms/update','SmsController@update')->name('sms.update');
 
 
+
+Route::get('settings/web/header','WebController@header')->name('web.header');
+Route::post('settings/web/header/store','WebController@headerStore')->name('web.header.store');
+
+Route::get('settings/web/about','WebController@about')->name('web.about');
+Route::post('settings/web/about/store','WebController@aboutStore')->name('web.about.store');
 
 // profile
 Route::get('profile/index', 'ProfileController@index')
@@ -90,6 +96,7 @@ Route::post('user/delete', 'UserController@delete')->name('user.delete');
 Route::get('user/remove/image/{id}', 'UserController@romoveImage')->name('user.remove.image');
 
 // Customer Route
+Route::get('customer/search','CustomerController@search')->name('customer.search');
 Route::get('customer/index', 'CustomerController@index')->name('customer.index');
 Route::get('customer/edit/{id}', 'CustomerController@edit')->name('customer.edit');
 Route::post('customer/update', 'CustomerController@update')->name('customer.update');
@@ -104,6 +111,7 @@ Route::get('customer/cargo/excell/{id}', 'CustomerController@createExcell')->nam
 
 
 // Receiver Route
+Route::get('receiver/search','ReceiverController@search')->name('receiver.search');
 Route::get('receiver/index', 'ReceiverController@index')->name('receiver.index');
 Route::get('receiver/edit/{id}', 'ReceiverController@edit')->name('receiver.edit');
 Route::get('receiver/show/{id}', 'ReceiverController@show')->name('receiver.show');
@@ -144,31 +152,45 @@ Route::post('cargo/changeStatus', 'CargoController@changeStatus')
 
 Route::get('cargo/manafes', 'CargoController@manafesExcel')->name('cargo.manafes');
 
+
+# City controller
+Route::resource('settings/city','CityController');
+
+# Servoce
+Route::resource('settings/service','ServiceController');
+
+# faq
+Route::resource('settings/faq','FaqController');
+
+# address
+Route::resource('settings/address','AddressController');
+
+
 // Cargo Status route
-Route::get('status/cargo/index', 'CargoStatusController@index')
+Route::get('settings/status/cargo/index', 'CargoStatusController@index')
 ->name('status.cargo.index');
 
-Route::get('status/cargo/create', 'CargoStatusController@create')
+Route::get('settings/status/cargo/create', 'CargoStatusController@create')
 ->name('status.cargo.create');
 
-Route::post('status/cargo/edit', 'CargoStatusController@edit')
+Route::post('settings/status/cargo/edit', 'CargoStatusController@edit')
 ->name('status.cargo.edit');
 
-Route::post('status/cargo/update', 'CargoStatusController@update')
+Route::post('settings/status/cargo/update', 'CargoStatusController@update')
 ->name('status.cargo.update');
 
-Route::post('status/cargo/store', 'CargoStatusController@store')
+Route::post('settings/status/cargo/store', 'CargoStatusController@store')
 ->name('status.cargo.store');
 
-Route::post('status/cargo/delete', 'CargoStatusController@delete')
+Route::post('settings/status/cargo/delete', 'CargoStatusController@delete')
 ->name('status.cargo.delete');
 
 Route::get('status/log/index', 'CargoLogController@index')->name('cargo.log.index');
 Route::get('status/log/store', 'CargoLogController@store')->name('cargo.log.store');
 
 // company route
-Route::get('settings/index', 'SettingsController@index')->name('settings.index');
-Route::post('settings/update', 'SettingsController@update')->name('settings.update');
+Route::get('settings/company/index', 'SettingsController@index')->name('settings.index');
+Route::post('settings/company/update', 'SettingsController@update')->name('settings.update');
 
 // page routes
 Route::get('page/index', 'PageController@index')->name('page.index');

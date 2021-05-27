@@ -3,10 +3,10 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <!-- Modal Header -->
-            <div class="modal-header bg-dark text-white">
+            <div class="modal-header ">
                 <h4 class="modal-title">Kargo durumunu değiştir !</h4>
 
-                <button type="button" data-dismiss="modal" class="close text-white">&times;</button>
+                <button type="button" data-bs-dismiss="modal" class="close text-white">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
@@ -22,11 +22,6 @@
                             @endforeach
                         </select>
                     </div>
-
-                   
-
-                    
-                    
                     <button type="submit" class="btn btn-success" >Devam et</button>
                 </form>
             </div>

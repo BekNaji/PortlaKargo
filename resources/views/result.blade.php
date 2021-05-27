@@ -1,56 +1,62 @@
-@extends('layouts.web')
+@extends('layouts.app')
 @section('content')
-<div class="site-section bg-light" >
-<div class="row">
-    <div class="col-md-8 offset-md-2">
-        <div class="card">
+
+    <div class="col-md-10 offset-md-1">
+        <a href="/" class="btn btn-success">Bosh sahifa</a>
+        <div class="card" style="margin-top:15px">
             <div class="card-body">
                 <div class="row">
-                    @if($cargo->sender->name ?? '' != '')
-                    <div class="col-md-4">
-                        <b>Gönderici:</b>
-                        {{substr($cargo->sender->name ?? '',0,2)}}***
-                        {{substr($cargo->sender->surname ?? '',0,2)}}***
-                    </div>
+                    @if ($cargo->sender->name ?? '' != '')
+                        <div class="col-md-4">
+                            <b>Yuboruvchi:</b>
+                            {{ substr($cargo->sender->name ?? '', 0, 2) }}***
+                            {{ substr($cargo->sender->surname ?? '', 0, 2) }}***
+                        </div>
                     @endif
-                    @if($cargo->receiver->name ?? '' != '')
-                    <div class="col-md-4">
-                        <b>Alıcı:</b>
-                        {{substr($cargo->receiver->name ?? '',0,2)}}***
-                        {{substr($cargo->receiver->surname ?? '',0,2)}}***
-                    </div>
+                    @if ($cargo->receiver->name ?? '' != '')
+                        <div class="col-md-4">
+                            <b>Oluvchi:</b>
+                            {{ substr($cargo->receiver->name ?? '', 0, 2) }}***
+                            {{ substr($cargo->receiver->surname ?? '', 0, 2) }}***
+                        </div>
                     @endif
                     <div class="col-md-4">
-                        <b>Kargo Takip No:</b> {{$cargo->number ?? ''}}
+                        <b>Kargo raqami:</b> {{ $cargo->number ?? '' }}
                     </div>
                 </div>
             </div>
         </div>
-        <br>
-        <div class="card">
+        <div class="card" id="result">
             <div class="card-body">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <td>*</td>
-                            <td>Son Durmu</td>
-                            <td>Tarih ve saat</td>
+                            <td>Status</td>
+                            <td>Sanasi va Vaqti</td>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($cargoLogs as $cargoLog)
-                        <tr>
-                            <td>{{$loop->iteration}}</td>
-                            <td>{{$cargoLog->cargoStatus->name}}</td>
-                            <td>{{$cargoLog->created_at}}</td>
-                        </tr>
+                        @foreach ($cargoLogs as $cargoLog)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $cargoLog->cargoStatus->name }}</td>
+                                <td>{{ date('d-m-Y h:i',strtotime($cargoLog->created_at)) }}</td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-</div>
 
-</div>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function(){
+            $(window).scrollTop( $('body').height() );
+        });
+       
+    </script>
 @endsection

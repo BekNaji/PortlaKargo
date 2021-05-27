@@ -1,193 +1,209 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <title>Portal Kargo</title>
+<head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
-    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,700|Oswald:400,700" rel="stylesheet">
+    <meta name="Description" CONTENT="Company: Zolotoy Express">
+    <title>Zolotoy Kargo</title>
 
-    <link rel="stylesheet" href="{{asset('web')}}/fonts/icomoon/style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('zolotoy') }}/css/bootstrap.min.css">
+    <!-- Font -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('zolotoy') }}/css/font-awesome.min.css">
+    <!-- Slicknav -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('zolotoy') }}/css/slicknav.css">
+    <!-- Owl carousel -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('zolotoy') }}/css/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('zolotoy') }}/css/owl.theme.css">
+    <!-- Animate -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('zolotoy') }}/css/animate.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('zolotoy') }}/css/main.css">
+    <!-- Extras Style -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('zolotoy') }}/css/extras.css">
+    <!-- Responsive Style -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('zolotoy') }}/css/responsive.css">
 
-    <link rel="stylesheet" href="{{asset('web')}}/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{asset('web')}}/css/jquery.fancybox.min.css">
-    <link rel="stylesheet" href="{{asset('web')}}/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="{{asset('web')}}/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="{{asset('web')}}/fonts/flaticon/font/flaticon.css">
-    <link rel="stylesheet" href="{{asset('web')}}/css/aos.css">
+    <link rel="stylesheet" href="{{asset('admin')}}/assets/vendors/sweetalert2/sweetalert2.min.css">
 
-    <!-- MAIN CSS -->
-    <link rel="stylesheet" href="{{asset('web')}}/css/style.css">
+</head>
 
-    <link href="{{ asset('assets') }}/css/toastr.min.css" rel="stylesheet" />
+<body>
 
-  </head>
+    <!-- Header Area wrapper Starts -->
+    <header id="header-wrap">
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand-lg fixed-top scrolling-navbar indigo">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar"
+                        aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        <span class="icon-menu"></span>
+                        <span class="icon-menu"></span>
+                        <span class="icon-menu"></span>
+                    </button>
+                    <a href="/" class="navbar-brand"><img src="{{ asset('zolotoy') }}/img/logo.png" alt=""
+                            style="width: 35%!important;">
+                        <span style="font-size: 25px; color: rgb(204 162 101); display: inline-block;position: absolute;top: 30px;
+              left: 70px;">Zolotoy Express</span>
+                    </a>
 
-  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-
-  
-
-    <div class="site-wrap" id="home-section">
-
-      <div class="site-mobile-menu site-navbar-target">
-        <div class="site-mobile-menu-header">
-          <div class="site-mobile-menu-close mt-3">
-            <span class="icon-close2 js-menu-toggle"></span>
-          </div>
-        </div>
-        <div class="site-mobile-menu-body"></div>
-      </div>
-
-  
-
-      <!-- header menu -->
-      <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
-
-        <div class="container">
-          <div class="row align-items-center position-relative">
-
-
-            <div class="site-logo">
-              <a href="{{url('/')}}" class="text-black"><span class="text-primary">Portal Kargo</a>
-            </div>
-
-            <div class="col-12">
-              <nav class="site-navigation text-right ml-auto " role="navigation">
-
-                <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-                  <li><a href="{{url('/')}}#home-section" class="nav-link">Anasyfa</a></li>
-                  <li><a href="{{url('/')}}#about" class="nav-link">Hakkımızda</a></li>
-                  <li><a href="{{url('/')}}#about-system" class="nav-link">Sistem hakkında</a></li>
-                  <li><a href="{{url('/')}}#contact" class="nav-link">İletişim</a></li>
-                  <li><a href="{{route('login')}}" class="nav-link">Giriş</a></li>
-                  
-                </ul>
-              </nav>
-
-            </div>
-
-            <div class="toggle-button d-inline-block d-lg-none"><a href="#" class="site-menu-toggle py-5 js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
-
-          </div>
-        </div>
-
-      </header>
-      <!-- header menu finished -->
-      @yield('content')
-
-        
-    </div>
-
-    <footer class="site-footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-7">
-                <h2 class="footer-heading mb-4">Hakkımızda</h2>
-                <p>Portal Kargo hakkında <br>
-                Bu web site Türkiyede özellikle İstanbul’da bulunan, Orta Asya ülkelerine  kargo hizmeti veren şirketler için tasarlanmıştır. Kargo Takip sistemi ile gönderileri kolayca takip edebilirsiniz.</p>
-              </div>
-              <div class="col-md-4 ml-auto">
-                <h2 class="footer-heading mb-4">Menu</h2>
-                <ul class="list-unstyled">
-                   <li><a href="{{url('/')}}#home-section" >Home</a></li>
-                  <li><a href="{{url('/')}}#about" >Hakkımızda</a></li>
-                  <li><a href="{{url('/')}}#about-system" >Sistem hakkında</a></li>
-                  <li><a href="{{url('/')}}#contact" >İletişim</a></li>
-                  <li><a href="{{route('login')}}">Giriş</a></li>
-                  
-                </ul>
-              </div>
-
-            </div>
-          </div>
-          <div class="col-md-4 ml-auto">
-
-            <div class="mb-5">
-              <h2 class="footer-heading mb-4">HABERLERE KAYIT OL</h2>
-              <form action="{{route('save.email')}}" method="post" >
-                @csrf
-                <div class="input-group mb-3">
-                  <input name="email" type="email" class="form-control" placeholder="Enter Email" required>
-                  <div class="input-group-append">
-                    <button 
-                    class="btn btn-primary text-white" type="submit" >KAYIT OL</button>
-                  </div>
                 </div>
-                </form>
+                <div class="collapse navbar-collapse" id="main-navbar">
+                    <ul class="navbar-nav mr-auto w-100 justify-content-end clearfix">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#sliders">
+                                Boshsahifa
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">
+                                Biz haqimizda
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#services">
+                                Hizmatlar
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">
+                                Aloqa
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
+            <!-- Mobile Menu Start -->
+            <ul class="mobile-menu navbar-nav">
+                <li>
+                    <a class="page-scroll" href="#sliders">
+                        Boshsahifa
+                    </a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#about">
+                        Biz haqimizda
+                    </a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#services">
+                        Hizmatlar
+                    </a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#contact">
+                        Aloqa
+                    </a>
+                </li>
+            </ul>
+            <!-- Mobile Menu End -->
 
-            <h2 class="footer-heading mb-4">Takip et</h2>
-            <a href="#about-section" class="smoothscroll pl-0 pr-3"><span class="icon-facebook"></span></a>
-            <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
-            <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
-            <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
-            
-          </div>
-        </div>
-        <div class="row pt-5 mt-5 text-center">
-          <div class="col-md-12">
-            <div class="border-top pt-5">
-              <p class="copyright">
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> Portal Kargo All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            </p>
+        </nav>
+        <!-- sliders -->
+        <div id="sliders">
+            <div class="full-width">
+                <!-- light slider -->
+                <div id="light-slider" class="carousel slide">
+                    <div id="carousel-area">
+                        <div id="carousel-slider" class="carousel slide" data-ride="carousel">
+
+                            <div class="carousel-inner" role="listbox">
+                                <div class="carousel-item active">
+                                    <img src="{{ asset('zolotoy') }}/img/slider/bg-11.jpg" alt=""
+                                        style="filter: brightness(0.3);">
+                                    <div class="carousel-caption">
+                                        <h3 class="slide-title animated fadeInDown"><span
+                                                style="color: rgb(204 162 101);">{{$data['header']->title ?? ''}}</span><br>
+                                            {{$data['header']->description}}</h3>
+                                        <form action="{{route('search')}}" method="GET" class="mt-4">
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-8">
+                                                    <input name="key" type="text" class="form-control"
+                                                        placeholder="Kargo raqamini yozing">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button class="btn btn-common btn-form-submit"
+                                                        type="submit">Qidirish</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-
         </div>
-      </div>
-    </footer>
+        <!-- End sliders -->
+    </header>
+    <!-- Navbar End -->
+    @yield('content')
 
+<!-- Footer Section -->
+<footer class="footer">
+    <!-- Copyright -->
+    <div id="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                    <p class="copyright-text">All rights reserved © {{ date('Y',strtotime('now'))}} Zolotoy Express
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- Copyright  End-->
 
+    </footer>
+    <!-- Footer Section End-->
 
-    <script src="{{asset('web')}}/js/jquery-3.3.1.min.js"></script>
-    <script src="{{asset('web')}}/js/popper.min.js"></script>
-    <script src="{{asset('web')}}/js/bootstrap.min.js"></script>
-    <script src="{{asset('web')}}/js/owl.carousel.min.js"></script>
-    <script src="{{asset('web')}}/js/jquery.sticky.js"></script>
-    <script src="{{asset('web')}}/js/jquery.waypoints.min.js"></script>
-    <script src="{{asset('web')}}/js/jquery.animateNumber.min.js"></script>
-    <script src="{{asset('web')}}/js/jquery.fancybox.min.js"></script>
-    <script src="{{asset('web')}}/js/jquery.easing.1.3.js"></script>
-    <script src="{{asset('web')}}/js/aos.js"></script>
+    <!-- Go to Top Link -->
+    <a href="#" class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+    </a>
 
-    <script src="{{asset('web')}}/js/main.js"></script>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader" id="loader-1"></div>
+    </div>
+    <!-- End Preloader -->
 
-    <script src="{{ asset('assets') }}/js/toastr.min.js"></script>
-            <script type="text/javascript">
-            toastr.options = {
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": true,
-            "positionClass": "toast-bottom-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "500",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "5000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-            }
-            </script>
-            <script type="text/javascript">
-            @if(session('warning'))
-            toastr.warning("{{session('warning')}}");
-            @elseif(session('success'))
-            toastr.success("{{session('success')}}");
-            @endif
-            </script>
-
-
-  </body>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{{ asset('zolotoy') }}/js/jquery-min.js"></script>
+    <script src="{{ asset('zolotoy') }}/js/popper.min.js"></script>
+    <script src="{{ asset('zolotoy') }}/js/bootstrap.min.js"></script>
+    <script src="{{ asset('zolotoy') }}/js/owl.carousel.min.js"></script>
+    <script src="{{ asset('zolotoy') }}/js/jquery.mixitup.js"></script>
+    <script src="{{ asset('zolotoy') }}/js/jquery.countTo.js"></script>
+    <script src="{{ asset('zolotoy') }}/js/jquery.nav.js"></script>
+    <script src="{{ asset('zolotoy') }}/js/scrolling-nav.js"></script>
+    <script src="{{ asset('zolotoy') }}/js/jquery.easing.min.js"></script>
+    <script src="{{ asset('zolotoy') }}/js/jquery.slicknav.js"></script>
+    <script src="{{ asset('zolotoy') }}/js/form-validator.min.js"></script>
+    <script src="{{ asset('zolotoy') }}/js/contact-form-script.js"></script>
+    <script src="{{ asset('zolotoy') }}/js/main.js"></script> 
+    <script src="{{ asset('admin') }}/assets/js/extensions/sweetalert2.js"></script>
+    <script src="{{ asset('admin') }}/assets/vendors/sweetalert2/sweetalert2.all.min.js"></script>
+    <script>
+        @if(session('warning'))
+            Swal.fire({
+                icon: "warning",
+                title: "{{session('warning')}}"
+            });
+        @endif
+        </script>
+    @yield('js')  
+    
+</body>
 
 </html>

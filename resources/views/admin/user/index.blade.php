@@ -19,10 +19,13 @@
 			<div class="card-body">
 				<i class="fa fa-users" aria-hidden="true"></i> Kullanıcı Listesi &#160;&#160;&#160;
 				
-				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp;
-				
-				
-
+				<button id="create" class="btn btn-success ">
+					<svg class="bi" width="1em" height="1em" fill="currentColor">
+						<use
+							xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#plus-square-fill" />
+					</svg>	
+				</button> &nbsp;
+			
 				<hr>
 				<table class="table table-bordered">
 					<thead>
@@ -47,7 +50,7 @@
 							@endif
 							<td>{{$user->name ?? ''}}</td>
 							<td>{{$user->email ?? ''}}</td>
-							<td><span class="badge badge-primary">{{$user->role ?? ''}}</span></td>
+							<td><span class="badge bg-primary">{{$user->role ?? ''}}</span></td>
 							<td>
 								@if($user->image !='')
 								<img class="img-fluid" style="width:100px; height:100px;" src="{{asset($user->image )}}">
@@ -57,12 +60,27 @@
 							</td>
 							<td>
 								
-								<a href="{{route('user.permission',encrypt($user->id))}}" class="btn btn-info"><i class="fa fa-key"></i></a>
+								<a href="{{route('user.permission',encrypt($user->id))}}" class="btn btn-info">
+									<svg class="bi" width="1em" height="1em" fill="currentColor">
+										<use
+											xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#key-fill" />
+									</svg>
+								</a>
 
-								<a href="{{route('user.edit',encrypt($user->id))}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+								<a href="{{route('user.edit',encrypt($user->id))}}" class="btn btn-warning">
+									<svg class="bi" width="1em" height="1em" fill="currentColor">
+										<use
+											xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#pencil-square" />
+									</svg>
+								</a>
 
 								<a id="delete" data-id="{{$user->id}}" 
-									data-name="{{$user->name}}" href="#delete" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
+									data-name="{{$user->name}}" href="#delete" class="btn btn-danger">
+									<svg class="bi" width="1em" height="1em" fill="currentColor">
+										<use
+											xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash-fill" />
+									</svg>
+								</a>
 								
 								
 							</td>

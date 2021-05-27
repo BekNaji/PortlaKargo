@@ -3,10 +3,10 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <!-- Modal Header -->
-            <div class="modal-header bg-dark text-white">
+            <div class="modal-header">
                 <h4 class="modal-title">Excel Hazırla</h4>
 
-                <button type="button" data-dismiss="modal" class="close text-white">&times;</button>
+                <button type="button" data-bs-dismiss="modal" class="Close">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
@@ -22,9 +22,17 @@
                         <input type="date" name="end" class="form-control" max="{{date('Y-m-d')}}">
                     </div>
                     <div class="form-group">
+                        <label>Kargo Kategori</label>
+                        <select class="form-control" name="category" >
+                            <option selected value="">Hepsi</option>
+                            <option value="posta">Posta</option>
+                            <option value="cargo">Kargo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label>Kargo Durumu</label>
                         <select class="form-control" name="status" >
-                            <option selected value="all">Hepsi</option>
+                            <option selected value="">Hepsi</option>
                             @foreach($statuses as $status)
                             <option value="{{$status->id}}">{{$status->name}}</option>
                             @endforeach
@@ -34,7 +42,7 @@
                     <div class="form-group">
                         <label>Kullanıcılar</label>
                         <select class="form-control" name="user" >
-                            <option selected value="all">Hepsi</option>
+                            <option selected value="">Hepsi</option>
                             @foreach($users as $user)
                             <option value="{{$user->id}}">{{$user->name}}</option>
                             @endforeach
@@ -48,6 +56,7 @@
                             <option value="manafes">Manafes</option>
                             <option value="baza">Baza</option>
                             <option value="delivery">Dastafka</option>
+                            <option value="kargo">Kargo Harajatlar</option>
                         </select>
                     </div>
 

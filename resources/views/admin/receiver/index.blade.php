@@ -3,6 +3,20 @@
 @section('content')
 <div class="row">
 	<div class="col-md-12">
+		<form action="{{route('receiver.search')}}" class="mt-4">
+			<div class="row">
+				<div class="col-md-10">
+					<input value="{{app('request')->input('key')}}" type="text" name="key" class="form-control" placeholder="Ad Soyad | Passport | Telefon ">
+					@error('key')
+					<span class="text-danger">{{$message}}</span>
+					@enderror
+				</div>
+				<div class="col-md-2">
+					<button class="btn btn-primary" type="submit">Ara</button>		
+					<a class="btn btn-info" href="{{route('customer.index')}}">Temizle</a>	
+				</div>
+			</div>	
+		</form>
 		<br>
 		@if(session('warning'))
 		<div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -42,10 +56,15 @@
 		<div class="card">
 			<div class="card-body">
 				<i class="fa fa-list" aria-hidden="true"></i><b> Alıcılar Listesı</b>&#160;&#160;&#160;
-				<button id="create" class="btn btn-success "><i class="fa fa-user-plus" aria-hidden="true"></i></button> &nbsp;
+				<button id="create" class="btn btn-success ">
+					<svg class="bi" width="1em" height="1em" fill="currentColor">
+						<use
+							xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#plus-square-fill" />
+					</svg>	
+				</button> &nbsp;
 				<button id="sendSms" type="button" class="btn btn-primary">SMS Gönder</button>
 				<hr>
-				<table id="dataTable" class="display responsive nowrap" width="100%" >
+				<table class="table table-bordered" width="100%" >
 					<thead>
 						<tr>
 							<td style="width:50px;">
@@ -80,13 +99,26 @@
 							<td>
 							<a type="submit" 
 								href="{{route('receiver.show',encrypt($receiver->id))}}" class="btn btn-info">
-								<i class="fa fa-list"></i>
+								<svg class="bi" width="1em" height="1em" fill="currentColor">
+									<use
+										xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#eye" />
+								</svg>
 							</a>
 								<a type="submit" 
-								href="{{route('receiver.edit',encrypt($receiver->id))}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+								href="{{route('receiver.edit',encrypt($receiver->id))}}" class="btn btn-warning">
+								<svg class="bi" width="1em" height="1em" fill="currentColor">
+									<use
+										xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#pencil-square" />
+								</svg>
+							</a>
 
 								<a id="delete" data-id="{{$receiver->id}}" 
-									data-name="{{$receiver->name}}" href="#delete" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
+									data-name="{{$receiver->name}}" href="#delete" class="btn btn-danger">
+									<svg class="bi" width="1em" height="1em" fill="currentColor">
+										<use
+											xlink:href="{{asset('admin')}}/assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash-fill" />
+									</svg>
+								</a>
 
 								</form>
 								
@@ -95,6 +127,7 @@
 						@endforeach
 					</tbody>
 				</table>
+				{{$receivers->links()}}
 			</div>
 		</div>
 	</div>

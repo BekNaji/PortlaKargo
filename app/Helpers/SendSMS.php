@@ -15,6 +15,7 @@ class SendSMS
 	static $api_keyUZ;
     static $company;
     static $api_tokenUZ;
+    static $loop = 0;
 
 	public function __construct()
     {
@@ -113,20 +114,47 @@ class SendSMS
 
     
 /* ------------------------------ UZ SMS ------------------------- */
+    /**
+     * This function is sending message
+     * @param $sms string
+     * @param $tel string
+     * @return object
+     */
     public function sendSmsUz($sms,$tel)
     {
+        # post url
         $url = "notify.eskiz.uz/api/message/sms/send";
+
+        # make array
         $body = array(
             'mobile_phone' => $tel,
             'message' => $sms,
             'from' => self::$company->sms_titleUZ
         );
         
+        # send function
         $response = self::ESKIZ($url,$body);
 
-        $result = json_decode($response);
-        return $result;
+        # convert json to array
+        $res = json_decode($response);
+
+        # error code
+        $arr = ['403','500'];
+
+        # check if has error then one time update token
+        if(isset($res->status_code) && in_array($res->status_code,$arr) && self::$loop != 1)
+        {
+            # update token
+            self::updateTokenUz();
+
+            # run self function
+            return self::getBalanceUZ();
+        }
+        # return array
+        return $res;
     }
+
+    
     public function sendMultipleSmsUz($data)
     {
         $API_KEY = trim(self::$api_tokenUZ);
@@ -169,19 +197,46 @@ class SendSMS
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'GET',
-        CURLOPT_HTTPHEADER => array( 'Authorization: Bearer '.$API_KEY
+        CURLOPT_HTTPHEADER => array( 'Authorization: Bearer '.$API_KEY.'12'
         ),
         ));
 
         $response = curl_exec($curl);
 
         curl_close($curl);
-        
+        $res = json_decode($response);
+        $arr = ['403','500'];
+        if(in_array($res->status_code,$arr) && self::$loop != 1)
+        {
+            self::updateTokenUz();
+            return self::getBalanceUZ();
+        }
         return json_decode($response);
     }
 
+    public static function updateTokenUz()
+    {
+        self::$loop = 1;
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'notify.eskiz.uz/api/auth/login',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => array('email' => auth()->user()->company->api_emailUZ,'password' => auth()->user()->company->api_keyUZ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        return json_decode($response);
+    }
    
-    static function ESKIZ($Url,$body = nul)
+    static function ESKIZ($Url,$body = null)
     {
         $API_KEY = self::$api_tokenUZ;
         

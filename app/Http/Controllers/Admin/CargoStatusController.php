@@ -30,6 +30,7 @@ class CargoStatusController extends Controller
     	$status                             = new CargoStatus();
         $status->company_id                 = Auth::user()->company_id;
     	$status->name                       = $request->name;
+    	$status->sms_message                = $request->sms_message;
         $status->public_status              = $request->public_status;
         $status->type                       = $request->type;
         $status->send_phone                 = $request->send_phone;
@@ -52,10 +53,11 @@ class CargoStatusController extends Controller
                $cargo->save();
             }  
         }
-        $status->public_status = $request->public_status;
-    	$status->name = $request->name;
-        $status->type = $request->type;
-        $status->send_phone = $request->send_phone;
+        $status->public_status      = $request->public_status;
+    	$status->name               = $request->name;
+        $status->sms_message        = $request->sms_message;
+        $status->type               = $request->type;
+        $status->send_phone         = $request->send_phone;
     	$status->save();
 
     	return back()->with(['success'=>'Güncellendi!']);

@@ -1,4 +1,4 @@
-@extends('layouts.web')
+@extends('layouts.app')
 @section('content')
 <br>
 <div class="site-section bg-light" >
@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-body">
                 
-                <center><h1>Login Portal Kargo</h1></center><br>
+                <center><h1>Login Zolotoy Express</h1></center><br>
                 	 <form method="POST" action="{{ route('login') }}">
                         @csrf
 

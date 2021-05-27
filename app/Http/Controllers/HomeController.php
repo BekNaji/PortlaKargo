@@ -11,7 +11,7 @@ use App\Models\Company;
 use App\Models\Follower;
 use App\Models\Customer;
 use App\Models\Receiver;
-
+use App\Models\Web;
 class HomeController extends Controller
 {
   
@@ -20,9 +20,20 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
+        $data['header'] = Web::where('type','header')->first();
+        $data['about']  = Web::where('type','about')->first();
+        $data['services'] = Web::where('type','service')->get();
+        $data['faqs'] = Web::where('type','faq')->get();
+        $data['address'] = Web::where('type','address')->get();
+        $data['customer']  = Customer::count();
+        $data['cargo']  = Cargo::count();
+        $company = Company::where('id',2)->first();
+        $data['option'] = json_decode($company->options);
+    
+    
+        return view('web',compact('data'));
     }
 
     
@@ -35,7 +46,7 @@ class HomeController extends Controller
     	if($key == '')
     	{
     		return redirect()->back()
-    		->with(['warning'=>'Hata']);
+    		->with(['warning'=>'Iltimos Kargo raqamini Kiriting']);
     	}
     	
     	
@@ -46,7 +57,7 @@ class HomeController extends Controller
         if(!$cargo)
         {
         	return redirect()->back()
-    		->with(['warning'=>'Boyle bir kayit bulunamadı!']);
+    		->with(['warning'=>'Kiritilgan kargo raqamiga oid mal\'lumot topilmadi!']);
         }
 
         $cargoLogs = CargoLog::where('cargo_id',$cargo->id)->get();

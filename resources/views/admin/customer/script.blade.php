@@ -40,7 +40,10 @@ $(document).ready(function(){
 			$('#sendSmsModal').modal('show');
 		}else
 		{
-			toastr.warning("Seçilmiş oğe bulunamadı!");
+			Swal.fire({
+				icon: "warning",
+				title: "Seçilmiş öğe bulunamadı!"
+			});
 		}
 		
 	});

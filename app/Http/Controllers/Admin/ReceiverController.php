@@ -16,7 +16,7 @@ class ReceiverController extends Controller
 {
     public function index()
     {
-    	$receivers  = Receiver::where('company_id',Auth::user()->company_id)->get();
+    	$receivers  = Receiver::where('company_id',Auth::user()->company_id)->paginate(10);
     	return view('admin.receiver.index',compact('receivers'));
     }
 
@@ -205,6 +205,16 @@ class ReceiverController extends Controller
         $data["messages"] = $sms->sendMultipleSmsUZ(json_encode($data));
     
         return back()->with(['success'=>'SMS gönderildi!','message' => $data["messages"]]);
+    }
+
+    public function search(Request $request)
+    {
+        $request->validate(['key' => 'required|max:255']);
+        $receivers = Receiver::orWhere('name','like','%'.$request->key.'%')
+        ->orWhere('phone','like','%'.$request->key.'%')
+        ->orWhere('passport','like','%'.$request->key.'%')->paginate(20);
+        
+        return view('admin.receiver.index',compact('receivers'));
     }
 
 }

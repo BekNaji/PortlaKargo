@@ -3,10 +3,10 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <!-- Modal Header -->
-            <div class="modal-header bg-dark text-white">
+            <div class="modal-header">
                 <h4 class="modal-title">Filter</h4>
 
-                <button type="button" data-dismiss="modal" class="close text-white">&times;</button>
+                <button type="button" data-bs-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
@@ -20,6 +20,22 @@
                     <div class="form-group">
                         <label>Bitiş Tarihi</label>
                         <input type="date" name="end" class="form-control" max="{{date('Y-m-d')}}">
+                    </div>
+                    <div class="form-group">
+                        <label>Kargo Kategori</label>
+                        <select class="form-control" name="type" >
+                            <option selected value="">Hepsi</option>
+                            <option value="posta">Posta</option>
+                            <option value="cargo">Kargo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Baza</label>
+                        <select class="form-control" name="baza" >
+                            <option selected value="">Hepsi</option>
+                            <option value="1">Baza-1</option>
+                            <option value="2">Baza-2</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Kargo Durumu</label>

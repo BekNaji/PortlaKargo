@@ -17,11 +17,8 @@ class CustomerController extends Controller
 {
     public function index()
     {
-    	$customers  = Customer::where('company_id',Auth::user()->company_id)->get();
-        for($i=0; $i<1000000; $i++)
-        {
-            $data[] = 1;
-        }
+    	$customers  = Customer::where('company_id',Auth::user()->company_id)->paginate(10);
+
     	return view('admin.customer.index',compact('customers'));
     }
 
@@ -142,6 +139,14 @@ class CustomerController extends Controller
         return back()->with(['success'=>'SMS gönderildi!','message'=>$data]);
     }
     
+    public function search(Request $request){
+
+        $request->validate(['key' => 'required|max:255']);
+        $customers = Customer::orWhere('name','like','%'.$request->key.'%')->orWhere('phone','like','%'.$request->key.'%')->paginate(20);
+        
+        return view('admin.customer.index',compact('customers'));
+
+    }
 
  
 

@@ -40,9 +40,34 @@
 						<label>Email</label>
 						<input value="{{Auth::user()->company->email ?? ''}}" class="form-control" type="email" name="email" required>
 					</div>
+					@php
+					# here we are converting json to obj
+					$option = json_decode(Auth::user()->company->options);
+					@endphp
 					<div class="form-group">
 						<label>Instagram</label>
-						<input value="{{Auth::user()->company->instagram ?? ''}}" class="form-control" type="text" name="instagram" required>
+						<input value="{{$option->socials->instagram ?? ''}}" class="form-control" type="text" name="instagram" required>
+					</div>
+					
+					<div class="form-group">
+						<label>Facebook</label>
+						<input value="{{$option->socials->facebook ?? ''}}" class="form-control" type="text" name="facebook" required>
+					</div>
+					<div class="form-group">
+						<label>Youtube</label>
+						<input value="{{$option->socials->youtube ?? ''}}" class="form-control" type="text" name="youtube" required>
+					</div>
+					<div class="form-group">
+						<label>Twitter</label>
+						<input value="{{$option->socials->twitter ?? ''}}" class="form-control" type="text" name="twitter" required>
+					</div>
+					<div class="form-group">
+						<label>Telegram</label>
+						<input value="{{$option->socials->telegram ?? ''}}" class="form-control" type="text" name="telegram" required>
+					</div>
+					<div class="form-group">
+						<label>Wahtasapp</label>
+						<input value="{{$option->socials->whatsapp ?? ''}}" class="form-control" type="text" name="whatsapp" required>
 					</div>
 					<div class="form-group">
 						<label>Telefon 1</label>

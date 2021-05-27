@@ -28,7 +28,7 @@ class SmsController extends Controller
 		
 		$sms_title = $sms->getTitle();
 		
-		$balanceUZ = $sms->getBalanceUZ();
+		$balanceUZ = (!isset($sms->getBalanceUZ()->status_code)) ? $sms->getBalanceUZ() : '0'; 
 		if(isset($balanceUZ->data->balance) && !empty($balanceUZ->data->balance))
 		{
 			$balanceUZ = number_format($balanceUZ->data->balance);
@@ -52,15 +52,11 @@ class SmsController extends Controller
 			$company->sms_titleUZ 	= $request->sms_titleUZ;
 			$company->api_emailUZ 	= $request->api_emailUZ;
 			$company->api_keyUZ 	= $request->api_keyUZ;
-			$login  = $sms->login();
-	
-			if(isset($login->data->token) && !empty($login->data->token))
-			{
-				$company->api_tokenUZ = $login->data->token;
-			}
 		}
 		
 		$company->save();
+
+		
 
 		return back()->with(['success'=>'Güncellendi!']);
 	}

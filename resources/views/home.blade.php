@@ -1,5 +1,7 @@
 @extends('layouts.web')
 @section('content')
+
+
 <div class="ftco-blocks-cover-1">
     <div class="ftco-cover-1 overlay" style="background-image: url('https://source.unsplash.com/pSyfecRCBQA/1920x780')">
         <div class="container">
@@ -69,7 +71,7 @@
         </div>
         
         
-        @include('about')
+        {{-- //@include('about') --}}
         
     </div>
 </div>
