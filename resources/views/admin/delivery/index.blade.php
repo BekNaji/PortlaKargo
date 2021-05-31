@@ -1,9 +1,11 @@
-@extends('layouts.delivery')
+@extends('layouts.app')
 @section('title','Teslimat')
 @section('content')
 
+<div class="col-md-10 offset-md-1">
+
+
 <div class="card">
-    
     <div class="card-body">
         <h3>Teslimat</h3><hr>
         @if(session('sms_code') == 200)
@@ -57,5 +59,5 @@
         </form>
     </div>
 </div>
-
+</div>
 @endsection

@@ -92,7 +92,6 @@ class CargoController extends Controller
         }
         // get cargo data according to request id
         $cargo = Cargo::find(decrypt($request->id));
-
         // get cities
         $cities = City::all();
 
@@ -113,8 +112,8 @@ class CargoController extends Controller
     public function delete(Request $request)
     {
         // get data according to id and delete then return back success message
-        $cargo = Cargo::find($request->id);
-        $cargo->delete();
+        Cargo::findOrFail($request->id)->delete();
+        CargoLog::where('cargo_id',$request->id)->delete();
         return back()->with(['success'=>'Silindi!']);
     }
 
@@ -187,10 +186,10 @@ class CargoController extends Controller
             $cargo->public_status = $status->public_status;
             if($cargo->status != $request->status)
             {
-                $this->storeLog($cargo->id,$request->status);
-
+                $cargo->status = $request->status;
+                $this->storeLog($cargo);
             }
-            $cargo->status = $request->status;
+            
             $cargo->save();
 
         }
@@ -203,20 +202,18 @@ class CargoController extends Controller
     * @param $status string
     * @return boolean
     */
-    public function storeLog($id,$status)
+    public function storeLog($cargo)
     {
         $cargoLog = new CargoLog();
-        $cargoLog->cargo_id = $id;
-        $cargoLog->cargo_status_id = $status;
+        $cargoLog->cargo_id = $cargo->id;
+        $cargoLog->cargo_status_id = $cargo->status;
         $cargoLog->save();
-        $status = CargoStatus::find($status);
-        
-        if($status->send_phone == 'true')
+        if($cargo->cargoStatus->send_phone == 'true')
         {
-            $this->sendPhone($id,$status->name,$status->sms_message);
-            $this->sendPhoneUz($id,$status->name,$status->sms_message);
+            $sms = new SendSMS();
+            return $sms->sendSms($cargo);
         }
-
+        return true;
     }
 
     /*
@@ -307,7 +304,7 @@ class CargoController extends Controller
         $total_price = 0;
 
         # log cargo record
-        $this->storeLog($cargo->id,$cargo->status);
+        $this->storeLog($cargo);
 
         # here we are saving products of cargo
         foreach ($request->product_name as $key=> $name)
@@ -351,19 +348,17 @@ class CargoController extends Controller
 
         # get cargo by id
         $cargo = Cargo::find($request->cargo_id);
+        $cargo->company_id = Auth::user()->company_id;
+        $cargo->payment_type = $request->payment_type;
 
         # make log if status is different 
         if($cargo->status != $request->status)
         {
+            $cargo->status = $request->status;
             # make log
-            $this->storeLog($cargo->id,$request->status);
+            $this->storeLog($cargo);
         }
-        # get status by id
-        $status = CargoStatus::find($request->status);
-        $cargo->company_id = Auth::user()->company_id;
-        $cargo->payment_type = $request->payment_type;
-        $cargo->status = $request->status;
-        $cargo->public_status = $status->public_status;
+
         $cargo->total_kg = $request->total_kg;
         $cargo->cargo_price = $request->cargo_price;
         $cargo->sender_price_tr = $request->sender_price_tr;
@@ -374,6 +369,8 @@ class CargoController extends Controller
         $cargo->receiver_id = $receiver_id;
         $cargo->baza = $request->baza;
         $cargo->save();
+
+        
         $cargo_id = $cargo->id;
 
         $total_price = '0';
@@ -709,56 +706,5 @@ class CargoController extends Controller
         $html = View::make('admin.cargo.search_result', compact('cargos'))->render();
         return Response::json(['html' => $html,'count'=>$count]);
     }
-
-    /*
-    * Send message to turkish mobile phone
-    * @param $id integer
-    * @param $status string
-    * @param $sms_message string
-    * @return boolean
-    */
-    public function sendPhone($id,$status,$sms_message)
-    {
-        $message  = '';
-        $cargo    = Cargo::find($id);
-        $message .= 'Kargo KODİ: '.$cargo->number.PHP_EOL;
-        $message .= 'Status: '.$status.PHP_EOL;
-        $message .=  $sms_message.PHP_EOL;
-        $message .= 'Online Tekshirish uchun link '.PHP_EOL;
-        $message .= 'https://portalkargo.com'.PHP_EOL;
-        $message .= 'Operator tel: +908504411101'.PHP_EOL;
-        $sms = new SendSMS();
-        $code = $cargo->sender->phone_code ? $cargo->sender->phone_code : '';
-        return $sms->sendSms($message,trim($code.$cargo->sender->phone));
-
-    }
-
-    /*
-    * Send message to uzbek mobile phone
-    * @param $id integer
-    * @param $status string
-    * @param $sms_message string
-    * @return boolean
-    */
-    public function sendPhoneUz($id,$status,$sms_message='')
-    {
-        $message  = '';
-        $cargo    = Cargo::find($id);
-        $message .= 'Kargo KODİ: '.$cargo->number.PHP_EOL;
-        $message .= 'Status: '.$status.PHP_EOL;
-        $message .=  $sms_message.PHP_EOL;
-        $message .= 'Online Tekshirish uchun link '.PHP_EOL;
-        $message .= 'https://portalkargo.com'.PHP_EOL;
-        $message .= 'Operator tel: +908504411101'.PHP_EOL;
-        $sms = new SendSMS();
-        $code = $cargo->receiver->phone_code ? $cargo->receiver->phone_code : '998';
-        $tel = $cargo->receiver->phone;
-        if(strlen($tel) != 12)
-        {
-            $tel = $code.str_replace([' ',',','  '],'',$cargo->receiver->phone);
-        }
-        return $sms->sendSmsUz($message,trim($tel));
-    }
-
 
 }

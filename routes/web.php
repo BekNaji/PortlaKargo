@@ -49,7 +49,7 @@ Route::middleware(['auth','checkcompany','checkact'])
 
 Route::get('delivery/index','DeliveryController@index')->name('delivery.index');
 Route::get('delivery/edit','DeliveryController@edit')->name('delivery.edit');
-Route::get('delivery/store','DeliveryController@store')->name('delivery.store');
+Route::post('delivery/store','DeliveryController@store')->name('delivery.store');
 
 Route::get('index', 'DashboardController@index')->name('dashboard.index');
 
@@ -64,6 +64,7 @@ Route::post('telegram/send/multiple/message/', 'TelegramController@sendMultipleM
 
 Route::get('settings/sms/index','SmsController@index')->name('sms.index');
 Route::post('settings/sms/update','SmsController@update')->name('sms.update');
+Route::post('settings/sms/message/save','SmsController@saveMessage')->name('sms.message.save');
 
 
 

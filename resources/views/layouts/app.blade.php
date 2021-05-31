@@ -18,6 +18,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <body>
     <div id="app">
@@ -45,5 +47,20 @@
             @yield('content')
         </main>
     </div>
+    <script type="text/javascript">
+        @if(session('success'))
+        Swal.fire(
+        '{{session('success')}}',
+        '',
+        'success'
+        );
+        @elseif(session('error'))
+        Swal.fire(
+        '{{session('error')}}',
+        '',
+        'warning'
+        );
+        @endif
+        </script>
 </body>
 </html>

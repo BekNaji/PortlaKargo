@@ -30,7 +30,11 @@ class HomeController extends Controller
         $data['customer']  = Customer::count();
         $data['cargo']  = Cargo::count();
         $company = Company::where('id',2)->first();
-        $data['option'] = json_decode($company->options);
+        if($company->options)
+        {
+            $data['option'] = json_decode($company->options);
+        }
+        
     
     
         return view('web',compact('data'));

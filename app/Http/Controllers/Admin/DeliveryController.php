@@ -10,6 +10,7 @@ use App\Models\CargoLog;
 use Auth;
 use Illuminate\Support\Facades\Http;
 use App\Helpers\sendSMS;
+use App\Helpers\Upload;
 
 
 
@@ -22,117 +23,73 @@ class DeliveryController extends Controller
 
     public function edit(Request $request)
     {
-    	if($request->number != '')
-    	{
-    		$cargo = Cargo::where('number','=',$request->number)
-    						->where('company_id','=',Auth::user()->company_id)->get()->first();
+    	
+        $request->validate(['number' => 'required']);
 
-            $statuses = CargoStatus::where('company_id',Auth::user()->company_id)
-                                ->where('type','kurye')->get();
+        $cargo = Cargo::where('number','like','%'.$request->number)->where('company_id','=',auth()->user()->company_id)->get()->first();
 
-    		if(!$cargo)
-    		{
+        $cargos = Cargo::where('sender_id','=',$cargo->sender_id)->where('status','=',$cargo->status)->get();
 
-    			return back()->with(['error'=>'Kargo Takip numarasi bulunamadi!']);
-    		}
-            
-    		
-    		return view('admin.delivery.edit',compact('cargo','statuses'));
-    	}
+        $statuses = CargoStatus::where('company_id',auth()->user()->company_id)->where('type','kurye')->get();
+
+        if(!$cargo) return back()->with(['error'=>'Kargo Takip numarasi bulunamadi!']);
+        
+        return view('admin.delivery.edit',compact('cargos','statuses'));
+    	
     }
-
+    /**
+     * This function update cargo by cargo id
+     * @param $request  array
+     * @return response
+     */
     public function store(Request $request)
     {
-        $cargo = Cargo::find($request->id);
-        $cargo->receiver_name = strtoupper($request->receiver);
-
-        if($cargo->status != $request->status)
+        $image = '';
+        # loop by cargo numbers
+        foreach($request->numbers as $item)
         {
-            $this->storeLog($cargo->id,$request->status);
-        } 
-        $cargo->status = $request->status ?? '';
-        $cargo->save();
-        
+            # find cargo
+            $cargo = Cargo::findOrFail($item);
+            
+            # if $image is empty and  has request file then updload it (one time upload image)
+            if($image == '' && $request->has('receiver_image') )
+            {
+                $image = Upload::uploadImage($request->file('receiver_image'),'');
+            }
+            # if $image doest not empty then
+            if($image != ''){ $cargo->receiver_image = $image; }
 
+            # receiver name
+            $cargo->receiver_name = strtoupper($request->receiver);
+
+            if($cargo->status != $request->status)
+            {
+                # cargo status
+                $cargo->status = $request->status;
+
+                $this->storeLog($cargo);
+            } 
+            # cargo save
+            $cargo->save();
+        }
 
         return redirect()->route('delivery.index')->with(['success'=>'Kargo Durumu Gümcellendi!']);
 
     }
     # store log
-    public function storeLog($id,$status)
+    public function storeLog($cargo)
     {
-
         $cargoLog = new CargoLog();
-        $cargoLog->cargo_id = $id;
-        $cargoLog->cargo_status_id = $status;
+        $cargoLog->cargo_id = $cargo->id;
+        $cargoLog->cargo_status_id = $cargo->status;
         $cargoLog->save();
-        $status = CargoStatus::find($status);
-        $this->sendMessage($id,$status->name);
-        
-        if($status->send_phone == 'true')
+    
+        if($cargo->cargoStatus->send_phone == 'true')
         {
-            $sms_response = $this->sendPhone($id,$status->name);
-            session()->flash('sms_code',$sms_response->status->code);
+            $sms = new SendSMS();
+            $sms->sendSms($cargo);
+
         }
-
-    }
-
-    public function sendPhone($id,$status)
-    {
-        $message = 'Sn. Müşterimiz ';
-        $cargo = Cargo::find($id);
-        $message .= $cargo->number;
-        $message .= ' nolu gonderi hk bilgi!'.PHP_EOL;
-        $message .= 'Status: '.$status.PHP_EOL;
-        $message .= 'Kargo Nerede ?'.PHP_EOL;
-        $message .= 'http://portalkargo.com'.PHP_EOL;
-        $message .= '08504411101 '.PHP_EOL;
-        
-        $sms = new SendSMS();
-        
-        return $sms->sendSms($message,$cargo->sender->phone);
-        
-    }
-
-    public function sendMessage($id,$status)
-    {
-        $message = '';
-        $cargo = Cargo::find($id);
-
-        $message .= '<b>Şirket adı:</b> '.$cargo->company->name.' '.PHP_EOL;
-        $message .= '<b>Kargo Durumu: </b>'.$status.' '.PHP_EOL;
-        $message .='<b>Kargo Takip No : </b>'.$cargo->number.' '.PHP_EOL;
-        $message .= '<b>Gönderici: </b>'.$cargo->sender->name ?? '-';
-        $message .= PHP_EOL;
-        $message .= '<b>Alıcı: </b>'.$cargo->receiver->name ?? '-';
-        $message .= PHP_EOL.PHP_EOL;
-        $message .= '<b>Teslim Alan: </b>'.$cargo->receiver_name ?? '-'.' '.PHP_EOL;
-        if($cargo->company->telegram_url != '')
-        {
-            $url = $cargo->company->telegram_url;
-
-            if($cargo->sender->telegram_id != '')
-            {
-                $response = Http::post($url.'sendMessage.php',
-                [
-                    'id' => $cargo->sender->telegram_id,
-                    'message' => $message,
-                ]);
-            }
-
-            if($cargo->receiver->telegram_id != '')
-            {
-                $response = Http::post($url.'sendMessage.php',
-                [
-                    'id' => $cargo->receiver->telegram_id,
-                    'message' => $message,
-                ]);
-            }
-            
-        }
-        
-        
-
-        return ;
+        return session()->flash('sms_code',200);
     }
 }

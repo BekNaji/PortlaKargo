@@ -5,8 +5,7 @@
 	@csrf
 	<div class="row">
 		
-		<div class="col-md-8">
-			<br>
+		<div class="col-md-8 mt-4">
 			<table class="table-bordered" style="width:100%;" >
 				<tr>
 					<td style="padding-left: 15px;padding-right: 15px;"><b>No:</b></td>
@@ -75,10 +74,15 @@
 					</td>
 				</tr>
 			</table>
+			@if ($cargo->receiver_name)
+				<h3>Teslim alan: {{$cargo->receiver_name ?? ''}}</h3>
+			@endif
+			@if ($cargo->receiver_image)
+				<a href="{{asset($cargo->receiver_image)}}">{{asset($cargo->receiver_image)}}</a>
+			@endif
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-4 mt-4">
 			{{-- sender info --}}
-			<br>
 			<table class="table-bordered" style="width:100%">
 				<input type="hidden" name="sender_id"
 				value="{{$cargo->sender->id ?? ''}}">
@@ -104,7 +108,7 @@
 								<input type="text" readonly value="90" name="sender_phone_code">
 							</div>
 							<div class="col-sm-10">
-								<input style="width:100%" type="text" name="sender_phone" value="{{$cargo->sender->phone()}}" required>
+								<input maxlength="10" minlength="10" style="width:100%" type="text" name="sender_phone" value="{{$cargo->sender->phone()}}" required>
 							</div>
 						</div>
 					</td>
@@ -138,7 +142,7 @@
 								<input type="text" readonly value="998" >
 							</div>
 							<div class="col-sm-10">
-								<input style="width:100%" type="text" name="receiver_phone" value="{{$cargo->receiver->phone() ?? ''}}" required>
+								<input maxlength="9" minlength="9" style="width:100%" type="text" name="receiver_phone" value="{{$cargo->receiver->phone() ?? ''}}" required>
 							</div>
 						</div>
 					</td>
@@ -152,7 +156,7 @@
 								<input type="text" readonly value="998" name="receiver_phone_code" >
 							</div>
 							<div class="col-sm-10">
-								<input value="{{ $cargo->receiver->other_phone() }}"style="width:100%" type="text" name="receiver_other_phone" >
+								<input maxlength="9" value="{{ $cargo->receiver->other_phone() }}"style="width:100%" type="text" name="receiver_other_phone" >
 							</div>
 						</div>	
 					</td>
@@ -160,13 +164,13 @@
 				<tr>
 					<td style="padding:0 15px 0 15px;"><b>Şehir</b></td>
 					<td>
-						<select name="city" id="city" style="width:100%;">
+						<select name="city" id="city" style="width:100%;" required>
 				 			<option value="">Seç</option>
 							@foreach ($cities as $item)
 								<option value="{{$item->id}}" data-baza="{{$item->type}}" {{$cargo->receiver->city == $item->id ? 'selected':''}}>{{$item->name}}</option>
 							@endforeach	
 						</select>
-						<select name="baza" id="baza" style="width:100%;">
+						<select name="baza" id="baza" style="width:100%;" required>
 							<option value="">Seç</option>
 								<option value="1" {{$cargo->baza == 1 ? 'selected' : ''}}>Baza-1</option>
 								<option value="2" {{$cargo->baza == 2 ? 'selected' : ''}}>Baza-2</option>
@@ -194,7 +198,7 @@
 				<tr>
 					<td>Kategori</td>
 					<td>
-						<select name="type" id="type" style="width:100%">
+						<select name="type" id="type" style="width:100%" required>
 							<option value="posta" {{ $cargo->type == 'posta' ? 'selected':''}}>Posta</option>
 							<option value="cargo" {{ $cargo->type == 'cargo' ? 'selected':''}}>Kargo</option>
 						</select>
@@ -269,8 +273,7 @@
 			</table>
 			<br>
 			<button class="btn btn-success" type="submit">Güncelle</button>
-			<a target="_blank" href="{{ route('cargo.print',encrypt($cargo->id)) }}" class="btn btn-info" type="button">Print</a>
-			
+			<a target="_blank" href="{{ route('cargo.print',encrypt($cargo->id)) }}" class="btn btn-info" type="button">Print</a>			
 		</div>
 	</div>
 </form>

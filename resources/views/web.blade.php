@@ -139,8 +139,8 @@
             <h3 class="title-head text-left">Biz bilan aloqaga chiqing</h3>
             
             <div class="social-footer">
+                @isset($data['option'])
                 <ul>
-
                     @if ($data['option']->socials->facebook)
                     <li><a href="{{$data['option']->socials->facebook}}"><i class="fa fa-facebook icon-round"></i> Facebook</a></li>
                     @endif
@@ -157,6 +157,7 @@
                     <li><a href="{{$data['option']->socials->youtube}}"><i class="fa fa-youtube icon-round"></i>Youtube</a></li>
                     @endif
                 </ul>  
+                @endisset
             </div>
         </div>
     </div>

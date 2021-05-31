@@ -8,6 +8,7 @@ use App\Models\Company;
 use Log; 
 use Illuminate\Support\Facades\Http;
 use SimpleXMLElement;
+use App\Models\Cargo;
 
 class SendSMS
 {
@@ -25,6 +26,32 @@ class SendSMS
         self::$api_keyUZ = self::$company->api_keyUZ;
         self::$api_tokenUZ = self::$company->api_tokenUZ;
     }
+
+    function sendSms($cargo)
+    {
+        # make message
+        $message = auth()->user()->company->message;
+        $message     = str_replace('#SENDER#',$cargo->sender->name,$message);
+        $message     = str_replace('#RECEIVER#',$cargo->receiver->name,$message);
+        $message     = str_replace('#CARGO#',$cargo->number,$message);
+        $message     = str_replace('#STATUS#',$cargo->cargoStatus->name,$message);
+        $message     = str_replace('#NUMBER#',$cargo->number,$message);
+        $message     = str_replace('#BR#',PHP_EOL,$message);
+        $message     = str_replace('#STATUS_MESSAGE#',$cargo->cargoStatus->sms_message,$message);
+
+        # send sms for uz
+        $phone = str_replace([' ',',','.','  '],'',$cargo->receiver->phone);
+        if(strlen($cargo->receiver->phone) != 12){ $phone = '998'.$phone; }
+        $this->sendSmsUz($message,$phone);
+
+        # send sms for tr
+        $phone = str_replace([' ',',','.','  '],'',$cargo->receiver->phone);
+        if(strlen($cargo->sender->phone) != 12){ $phone = '90'.$phone; }
+
+        return $this->sendSmsTr($message,$phone);
+        
+    }
+    # get balance for tr
     static function getBalance()
     {
         $url = "http://178.157.12.155:8080/api/credit/v1?";
@@ -46,6 +73,7 @@ class SendSMS
         return ['success'=> false] ;
     }
 
+    # get title for tr
     public function getTitle()
     {
         $url = "http://178.157.12.155:8080/api/originator/v1?";
@@ -66,7 +94,8 @@ class SendSMS
         return ['success'=> false];
 
     }
-    public function sendSms($sms,$tel)
+    # send message for tr
+    public function sendSmsTr($sms,$tel)
     {
         $xml = '
         <sms>
@@ -100,6 +129,8 @@ class SendSMS
         $response = curl_exec($curl);
 		
         curl_close($curl);
+
+        return json_decode($response);
     }
 
     public static function array_to_xml(array $arr, SimpleXMLElement $xml)

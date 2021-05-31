@@ -61,7 +61,7 @@
 				{{-- sender name --}}
 				<tr>
 					<td style="padding:0 15px 0 15px;"><b>Ad Soyad</b></td>
-					<td><input style="width:100%" type="text" name="sender_name" required>
+					<td><input style="width:100%" type="text" name="sender_name" required max="255">
 					</td>
 				</tr>
 				
@@ -74,7 +74,7 @@
 								<input type="text" readonly value="90" name="sender_phone_code">
 							</div>
 							<div class="col-sm-10">
-								<input style="width:100%" type="text" name="sender_phone" required>
+								<input maxlength="10" minlength="10" style="width:100%" type="text" name="sender_phone" required>
 							</div>
 						</div>
 					</td>
@@ -107,7 +107,7 @@
 								<input type="text" readonly value="998" >
 							</div>
 							<div class="col-sm-10">
-								<input style="width:100%" type="text" name="receiver_phone" required>
+								<input maxlength="9" minlength="9" style="width:100%" type="text" name="receiver_phone" required>
 							</div>
 						</div>	
 					</td>
@@ -121,7 +121,7 @@
 								<input type="text" readonly value="998" name="receiver_phone_code" >
 							</div>
 							<div class="col-sm-10">
-								<input  style="width:100%" type="text" name="receiver_other_phone" >
+								<input  maxlength="9" style="width:100%" type="text" name="receiver_other_phone" >
 							</div>
 						</div>
 						
@@ -130,13 +130,13 @@
 				<tr>
 					<td style="padding:0 15px 0 15px;"><b>Şehir</b></td>
 					<td>
-						<select name="city" id="city" style="width:100%;">
+						<select name="city" id="city" style="width:100%;" required>
 				 			<option value="">Seç</option>
 							@foreach ($cities as $item)
 								<option value="{{$item->id}}" data-baza="{{$item->type}}">{{$item->name}}</option>
 							@endforeach	
 						</select>
-						<select name="baza" id="baza" style="width:100%;">
+						<select name="baza" id="baza" style="width:100%;" required>
 							<option value="">Seç</option>
 								<option value="1">Baza-1</option>
 								<option value="2">Baza-2</option>
@@ -159,7 +159,7 @@
 				<tr>
 					<td>Kategori</td>
 					<td>
-						<select name="type" id="type" style="width:100%">
+						<select name="type" id="type" style="width:100%" required>
 							<option value="posta">Posta</option>
 							<option value="cargo">Kargo</option>
 						</select>

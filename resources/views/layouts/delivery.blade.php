@@ -11,18 +11,18 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> 
     </head>
-    <body>
+    <body style="background-">
         <div class="container">
             <div class="row">
-                <div class="col-sm-4 offset-sm-4">
+                <div class="col-md-12">
                     <br>
                     @yield('content')
                 </div>
             </div>
         </div>
-        @yield('js');
+        @yield('js')
         <script type="text/javascript">
         @if(session('success'))
         Swal.fire(

@@ -61,6 +61,48 @@
 			</div>
 		</div>
 	</div>
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-body">
+				
+				<div class="row">
+					<div class="col-md-4">
+						<b>Mesaj anahtarları</b><br>
+						<table class="table table-bordered">
+							<tr>
+								<td><span class="text-info">Gönderici Tam Adı</span></td>
+								<td><span class="text-info">#SENDER#</span></td>
+							</tr>
+		
+							<tr>
+								<td><span class="text-info"> Alıcı Tam Adı</span></td>
+								<td><span class="text-info">#RECEIVER#</span></td>
+							</tr>
+		
+							<tr>
+								<td><span class="text-info">Kargo Numaras</span></td>
+								<td><span class="text-info">#CARGO#</span></td>
+							</tr>
+							<tr>
+								<td><span class="text-info">Pastgi qatorga o'tish</span></td>
+								<td><span class="text-info">#BR#</span></td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-md-8">
+						<form action="{{route('sms.message.save')}}" method="POST">
+							@csrf
+							<div class="form-group">
+								<label for="">Mesaj</label>
+								<textarea class="form-control" name="message" id="" cols="30" rows="10">{{auth()->user()->company->message ?? ''}}</textarea>
+							</div>
+							<button class="btn btn-primary" type="submit">Kaydet</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 @endsection
